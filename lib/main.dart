@@ -15,38 +15,23 @@ Future<void> main() async {
   );
   const androidProvider =
       kReleaseMode ? AndroidProvider.playIntegrity : AndroidProvider.debug;
+
   const appleProvider = kReleaseMode
       ? AppleProvider.appAttestWithDeviceCheckFallback
       : AppleProvider.debug;
   // final webProvider = isWeb ? reCaptcha : null;
 
-  await FirebaseAppCheck.instance.activate(
+  await FirebaseAppCheck.instance
+      .activate(
     androidProvider: androidProvider,
     appleProvider: appleProvider,
     // webRecaptchaSiteKey: _webProvider,
-  );
-
-  FirebaseAppCheck.instance.onTokenChange.listen((token) async {
-    print('AppCheck token changed: $token');
-    // await _saveAppCheckToken(
-    //   authRepository: _authRepository,
-    //   token: token,
-    // );
+  )
+      .then((value) {
+    print('Firebase App Check Activated');
+  }).catchError((e) {
+    print('Firebase App Check Activation Error: $e');
   });
-
-  try {
-    // final forceRefresh = _authRepository.getAppCheckToken() == null;
-    final tokenAppCheck =
-        await FirebaseAppCheck.instance.getToken(true); // <-- Fail
-    print('AppCheck token: $tokenAppCheck');
-    // await _saveAppCheckToken(
-    //   authRepository: _authRepository,
-    //   token: tokenAppCheck,
-    // );
-  } catch (error, stackTrace) {
-    print('AppCheck error: $error');
-    // logger.d('#AppCheck: ⛔️ ERROR: $error');
-  }
 
   ///You can override your environment variable in bootstrap method here for providers
   bootstrap(() => const App());
