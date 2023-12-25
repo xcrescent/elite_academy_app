@@ -1,13 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../features/counter/counter.dart';
+
+import '../../../../features/auth/auth.dart';
 
 /// This notifier class used to build intial value
 /// from intial counter value which can be overriden.
 
-class CounterNotifier extends Notifier<int> {
+class AuthNotifier extends Notifier<int> {
   @override
   int build() {
-    return ref.watch(intialCounterValuePod);
+    return ref.watch(intialAuthValuePod);
   }
 
   ///This function updates current state increase by 1
