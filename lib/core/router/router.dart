@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+
 import '../../../core/router/router.gr.dart';
 
 /// This class used for defined routes and paths na dother properties
@@ -13,8 +14,28 @@ class AppRouter extends $AppRouter {
     ),
     AutoRoute(
       page: AuthRoute.page,
-      path: '/',
+      path: '/auth',
+      initial: false,
+    ),
+    AutoRoute(
+      page: HomeRoute.page,
+      path: '/home',
+      initial: false,
+    ),
+    AutoRoute(
+      page: SplashRoute.page,
+      path: '/splash',
       initial: true,
-    )
+    ),
+    AutoRoute(
+      page: SignInRoute.page,
+      path: '/sign-in',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AccountCreationRoute.page,
+      path: '/account-creation',
+      initial: false,
+    ),
   ];
 }
