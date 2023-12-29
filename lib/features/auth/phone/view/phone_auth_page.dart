@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:elite_academy/core/router/router.gr.dart';
 import 'package:elite_academy/core/theme/app_style.dart';
 import 'package:elite_academy/core/utils/color_constant.dart';
-import 'package:elite_academy/core/utils/image_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:elite_academy/features/auth/auth.dart';
-import 'package:elite_academy/shared/widget/app_bar/appbar_image.dart';
 import 'package:elite_academy/shared/widget/app_bar/appbar_subtitle.dart';
 import 'package:elite_academy/shared/widget/app_bar/custom_app_bar.dart';
 import 'package:elite_academy/shared/widget/custom_button.dart';
@@ -15,16 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class AuthPage extends ConsumerStatefulWidget {
-  const AuthPage({super.key});
+class PhoneAuthPage extends ConsumerStatefulWidget {
+  const PhoneAuthPage({super.key});
 
   @override
-  ConsumerState<AuthPage> createState() {
-    return _AuthPageState();
+  ConsumerState<PhoneAuthPage> createState() {
+    return _PhoneAuthPageState();
   }
 }
 
-class _AuthPageState extends ConsumerState<AuthPage> {
+class _PhoneAuthPageState extends ConsumerState<PhoneAuthPage> {
   final TextEditingController _phoneController = TextEditingController();
   // String appCheckToken = 'Waiting...';
 
@@ -78,16 +77,16 @@ class _AuthPageState extends ConsumerState<AuthPage> {
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
           height: getVerticalSize(54),
-          leadingWidth: 40,
-          leading: AppbarImage(
-            height: getSize(24),
-            width: getSize(24),
-            svgPath: ImageConstant.imgArrowleft,
-            margin: getMargin(left: 16, top: 13, bottom: 17),
-            onTap: () {
-              context.router.pop();
-            },
-          ),
+          // leadingWidth: 40,
+          // leading: AppbarImage(
+          //   height: getSize(24),
+          //   width: getSize(24),
+          //   svgPath: ImageConstant.imgArrowleft,
+          //   margin: getMargin(left: 16, top: 13, bottom: 17),
+          //   onTap: () {
+          //     context.router.pop();
+          //   },
+          // ),
           centerTitle: true,
           title: AppbarSubtitle(
             text: "Phone Login",
@@ -124,7 +123,16 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                     bottom: 5,
                   ),
                   onTap: () {
-                    sendOTP(context, ref);
+                    if (kDebugMode) {
+                      context.router.replace(
+                          PhoneVerificationRoute(verificationId: "123456"));
+                      //
+                      return;
+                    }
+
+                    if (_formKey.currentState!.validate()) {
+                      sendOTP(context, ref);
+                    }
                   },
                 ),
               ],
@@ -228,13 +236,8 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           content: Text('OTP sent successfully'),
         ),
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              OTPVerificationPage(verificationId: verificationId),
-        ),
-      );
+      context.router
+          .push(PhoneVerificationRoute(verificationId: verificationId));
     }
 
     codeAutoRetrievalTimeout(String verificationId) {
@@ -256,81 +259,5 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       codeSent: codeSent,
       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
-  }
-}
-
-class OTPVerificationPage extends ConsumerWidget {
-  final String verificationId;
-
-  const OTPVerificationPage({super.key, required this.verificationId});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('OTP Verification'),
-      ),
-      body: Column(
-        children: [
-          const Center(
-            child: Text(
-              'OTP Verification',
-              style: TextStyle(fontSize: 24),
-            ),
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter OTP',
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Center(
-            child: Text(
-              'Enter the OTP sent to your phone number',
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                // Call the function to verify OTP
-                verifyOTP(context, ref);
-              },
-              child: const Text('Verify OTP'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void verifyOTP(BuildContext context, WidgetRef ref) async {
-    final auth = ref.read(authProvider);
-
-    // Replace with the OTP entered by the user
-    String otp = '123456';
-
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: otp,
-    );
-
-    try {
-      var userCred = await auth.signInWithCredential(credential);
-      if (kDebugMode) {
-        print(
-            "Phone number automatically verified and user signed in: ${auth.currentUser!.uid}");
-      }
-      if (userCred.user != null) {
-        if (!context.mounted) return;
-        context.router.pushNamed('/counter');
-      }
-      // Handle successful sign-in
-    } catch (e) {
-      // Handle verification failure
-    }
   }
 }
