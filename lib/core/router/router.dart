@@ -13,8 +13,8 @@ class AppRouter extends $AppRouter {
       initial: false,
     ),
     AutoRoute(
-      page: AuthRoute.page,
-      path: '/auth',
+      page: PhoneAuthRoute.page,
+      path: '/phone-auth',
       initial: false,
     ),
     AutoRoute(
@@ -35,6 +35,11 @@ class AppRouter extends $AppRouter {
     AutoRoute(
       page: AccountCreationRoute.page,
       path: '/account-creation',
+      initial: false,
+    ),
+    AutoRoute(
+      page: PhoneVerificationRoute.page,
+      path: '/phone-verify',
       initial: false,
     ),
   ];
