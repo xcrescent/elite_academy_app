@@ -468,7 +468,7 @@ List<ProfileMenu1> contributorsList = [
   ),
   ProfileMenu1(
     title: 'Maansi Garg',
-    subTitle: 'GitHub: ',
+    subTitle: 'GitHub: Maansi06Garg',
     icon: '',
     url: 'https://github.com/Maansi06Garg',
   ),
