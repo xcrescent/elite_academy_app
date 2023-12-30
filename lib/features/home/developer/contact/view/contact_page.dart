@@ -461,16 +461,23 @@ class MenuItem extends StatelessWidget {
 
 List<ProfileMenu1> contributorsList = [
   ProfileMenu1(
-    title: '',
-    subTitle: 'GitHub: ',
+    title: 'Ananya Singhal',
+    subTitle: 'GitHub: AnanyaSinghal23',
     icon: '',
-    url: '',
+    url: 'https://github.com/AnanyaSinghal23',
   ),
   ProfileMenu1(
     title: 'Maansi Garg',
     subTitle: 'GitHub: Maansi06Garg',
     icon: 'assets/images/img_ellipse5_150x150.png',
     url: 'https://github.com/Maansi06Garg',
+  ),
+
+  ProfileMenu1(
+    title: 'Gaurav Singh ',
+    subTitle: 'GitHub: euclidstellar',
+    icon: 'assets/images/img_ellipse5_150x150.png',
+    url: 'https://github.com/euclidstellar',
   ),
 ];
 
