@@ -475,10 +475,10 @@ List<ProfileMenu1> contributorsList = [
 ];
 
 ProfileMenu1 creator = ProfileMenu1(
-  title: 'Utkarsh Singh',
-  subTitle: 'GitHub: xcrescent',
+  title: 'Gaurav Singh',
+  subTitle: 'GitHub: euclidstellar',
   icon: 'assets/images/img_ellipse5_150x150.png',
-  url: 'https://github.com/xcrescent',
+  url: 'https://github.com/euclidstellar',
 );
 
 
