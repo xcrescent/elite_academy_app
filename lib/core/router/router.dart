@@ -42,5 +42,10 @@ class AppRouter extends $AppRouter {
       path: '/phone-verify',
       initial: false,
     ),
+    AutoRoute(
+      page: ContactRoute.page,
+      path: '/contact',
+      initial: false,
+    ),
   ];
 }

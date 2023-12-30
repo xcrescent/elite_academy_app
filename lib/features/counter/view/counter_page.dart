@@ -1,11 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../features/counter/controller/counter_state_pod.dart';
 import '../../../features/theme_segmented_btn/view/theme_segmented_btn.dart';
 import '../../../shared/widget/app_locale_popup.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage(
   deferredLoading: true,
@@ -31,13 +31,21 @@ class CounterView extends StatelessWidget {
           AppLocalePopUp(),
         ],
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CounterText(),
-            ThemeSegmentedBtn(),
+            const CounterText(),
+            const ThemeSegmentedBtn(),
+            Consumer(builder: (context, ref, child) {
+              final boolPod = ref.watch(boolPodNotifier);
+              return Switch(
+                value: boolPod,
+                onChanged: (value) =>
+                    ref.read(boolPodNotifier.notifier).switchValue(),
+              );
+            }),
           ],
         ),
       ),

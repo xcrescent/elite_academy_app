@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../features/counter/counter.dart';
 
 /// This notifier class used to build intial value
@@ -15,4 +16,16 @@ class CounterNotifier extends Notifier<int> {
 
   ///This function updates current state decrease by 1
   void decrement() => state = state - 1;
+}
+
+/// This notifier class used to build intial value
+
+class BoolPodNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    return ref.watch(boolPod);
+  }
+
+  ///This function updates current state increase by 1
+  void switchValue() => state = !state;
 }

@@ -4,6 +4,7 @@ import 'package:elite_academy/core/utils/image_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:elite_academy/features/auth/auth.dart';
 import 'package:elite_academy/shared/widget/custom_image_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,6 +19,13 @@ class SplashScreen extends ConsumerWidget {
         seconds: 2,
       ),
       () {
+        if (kDebugMode) {
+          context.router.replaceNamed(
+            '/contact',
+          );
+          return;
+        }
+
         if (ref.watch(authStateChangesProvider).value != null) {
           context.router.replaceNamed(
             '/home',
