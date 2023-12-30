@@ -475,6 +475,14 @@ ProfileMenu1 creator = ProfileMenu1(
   url: 'https://github.com/euclidstellar',
 );
 
+
+ProfileMenu1 creator1 = ProfileMenu1(
+  title: 'xcrescent',
+  subTitle: 'GitHub: xcrescent',
+  icon: 'assets/images/img_ellipse5_150x150.png',
+  url: 'https://github.com/xcrescent',
+);
+
 class ProfileMenu1 {
   String title;
   String subTitle;
