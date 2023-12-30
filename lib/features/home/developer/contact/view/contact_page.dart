@@ -472,6 +472,13 @@ List<ProfileMenu1> contributorsList = [
     icon: '',
     url: 'https://github.com/Maansi06Garg',
   ),
+
+  ProfileMenu1(
+    title: 'Gaurav Singh ',
+    subTitle: 'GitHub: euclidstellar',
+    icon: 'assets/images/img_ellipse5_150x150.png',
+    url: 'https://github.com/euclidstellar',
+  ),
 ];
 
 ProfileMenu1 creator = ProfileMenu1(
