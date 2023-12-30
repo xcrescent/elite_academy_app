@@ -466,6 +466,12 @@ List<ProfileMenu1> contributorsList = [
     icon: '',
     url: '',
   ),
+  ProfileMenu1(
+    title: 'Maansi Garg',
+    subTitle: 'GitHub: Maansi06Garg',
+    icon: '',
+    url: 'https://github.com/Maansi06Garg',
+  ),
 ];
 
 ProfileMenu1 creator = ProfileMenu1(
@@ -474,6 +480,8 @@ ProfileMenu1 creator = ProfileMenu1(
   icon: 'assets/images/img_ellipse5_150x150.png',
   url: 'https://github.com/xcrescent',
 );
+
+
 
 class ProfileMenu1 {
   String title;
