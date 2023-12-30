@@ -53,6 +53,7 @@ dependencies:
   responsive_framework: ^1.1.1
   talker_dio_logger: ^2.4.0
   talker_flutter: ^3.6.0
+  url_launcher: ^6.2.2
   velocity_x: ^4.1.2
   webview_flutter: ^4.4.2
 
