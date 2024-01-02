@@ -11,22 +11,22 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class AccountCreationScreen extends StatelessWidget {
-  AccountCreationScreen({super.key});
-  TextEditingController group10198Controller = TextEditingController();
-  TextEditingController group10198OneController = TextEditingController();
-  TextEditingController group10198TwoController = TextEditingController();
-  TextEditingController group10198ThreeController = TextEditingController();
-  TextEditingController group10198FourController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  const AccountCreationScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    TextEditingController group10198Controller = TextEditingController();
+    TextEditingController group10198OneController = TextEditingController();
+    TextEditingController group10198TwoController = TextEditingController();
+    TextEditingController group10198ThreeController = TextEditingController();
+    TextEditingController group10198FourController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorConstant.gray50,
         resizeToAvoidBottomInset: false,
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -41,7 +41,7 @@ class AccountCreationScreen extends StatelessWidget {
               children: [
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     height: getSize(
                       150,
                     ),

@@ -3,7 +3,26 @@ import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
+  final TextFormFieldShape? shape;
+  final TextFormFieldPadding? padding;
+  final TextFormFieldVariant? variant;
+  final TextFormFieldFontStyle? fontStyle;
+  final Alignment? alignment;
+  final double? width;
+  final EdgeInsetsGeometry? margin;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final bool? isObscureText;
+  final TextInputAction? textInputAction;
+  final TextInputType? textInputType;
+  final int? maxLines;
+  final String? hintText;
+  final Widget? prefix;
+  final BoxConstraints? prefixConstraints;
+  final Widget? suffix;
+  final BoxConstraints? suffixConstraints;
+  final FormFieldValidator<String>? validator;
+  const CustomTextFormField({
     super.key,
     this.shape,
     this.padding,
@@ -25,44 +44,6 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixConstraints,
     this.validator,
   });
-
-  TextFormFieldShape? shape;
-
-  TextFormFieldPadding? padding;
-
-  TextFormFieldVariant? variant;
-
-  TextFormFieldFontStyle? fontStyle;
-
-  Alignment? alignment;
-
-  double? width;
-
-  EdgeInsetsGeometry? margin;
-
-  TextEditingController? controller;
-
-  FocusNode? focusNode;
-
-  bool? isObscureText;
-
-  TextInputAction? textInputAction;
-
-  TextInputType? textInputType;
-
-  int? maxLines;
-
-  String? hintText;
-
-  Widget? prefix;
-
-  BoxConstraints? prefixConstraints;
-
-  Widget? suffix;
-
-  BoxConstraints? suffixConstraints;
-
-  FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {

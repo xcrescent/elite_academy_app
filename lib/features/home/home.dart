@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
+import 'package:elite_academy/features/home/admin/dashboard/dashboard_page.dart';
 import 'package:elite_academy/features/home/quiz/quiz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -12,8 +14,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
+
   static const List<Widget> pages = [
-    QuizPage(),
+    AdminDashboardPage(),
     QuizPage(),
     QuizPage(),
     QuizPage(),
@@ -30,6 +33,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+          email: "dev@eliteacademy.co.in",
+          password: "123456",
+        )
+        .then((value) => print("Email Verified: ${value.user!.emailVerified}"));
     return SafeArea(
       child: Scaffold(
         body: Column(

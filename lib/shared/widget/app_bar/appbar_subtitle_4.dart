@@ -3,13 +3,12 @@ import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class AppbarSubtitle4 extends StatelessWidget {
-  AppbarSubtitle4({required this.text, this.margin, this.onTap});
+  final String text;
+  final EdgeInsetsGeometry? margin;
+  final Function? onTap;
 
-  String text;
-
-  EdgeInsetsGeometry? margin;
-
-  Function? onTap;
+  const AppbarSubtitle4(
+      {super.key, required this.text, this.margin, this.onTap});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,19 @@ import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton(
+  final ButtonShape? shape;
+  final ButtonPadding? padding;
+  final ButtonVariant? variant;
+  final ButtonFontStyle? fontStyle;
+  final Alignment? alignment;
+  final EdgeInsetsGeometry? margin;
+  final VoidCallback? onTap;
+  final double? width;
+  final double? height;
+  final String? text;
+  final Widget? prefixWidget;
+  final Widget? suffixWidget;
+  const CustomButton(
       {super.key,
       this.shape,
       this.padding,
@@ -17,30 +29,6 @@ class CustomButton extends StatelessWidget {
       this.text,
       this.prefixWidget,
       this.suffixWidget});
-
-  ButtonShape? shape;
-
-  ButtonPadding? padding;
-
-  ButtonVariant? variant;
-
-  ButtonFontStyle? fontStyle;
-
-  Alignment? alignment;
-
-  EdgeInsetsGeometry? margin;
-
-  VoidCallback? onTap;
-
-  double? width;
-
-  double? height;
-
-  String? text;
-
-  Widget? prefixWidget;
-
-  Widget? suffixWidget;
 
   @override
   Widget build(BuildContext context) {

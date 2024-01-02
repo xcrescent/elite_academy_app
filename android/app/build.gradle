@@ -76,13 +76,48 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+//            debuggable false
+//            minifyEnabled true
+//            shrinkResources true
 //            isDebuggable = false
         }
         debug {
+            applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
-//            isDebuggable = true
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
         }
 
+    }
+    flavorDimensions "default"
+
+    productFlavors {
+        production {
+            dimension "default"
+            resValue "string", "app_name", "Elite Academy"
+            manifestPlaceholders = [
+                    appName: "Elite Academy"
+            ]
+        }
+        staging {
+            dimension "default"
+            applicationIdSuffix ".stg"
+            versionNameSuffix "-stg"
+            resValue "string", "app_name", "[STG] Elite Academy"
+            manifestPlaceholders = [
+                    appName: "[STG] Elite Academy"
+            ]
+        }
+        development {
+            dimension "default"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            resValue "string", "app_name", "[DEV] Elite Academy"
+            manifestPlaceholders = [
+                    appName: "[DEV] Elite Academy"
+            ]
+        }
     }
 }
 

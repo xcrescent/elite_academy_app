@@ -1,7 +1,9 @@
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/router/auto_route_observer.dart';
 import '../../../core/router/router_pod.dart';
 import '../../../core/theme/app_theme.dart';
@@ -10,7 +12,7 @@ import '../../../shared/helper/global_helper.dart';
 import '../../../shared/pods/locale_pod.dart';
 import '../../../shared/widget/no_internet_widget.dart';
 import '../../../shared/widget/responsive_wrapper.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 ///This class holds Material App or Cupertino App
 ///with routing,theming and locale setup .
 ///Also responsive framerwork used for responsive application
@@ -51,11 +53,12 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           );
 
           /// Add support for maximum text scale according to changes in
-          /// accessibilty in sytem settings
-          final mediaquery = MediaQuery.of(context);
+          /// accessibility in system settings
+          final mediaQuery = MediaQuery.of(context);
           child = MediaQuery(
-            data: mediaquery.copyWith(
-              textScaleFactor: mediaquery.textScaleFactor.clamp(0, 1.5),
+            data: mediaQuery.copyWith(
+              textScaler:
+                  TextScaler.linear(mediaQuery.textScaleFactor.clamp(0, 1.5)),
             ),
             child: child,
           );
