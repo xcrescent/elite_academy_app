@@ -56,13 +56,13 @@ class CustomButton extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          prefixWidget ?? SizedBox(),
+          prefixWidget ?? const SizedBox(),
           Text(
             text ?? "",
             textAlign: TextAlign.center,
             style: _setFontStyle(),
           ),
-          suffixWidget ?? SizedBox(),
+          suffixWidget ?? const SizedBox(),
         ],
       );
     } else {
@@ -91,33 +91,33 @@ class CustomButton extends StatelessWidget {
 
   _setPadding() {
     switch (padding) {
-      case ButtonPadding.PaddingT15:
+      case ButtonPadding.paddingT15:
         return getPadding(
           top: 15,
           right: 15,
           bottom: 15,
         );
-      case ButtonPadding.PaddingAll6:
+      case ButtonPadding.paddingAll6:
         return getPadding(
           all: 6,
         );
-      case ButtonPadding.PaddingAll9:
+      case ButtonPadding.paddingAll9:
         return getPadding(
           all: 9,
         );
-      case ButtonPadding.PaddingT12:
+      case ButtonPadding.paddingT12:
         return getPadding(
           left: 12,
           top: 12,
           bottom: 12,
         );
-      case ButtonPadding.PaddingT6:
+      case ButtonPadding.paddingT6:
         return getPadding(
           top: 6,
           right: 6,
           bottom: 6,
         );
-      case ButtonPadding.PaddingT9:
+      case ButtonPadding.paddingT9:
         return getPadding(
           top: 9,
           right: 9,
@@ -132,13 +132,13 @@ class CustomButton extends StatelessWidget {
 
   _setColor() {
     switch (variant) {
-      case ButtonVariant.FillBluegray100:
+      case ButtonVariant.fillBlueGray100:
         return ColorConstant.blueGray100;
-      case ButtonVariant.OutlineBlueA700_1:
+      case ButtonVariant.outlineBlueA700_1:
         return ColorConstant.whiteA700;
-      case ButtonVariant.FillIndigo50:
+      case ButtonVariant.fillIndigo50:
         return ColorConstant.indigo50;
-      case ButtonVariant.OutlineBlueA700_2:
+      case ButtonVariant.outlineBlueA700_2:
         return ColorConstant.blue50;
       case ButtonVariant.OutlineBluegray40001:
         return ColorConstant.whiteA700;
@@ -154,7 +154,7 @@ class CustomButton extends StatelessWidget {
         return ColorConstant.whiteA700;
       case ButtonVariant.FillBlue50:
         return ColorConstant.blue50;
-      case ButtonVariant.OutlineBlueA700:
+      case ButtonVariant.outlineBlueA700:
       case ButtonVariant.OutlineBluegray300:
         return null;
       default:
@@ -164,21 +164,21 @@ class CustomButton extends StatelessWidget {
 
   _setTextButtonBorder() {
     switch (variant) {
-      case ButtonVariant.OutlineBlueA700:
+      case ButtonVariant.outlineBlueA700:
         return BorderSide(
           color: ColorConstant.blueA700,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case ButtonVariant.OutlineBlueA700_1:
+      case ButtonVariant.outlineBlueA700_1:
         return BorderSide(
           color: ColorConstant.blueA700,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case ButtonVariant.OutlineBlueA700_2:
+      case ButtonVariant.outlineBlueA700_2:
         return BorderSide(
           color: ColorConstant.blueA700,
           width: getHorizontalSize(
@@ -220,9 +220,9 @@ class CustomButton extends StatelessWidget {
             1.00,
           ),
         );
-      case ButtonVariant.FillBlueA700:
-      case ButtonVariant.FillBluegray100:
-      case ButtonVariant.FillIndigo50:
+      case ButtonVariant.fillBlueA700:
+      case ButtonVariant.fillBlueGray100:
+      case ButtonVariant.fillIndigo50:
       case ButtonVariant.FillBlack9007f:
       case ButtonVariant.FillBlack90099:
       case ButtonVariant.FillBlue50:
@@ -234,13 +234,13 @@ class CustomButton extends StatelessWidget {
 
   _setBorderRadius() {
     switch (shape) {
-      case ButtonShape.CircleBorder23:
+      case ButtonShape.circleBorder23:
         return BorderRadius.circular(
           getHorizontalSize(
             23.00,
           ),
         );
-      case ButtonShape.CustomBorderBL10:
+      case ButtonShape.customBorderBL10:
         return BorderRadius.only(
           topLeft: Radius.circular(
             getHorizontalSize(
@@ -263,19 +263,19 @@ class CustomButton extends StatelessWidget {
             ),
           ),
         );
-      case ButtonShape.CircleBorder19:
+      case ButtonShape.circleBorder19:
         return BorderRadius.circular(
           getHorizontalSize(
             19.00,
           ),
         );
-      case ButtonShape.RoundedBorder10:
+      case ButtonShape.roundedBorder10:
         return BorderRadius.circular(
           getHorizontalSize(
             10.00,
           ),
         );
-      case ButtonShape.Square:
+      case ButtonShape.square:
         return BorderRadius.circular(0);
       default:
         return BorderRadius.circular(
@@ -410,31 +410,31 @@ class CustomButton extends StatelessWidget {
 }
 
 enum ButtonShape {
-  Square,
-  RoundedBorder6,
-  CircleBorder23,
-  CustomBorderBL10,
-  CircleBorder19,
-  RoundedBorder10,
+  square,
+  roundedBorder6,
+  circleBorder23,
+  customBorderBL10,
+  circleBorder19,
+  roundedBorder10,
 }
 
 enum ButtonPadding {
-  PaddingAll14,
-  PaddingT15,
-  PaddingAll6,
-  PaddingAll9,
-  PaddingT12,
-  PaddingT6,
-  PaddingT9,
+  paddingAll14,
+  paddingT15,
+  paddingAll6,
+  paddingAll9,
+  paddingT12,
+  paddingT6,
+  paddingT9,
 }
 
 enum ButtonVariant {
-  FillBlueA700,
-  OutlineBlueA700,
-  FillBluegray100,
-  OutlineBlueA700_1,
-  FillIndigo50,
-  OutlineBlueA700_2,
+  fillBlueA700,
+  outlineBlueA700,
+  fillBlueGray100,
+  outlineBlueA700_1,
+  fillIndigo50,
+  outlineBlueA700_2,
   OutlineBluegray40001,
   OutlineBlueA700_3,
   OutlineBluegray100,

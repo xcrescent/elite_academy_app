@@ -1,17 +1,16 @@
+import 'package:elite_academy/core/router/auto_route_observer.dart';
+import 'package:elite_academy/core/router/router_pod.dart';
+import 'package:elite_academy/core/theme/app_theme.dart';
+import 'package:elite_academy/core/theme/theme_controller.dart';
+import 'package:elite_academy/l10n/l10n.dart';
+import 'package:elite_academy/shared/helper/global_helper.dart';
+import 'package:elite_academy/shared/pods/locale_pod.dart';
+import 'package:elite_academy/shared/widget/no_internet_widget.dart';
+import 'package:elite_academy/shared/widget/responsive_wrapper.dart';
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../core/router/auto_route_observer.dart';
-import '../../../core/router/router_pod.dart';
-import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/theme_controller.dart';
-import '../../../shared/helper/global_helper.dart';
-import '../../../shared/pods/locale_pod.dart';
-import '../../../shared/widget/no_internet_widget.dart';
-import '../../../shared/widget/responsive_wrapper.dart';
 
 ///This class holds Material App or Cupertino App
 ///with routing,theming and locale setup .
@@ -53,12 +52,12 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           );
 
           /// Add support for maximum text scale according to changes in
-          /// accessibility in system settings
-          final mediaQuery = MediaQuery.of(context);
+          /// accessibilty in sytem settings
+          final mediaquery = MediaQuery.of(context);
           child = MediaQuery(
-            data: mediaQuery.copyWith(
+            data: mediaquery.copyWith(
               textScaler:
-                  TextScaler.linear(mediaQuery.textScaleFactor.clamp(0, 1.5)),
+                  TextScaler.linear(mediaquery.textScaleFactor.clamp(0, 1.5)),
             ),
             child: child,
           );

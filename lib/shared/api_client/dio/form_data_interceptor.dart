@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../../bootstrap.dart';
+import 'package:elite_academy/bootstrap.dart';
 
 // coverage:ignore-file
 

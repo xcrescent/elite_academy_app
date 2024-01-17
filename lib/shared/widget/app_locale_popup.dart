@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../shared/pods/locale_pod.dart';
+import 'package:elite_academy/l10n/l10n.dart';
+import 'package:elite_academy/shared/pods/locale_pod.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 ///This widget can be used to change the local in a popup

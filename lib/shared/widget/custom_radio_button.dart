@@ -55,7 +55,7 @@ class CustomRadioButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             right: 8,
           ),
           child: getTextWidget(),
@@ -70,7 +70,7 @@ class CustomRadioButton extends StatelessWidget {
       children: [
         getRadioWidget(),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 8,
           ),
           child: getTextWidget(),
@@ -98,7 +98,7 @@ class CustomRadioButton extends StatelessWidget {
         onChanged: (value) {
           onChange!(value!);
         },
-        visualDensity: VisualDensity(
+        visualDensity: const VisualDensity(
           vertical: -4,
           horizontal: -4,
         ),

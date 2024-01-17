@@ -1,88 +1,68 @@
 name: elite_academy
-description: "A new Flutter project."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
+description: "Elite Academy"
 version: 1.0.0+9
+publish_to: none
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
-  auto_route: ^7.8.4
-  cached_network_image: ^3.3.0
+  auto_route: ^7.8.3
+  cached_network_image: ^3.3.1
   cupertino_icons: ^1.0.6
-  dio: ^5.4.0
-  dio_smart_retry: ^6.0.0
+  dio: ^5.3.2
+  dio_smart_retry: ^5.0.0
   duration: ^3.0.13
   firebase_app_check: ^0.2.1+8
-  firebase_auth: ^4.15.3
+  firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
-  flash: ^3.1.0
+  fl_chart: ^0.66.0
+  flash: ^3.0.5+1
   flex_color_scheme: ^7.3.1
+  floating_action_bubble: ^1.1.4
   flutter:
     sdk: flutter
   flutter_displaymode: ^0.6.0
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^2.4.9
+  flutter_riverpod: ^2.4.0
   flutter_svg: ^2.0.9
+  google_fonts: ^6.1.0
   hive_flutter: ^1.1.0
-  hooks_riverpod: ^2.4.9
-  internet_connection_checker_plus: ^2.1.0
-  intl: 0.18.1
+  internet_connection_checker_plus: ^2.0.0
+  intl: ^0.18.1
   json_annotation: ^4.8.1
+  path_provider: ^2.1.1
   platform_info: ^4.0.2
   responsive_framework: ^1.1.1
-  talker_dio_logger: ^2.4.0
-  talker_flutter: ^3.6.0
-  url_launcher: ^6.2.2
-  velocity_x: ^4.1.2
-  video_player: ^2.8.1
-  webview_flutter: ^4.4.2
+  talker_dio_logger: ^2.3.0
+  talker_flutter: ^3.2.7
+  url_launcher: ^6.2.3
+  velocity_x: ^4.1.1
+  video_player: ^2.8.2
+  webview_flutter: ^4.4.4
 
 dev_dependencies:
-  auto_route_generator: ^7.3.2
-  build_runner: ^2.4.7
-  custom_lint: ^0.5.7
+  auto_route_generator: ^7.1.1
+  build_runner: ^2.4.6
+  custom_lint: ^0.5.1
   flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^3.0.1
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
   json_serializable: ^6.7.1
-  mocktail: ^1.0.2
-  riverpod_lint: ^2.3.7
-  riverpod_test: ^0.1.4
-  very_good_analysis: ^5.1.0
+  mocktail: ^1.0.0
+  riverpod_lint: ^2.1.0
+  riverpod_test: ^0.1.3
+  very_good_analysis: ^5.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 flutter_launcher_icons:
-#  image_path: "assets/app_icons/ic_launcher.png"
+  #  image_path: "assets/app_icons/ic_launcher.png"
   image_path_android: "assets/app_icons/icon-710x599-android.png"
   image_path_ios: "assets/app_icons/icon-1024x1024.png"
   android: true # can specify file name here e.g. "ic_launcher"
   ios: true # can specify file name here e.g. "My-Launcher-Icon"
-#  adaptive_icon_background: "#000000" # only available for Android 8.0 devices and above
+  #  adaptive_icon_background: "#000000" # only available for Android 8.0 devices and above
   adaptive_icon_background: "assets/app_icons/background.png" # only available for Android 8.0 devices and above
   adaptive_icon_foreground: "assets/app_icons/icon-foreground-432x432.png" # only available for Android 8.0 devices and above
   adaptive_icon_monochrome: "assets/app_icons/icon-monochrome-432x432.png" # only available for Android 13 devices and above
@@ -103,49 +83,19 @@ flutter_launcher_icons:
     image_path: "assets/app_icons/icon-1024x1024.png"
     icon_size: 128 # min:128, max:1024, default: 128
 
-
-
-
 flutter:
-
   uses-material-design: true
   generate: true
   assets:
     - assets/
     - assets/app_icons/
     - assets/images/
-#    - assets/images/avatars/
+    #    - assets/images/avatars/
     - assets/splash/
-#    - assets/svgs/
+    #    - assets/svgs/
     - assets/fonts/
-#    - assets/json/
-#    - assets/videos/
-#    - assets/audios/
-#    - assets/audios/audios.json
-#    - assets/audios/audios.json
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  #    - assets/json/
+  #    - assets/videos/
+  #    - assets/audios/
+  #    - assets/audios/audios.json
+  #    - assets/audios/audios.json

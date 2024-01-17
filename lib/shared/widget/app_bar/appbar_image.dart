@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class AppbarImage extends StatelessWidget {
   AppbarImage(
-      {required this.height,
+      {super.key, required this.height,
       required this.width,
       this.imagePath,
       this.svgPath,

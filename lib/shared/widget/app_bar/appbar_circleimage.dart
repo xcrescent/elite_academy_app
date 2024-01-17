@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AppbarCircleimage extends StatelessWidget {
-  AppbarCircleimage({this.imagePath, this.svgPath, this.margin, this.onTap});
+  AppbarCircleimage({super.key, this.imagePath, this.svgPath, this.margin, this.onTap});
 
   String? imagePath;
 

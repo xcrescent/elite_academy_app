@@ -83,7 +83,7 @@ class CounterAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.counterAppBarTitle);
+    return Text(AppLocalizations.of(context).counterAppBarTitle);
   }
 }
 

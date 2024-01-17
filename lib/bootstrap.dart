@@ -5,9 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:platform_info/platform_info.dart';
-import 'core/local_storage/app_storage_pod.dart';
-import 'init.dart';
-import 'shared/riverpod_ext/riverpod_observer.dart';
+import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
+import 'package:elite_academy/init.dart';
+import 'package:elite_academy/shared/riverpod_ext/riverpod_observer.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 // coverage:ignore-file

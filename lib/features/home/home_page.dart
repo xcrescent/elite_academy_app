@@ -1,7 +1,8 @@
 import 'package:auto_route/annotations.dart';
-import 'package:elite_academy/features/home/admin/dashboard/dashboard_page.dart';
+import 'package:elite_academy/features/home/admin/dashboard/view/dashboard_page.dart';
 import 'package:elite_academy/features/home/quiz/quiz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -35,10 +36,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
-          email: "dev@eliteacademy.co.in",
-          password: "123456",
-        )
-        .then((value) => print("Email Verified: ${value.user!.emailVerified}"));
+      email: "dev@eliteacademy.co.in",
+      password: "123456",
+    )
+        .then((value) {
+      if (kDebugMode) {
+        print("Email Verified: ${value.user!.emailVerified}");
+      }
+    });
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -71,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               label: 'Profile',
             ),
           ],
-          currentIndex: 2,
+          currentIndex: pageIndex,
           selectedItemColor: Colors.amber[800],
           onTap: _onItemTapped,
         ),
