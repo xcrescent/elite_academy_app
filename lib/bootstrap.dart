@@ -1,14 +1,21 @@
 import 'dart:async';
 import 'dart:developer';
+
+import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
+import 'package:elite_academy/features/home/admin/dashboard/model/attendance_model.dart';
+import 'package:elite_academy/features/home/admin/dashboard/model/fee_model.dart';
+import 'package:elite_academy/features/home/admin/dashboard/model/org_model.dart';
+import 'package:elite_academy/init.dart';
+import 'package:elite_academy/shared/riverpod_ext/riverpod_observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:platform_info/platform_info.dart';
-import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
-import 'package:elite_academy/init.dart';
-import 'package:elite_academy/shared/riverpod_ext/riverpod_observer.dart';
 import 'package:talker_flutter/talker_flutter.dart';
+
+import 'features/home/admin/dashboard/model/batch_model.dart';
+import 'features/home/admin/dashboard/model/student_model.dart';
 
 // coverage:ignore-file
 
@@ -47,6 +54,11 @@ Future<void> bootstrap(
   unawaited(init());
   await Hive.initFlutter();
   final appBox = await Hive.openBox('appBox');
+  Hive.registerAdapter(OrgModelAdapter());
+  Hive.registerAdapter(BatchModelAdapter());
+  Hive.registerAdapter(StudentModelAdapter());
+  Hive.registerAdapter(FeeModelAdapter());
+  Hive.registerAdapter(AttendanceModelAdapter());
 
   runApp(
     ProviderScope(
