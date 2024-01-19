@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/router/router.gr.dart';
 import 'package:elite_academy/core/theme/app_style.dart';
 import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
@@ -12,6 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/router/router.gr.dart';
 
 @RoutePage()
 class PhoneAuthPage extends ConsumerStatefulWidget {

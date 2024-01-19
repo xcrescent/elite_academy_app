@@ -21,10 +21,9 @@ import 'package:elite_academy/features/counter/view/counter_page.dart'
     deferred as _i3;
 import 'package:elite_academy/features/home/developer/contact/view/contact_page.dart'
     as _i2;
-import 'package:elite_academy/features/home/home.dart' as _i4;
+import 'package:elite_academy/features/home/home_page.dart' as _i4;
 import 'package:elite_academy/features/splash/view/splash_page.dart' as _i8;
-import 'package:flutter/foundation.dart' as _i11;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/foundation.dart' as _i10;
 
 abstract class $AppRouter extends _i9.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -32,11 +31,9 @@ abstract class $AppRouter extends _i9.RootStackRouter {
   @override
   final Map<String, _i9.PageFactory> pagesMap = {
     AccountCreationRoute.name: (routeData) {
-      final args = routeData.argsAs<AccountCreationRouteArgs>(
-          orElse: () => const AccountCreationRouteArgs());
       return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.AccountCreationScreen(key: args.key),
+        child: const _i1.AccountCreationScreen(),
       );
     },
     ContactRoute.name: (routeData) {
@@ -79,7 +76,7 @@ abstract class $AppRouter extends _i9.RootStackRouter {
     SignInRoute.name: (routeData) {
       return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i7.SignInScreen(),
+        child: const _i7.SignInScreen(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -93,31 +90,16 @@ abstract class $AppRouter extends _i9.RootStackRouter {
 
 /// generated route for
 /// [_i1.AccountCreationScreen]
-class AccountCreationRoute extends _i9.PageRouteInfo<AccountCreationRouteArgs> {
-  AccountCreationRoute({
-    _i10.Key? key,
-    List<_i9.PageRouteInfo>? children,
-  }) : super(
+class AccountCreationRoute extends _i9.PageRouteInfo<void> {
+  const AccountCreationRoute({List<_i9.PageRouteInfo>? children})
+      : super(
           AccountCreationRoute.name,
-          args: AccountCreationRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'AccountCreationRoute';
 
-  static const _i9.PageInfo<AccountCreationRouteArgs> page =
-      _i9.PageInfo<AccountCreationRouteArgs>(name);
-}
-
-class AccountCreationRouteArgs {
-  const AccountCreationRouteArgs({this.key});
-
-  final _i10.Key? key;
-
-  @override
-  String toString() {
-    return 'AccountCreationRouteArgs{key: $key}';
-  }
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
@@ -181,7 +163,7 @@ class PhoneAuthRoute extends _i9.PageRouteInfo<void> {
 class PhoneVerificationRoute
     extends _i9.PageRouteInfo<PhoneVerificationRouteArgs> {
   PhoneVerificationRoute({
-    _i11.Key? key,
+    _i10.Key? key,
     required String verificationId,
     List<_i9.PageRouteInfo>? children,
   }) : super(
@@ -205,7 +187,7 @@ class PhoneVerificationRouteArgs {
     required this.verificationId,
   });
 
-  final _i11.Key? key;
+  final _i10.Key? key;
 
   final String verificationId;
 

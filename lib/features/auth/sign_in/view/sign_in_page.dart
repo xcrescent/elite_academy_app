@@ -13,14 +13,15 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
-  TextEditingController group10198Controller = TextEditingController();
-
-  TextEditingController group10198OneController = TextEditingController();
-
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController group10198Controller = TextEditingController();
+
+    TextEditingController group10198OneController = TextEditingController();
+
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorConstant.gray50,
@@ -39,7 +40,7 @@ class SignInScreen extends StatelessWidget {
             centerTitle: true,
             title: AppbarSubtitle(text: "Sign in")),
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(left: 16, top: 34, right: 16, bottom: 34),

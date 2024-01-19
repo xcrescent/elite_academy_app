@@ -3,35 +3,27 @@ import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-  CustomIconButton(
-      {super.key,
-      this.shape,
-      this.padding,
-      this.variant,
-      this.alignment,
-      this.margin,
-      this.width,
-      this.height,
-      this.child,
-      this.onTap});
-
-  IconButtonShape? shape;
-
-  IconButtonPadding? padding;
-
-  IconButtonVariant? variant;
-
-  Alignment? alignment;
-
-  EdgeInsetsGeometry? margin;
-
-  double? width;
-
-  double? height;
-
-  Widget? child;
-
-  VoidCallback? onTap;
+  final IconButtonShape? shape;
+  final IconButtonPadding? padding;
+  final IconButtonVariant? variant;
+  final Alignment? alignment;
+  final EdgeInsetsGeometry? margin;
+  final double? width;
+  final double? height;
+  final Widget? child;
+  final VoidCallback? onTap;
+  const CustomIconButton({
+    super.key,
+    this.shape,
+    this.padding,
+    this.variant,
+    this.alignment,
+    this.margin,
+    this.width,
+    this.height,
+    this.child,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

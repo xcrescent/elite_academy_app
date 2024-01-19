@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-import '../../../shared/api_client/dio/dio_client_provider.dart';
-import '../../../shared/pods/internet_checker_pod.dart';
+import 'package:elite_academy/shared/api_client/dio/dio_client_provider.dart';
+import 'package:elite_academy/shared/pods/internet_checker_pod.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 ///No internet extension widget
