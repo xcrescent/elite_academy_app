@@ -9,7 +9,7 @@ import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:elite_academy/features/counter/counter.dart';
 import 'package:elite_academy/features/theme_segmented_btn/controller/selection_theme_pod.dart';
 import 'package:elite_academy/features/theme_segmented_btn/view/theme_segmented_btn.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:elite_academy/l10n/l10n.dart';
 import 'package:elite_academy/shared/pods/internet_checker_pod.dart';
 
 import '../../../helpers/helpers.dart';

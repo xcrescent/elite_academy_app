@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
+import 'package:elite_academy/core/router/router.gr.dart';
 import 'package:elite_academy/features/home/quiz/quiz_model.dart';
-import 'package:elite_academy/features/home/quiz/web_view.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:google_fonts/google_fonts.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -13,12 +15,17 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   late Future<List<QuizModel>> futureUrl;
   Future<List<QuizModel>> fetchQuizUrl() async {
-    final response = await http.get(
-        Uri.parse(
-            'https://elite-academy-quiz-backend.onrender.com/class/xii/subject/accountancy/?term=1'),
-        headers: {});
+    Dio dio = Dio();
+    final response = await dio.get(
+      'https://elite-academy-quiz-backend.onrender.com/class/xii/subject/accountancy/?term=1',
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
     if (response.statusCode == 200) {
-      return quizListFromJSON(response.body);
+      return quizListFromJSON(response.data);
     } else {
       throw Exception('Failed to load album');
     }
@@ -37,7 +44,14 @@ class _QuizPageState extends State<QuizPage> {
         const SizedBox(
           height: 20,
         ),
-        const Text('Quiz Page'),
+        Text(
+          'Quiz Page',
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+          ),
+        ),
         const SizedBox(
           height: 20,
         ),
@@ -47,18 +61,35 @@ class _QuizPageState extends State<QuizPage> {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
+                itemExtent: 80,
                 shrinkWrap: true,
-                itemBuilder: (context, index) => ElevatedButton(
-                  onPressed: () {
-                    // print(snapshot.data!);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            QuizWebView(url: snapshot.data![index].href),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: TextStyle(
+                        fontSize: 20,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                       ),
-                    );
-                  },
-                  child: Text(snapshot.data![index].name),
+                    ),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Loading...'),
+                        ),
+                      );
+                      // print(snapshot.data!);
+                      context.router.push(
+                        QuizWebView(url: snapshot.data![index].href),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        snapshot.data![index].name,
+                      ),
+                    ),
+                  ),
                 ),
               );
             } else if (snapshot.hasError) {
@@ -66,7 +97,7 @@ class _QuizPageState extends State<QuizPage> {
             }
 
             // By default, show a loading spinner.
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
         ),
         // ElevatedButton(

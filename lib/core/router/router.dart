@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-
-import '../../../core/router/router.gr.dart';
+import 'package:elite_academy/core/router/router.gr.dart';
 
 /// This class used for defined routes and paths na dother properties
 @AutoRouterConfig()
@@ -45,6 +44,16 @@ class AppRouter extends $AppRouter {
     AutoRoute(
       page: ContactRoute.page,
       path: '/contact',
+      initial: false,
+    ),
+    AutoRoute(
+      page: QuizWebView.page,
+      path: '/quiz-web-view',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AddStudentRoute.page,
+      path: '/add-student',
       initial: false,
     ),
   ];
