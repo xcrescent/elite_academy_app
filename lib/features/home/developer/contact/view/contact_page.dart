@@ -344,29 +344,29 @@ class Creators extends StatelessWidget {
               menu: creator,
             ),
           ),
-          const Text(
-            'CONTRIBUTORS',
-            textAlign: TextAlign.right,
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
-                fontFamily: 'poppins'),
-          ),
-          const SizedBox(
-            height: 18,
-          ),
-          for (var contributor in contributorsList)
-            SingleChildScrollView(
-              padding: const EdgeInsets.only(
-                bottom: 20,
-                right: 10,
-                left: 10,
-              ),
-              child: MenuItem(
-                menu: contributor,
-              ),
-            ),
+          // const Text(
+          //   'CONTRIBUTORS',
+          //   textAlign: TextAlign.right,
+          //   style: TextStyle(
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold,
+          //       color: Colors.blueAccent,
+          //       fontFamily: 'poppins'),
+          // ),
+          // const SizedBox(
+          //   height: 18,
+          // ),
+          // for (var contributor in contributorsList)
+          //   SingleChildScrollView(
+          //     padding: const EdgeInsets.only(
+          //       bottom: 20,
+          //       right: 10,
+          //       left: 10,
+          //     ),
+          //     child: MenuItem(
+          //       menu: contributor,
+          //     ),
+          //   ),
         ],
       ),
     );
@@ -383,8 +383,8 @@ class MenuItem extends StatelessWidget {
     return Container(
       height: deviceSize.height * 0.14,
       decoration: BoxDecoration(
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.blueAccent,
             blurRadius: 8.0, // has the effect of softening the shadow
             spreadRadius: 1, // has the effect of extending the shadow
@@ -460,25 +460,25 @@ class MenuItem extends StatelessWidget {
 // contributors may add there profile here
 
 List<ProfileMenu1> contributorsList = [
-  ProfileMenu1(
-    title: 'Ananya Singhal',
-    subTitle: 'GitHub: AnanyaSinghal23',
-    icon: '',
-    url: 'https://github.com/AnanyaSinghal23',
-  ),
-  ProfileMenu1(
-    title: 'Maansi Garg',
-    subTitle: 'GitHub: Maansi06Garg',
-    icon: 'assets/images/img_ellipse5_150x150.png',
-    url: 'https://github.com/Maansi06Garg',
-  ),
-
-  ProfileMenu1(
-    title: 'Gaurav Singh ',
-    subTitle: 'GitHub: euclidstellar',
-    icon: 'assets/images/img_ellipse5_150x150.png',
-    url: 'https://github.com/euclidstellar',
-  ),
+  // ProfileMenu1(
+  //   title: 'Ananya Singhal',
+  //   subTitle: 'GitHub: AnanyaSinghal23',
+  //   icon: '',
+  //   url: 'https://github.com/AnanyaSinghal23',
+  // ),
+  // ProfileMenu1(
+  //   title: 'Maansi Garg',
+  //   subTitle: 'GitHub: Maansi06Garg',
+  //   icon: 'assets/images/img_ellipse5_150x150.png',
+  //   url: 'https://github.com/Maansi06Garg',
+  // ),
+  //
+  // ProfileMenu1(
+  //   title: 'Gaurav Singh ',
+  //   subTitle: 'GitHub: euclidstellar',
+  //   icon: 'assets/images/img_ellipse5_150x150.png',
+  //   url: 'https://github.com/euclidstellar',
+  // ),
 ];
 
 ProfileMenu1 creator = ProfileMenu1(
@@ -487,8 +487,6 @@ ProfileMenu1 creator = ProfileMenu1(
   icon: 'assets/images/img_ellipse5_150x150.png',
   url: 'https://github.com/xcrescent',
 );
-
-
 
 class ProfileMenu1 {
   String title;
@@ -504,7 +502,8 @@ class ProfileMenu1 {
 
 class CustomScrollGlowBehaviour extends ScrollBehavior {
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, _) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }
