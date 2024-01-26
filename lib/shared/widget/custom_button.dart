@@ -140,22 +140,22 @@ class CustomButton extends StatelessWidget {
         return ColorConstant.indigo50;
       case ButtonVariant.outlineBlueA700_2:
         return ColorConstant.blue50;
-      case ButtonVariant.OutlineBluegray40001:
+      case ButtonVariant.outlineBlueGray40001:
         return ColorConstant.whiteA700;
-      case ButtonVariant.OutlineBlueA700_3:
+      case ButtonVariant.outlineBlueA700_3:
         return ColorConstant.blue5001;
-      case ButtonVariant.OutlineBluegray100:
+      case ButtonVariant.outlineBlueGray100:
         return ColorConstant.whiteA700;
-      case ButtonVariant.FillBlack9007f:
+      case ButtonVariant.fillBlack9007f:
         return ColorConstant.black9007f;
-      case ButtonVariant.FillBlack90099:
+      case ButtonVariant.fillBlack90099:
         return ColorConstant.black90099;
-      case ButtonVariant.OutlineGray300:
+      case ButtonVariant.outlineGray300:
         return ColorConstant.whiteA700;
-      case ButtonVariant.FillBlue50:
+      case ButtonVariant.fillBlue50:
         return ColorConstant.blue50;
       case ButtonVariant.outlineBlueA700:
-      case ButtonVariant.OutlineBluegray300:
+      case ButtonVariant.outlineBlueGray300:
         return null;
       default:
         return ColorConstant.blueA700;
@@ -185,35 +185,35 @@ class CustomButton extends StatelessWidget {
             1.00,
           ),
         );
-      case ButtonVariant.OutlineBluegray40001:
+      case ButtonVariant.outlineBlueGray40001:
         return BorderSide(
           color: ColorConstant.blueGray40001,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case ButtonVariant.OutlineBlueA700_3:
+      case ButtonVariant.outlineBlueA700_3:
         return BorderSide(
           color: ColorConstant.blueA700,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case ButtonVariant.OutlineBluegray100:
+      case ButtonVariant.outlineBlueGray100:
         return BorderSide(
           color: ColorConstant.blueGray100,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case ButtonVariant.OutlineBluegray300:
+      case ButtonVariant.outlineBlueGray300:
         return BorderSide(
           color: ColorConstant.blueGray300,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case ButtonVariant.OutlineGray300:
+      case ButtonVariant.outlineGray300:
         return BorderSide(
           color: ColorConstant.gray300,
           width: getHorizontalSize(
@@ -223,9 +223,9 @@ class CustomButton extends StatelessWidget {
       case ButtonVariant.fillBlueA700:
       case ButtonVariant.fillBlueGray100:
       case ButtonVariant.fillIndigo50:
-      case ButtonVariant.FillBlack9007f:
-      case ButtonVariant.FillBlack90099:
-      case ButtonVariant.FillBlue50:
+      case ButtonVariant.fillBlack9007f:
+      case ButtonVariant.fillBlack90099:
+      case ButtonVariant.fillBlue50:
         return null;
       default:
         return null;
@@ -288,7 +288,7 @@ class CustomButton extends StatelessWidget {
 
   _setFontStyle() {
     switch (fontStyle) {
-      case ButtonFontStyle.GilroyMedium16BlueA700:
+      case ButtonFontStyle.gilroyMedium16BlueA700:
         return TextStyle(
           color: ColorConstant.blueA700,
           fontSize: getFontSize(
@@ -297,7 +297,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyMedium14:
+      case ButtonFontStyle.gilroyMedium14:
         return TextStyle(
           color: ColorConstant.whiteA700,
           fontSize: getFontSize(
@@ -306,7 +306,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyMedium14Bluegray40001:
+      case ButtonFontStyle.gilroyMedium14BlueGray40001:
         return TextStyle(
           color: ColorConstant.blueGray40001,
           fontSize: getFontSize(
@@ -315,7 +315,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyMedium14BlueA700:
+      case ButtonFontStyle.gilroyMedium14BlueA700:
         return TextStyle(
           color: ColorConstant.blueA700,
           fontSize: getFontSize(
@@ -324,7 +324,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyMedium14Black900:
+      case ButtonFontStyle.gilroyMedium14Black900:
         return TextStyle(
           color: ColorConstant.black900,
           fontSize: getFontSize(
@@ -333,7 +333,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyMedium14Bluegray400:
+      case ButtonFontStyle.gilroyMedium14BlueGray400:
         return TextStyle(
           color: ColorConstant.blueGray400,
           fontSize: getFontSize(
@@ -342,7 +342,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyMedium16Bluegray200:
+      case ButtonFontStyle.gilroyMedium16BlueGray200:
         return TextStyle(
           color: ColorConstant.blueGray200,
           fontSize: getFontSize(
@@ -351,7 +351,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.GilroyBold14:
+      case ButtonFontStyle.gilroyBold14:
         return TextStyle(
           color: ColorConstant.whiteA700,
           fontSize: getFontSize(
@@ -360,7 +360,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w700,
         );
-      case ButtonFontStyle.GilroyRegular12:
+      case ButtonFontStyle.gilroyRegular12:
         return TextStyle(
           color: ColorConstant.blueGray300,
           fontSize: getFontSize(
@@ -369,7 +369,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w400,
         );
-      case ButtonFontStyle.GilroyMedium12:
+      case ButtonFontStyle.gilroyMedium12:
         return TextStyle(
           color: ColorConstant.whiteA700,
           fontSize: getFontSize(
@@ -378,7 +378,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case ButtonFontStyle.RobotoRegular16:
+      case ButtonFontStyle.robotoRegular16:
         return TextStyle(
           color: ColorConstant.black900,
           fontSize: getFontSize(
@@ -387,7 +387,7 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Roboto',
           fontWeight: FontWeight.w400,
         );
-      case ButtonFontStyle.GilroyMedium16Black90001:
+      case ButtonFontStyle.gilroyMedium16Black90001:
         return TextStyle(
           color: ColorConstant.black90001,
           fontSize: getFontSize(
@@ -435,28 +435,28 @@ enum ButtonVariant {
   outlineBlueA700_1,
   fillIndigo50,
   outlineBlueA700_2,
-  OutlineBluegray40001,
-  OutlineBlueA700_3,
-  OutlineBluegray100,
-  FillBlack9007f,
-  OutlineBluegray300,
-  FillBlack90099,
-  OutlineGray300,
-  FillBlue50,
+  outlineBlueGray40001,
+  outlineBlueA700_3,
+  outlineBlueGray100,
+  fillBlack9007f,
+  outlineBlueGray300,
+  fillBlack90099,
+  outlineGray300,
+  fillBlue50,
 }
 
 enum ButtonFontStyle {
-  GilroyMedium16,
-  GilroyMedium16BlueA700,
-  GilroyMedium14,
-  GilroyMedium14Bluegray40001,
-  GilroyMedium14BlueA700,
-  GilroyMedium14Black900,
-  GilroyMedium14Bluegray400,
-  GilroyMedium16Bluegray200,
-  GilroyBold14,
-  GilroyRegular12,
-  GilroyMedium12,
-  RobotoRegular16,
-  GilroyMedium16Black90001,
+  gilroyMedium16,
+  gilroyMedium16BlueA700,
+  gilroyMedium14,
+  gilroyMedium14BlueGray40001,
+  gilroyMedium14BlueA700,
+  gilroyMedium14Black900,
+  gilroyMedium14BlueGray400,
+  gilroyMedium16BlueGray200,
+  gilroyBold14,
+  gilroyRegular12,
+  gilroyMedium12,
+  robotoRegular16,
+  gilroyMedium16Black90001,
 }

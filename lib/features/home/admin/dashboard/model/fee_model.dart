@@ -10,10 +10,10 @@ part 'fee_model.g.dart';
 //   expense,
 // }
 
-@HiveType(typeId: 3)
+@HiveType(typeId: 5)
 class FeeModel extends HiveObject {
   @HiveField(0)
-  final int id;
+  final String id;
   @HiveField(1)
   final int studentId;
   @HiveField(2)

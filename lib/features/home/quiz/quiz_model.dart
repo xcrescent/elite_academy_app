@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-List<QuizModel> quizListFromJSON(String str) =>
-    List<QuizModel>.from(json.decode(str).map((x) => QuizModel.fromJson(x)));
-    
+List<QuizModel> quizListFromJSON(List<dynamic> str) =>
+    List<QuizModel>.from(str.map((x) => QuizModel.fromJson(x)));
+
 String quizListToJson(List<QuizModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

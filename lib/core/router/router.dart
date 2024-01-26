@@ -46,5 +46,15 @@ class AppRouter extends $AppRouter {
       path: '/contact',
       initial: false,
     ),
+    AutoRoute(
+      page: QuizWebView.page,
+      path: '/quiz-web-view',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AddStudentRoute.page,
+      path: '/add-student',
+      initial: false,
+    ),
   ];
 }

@@ -17,8 +17,8 @@ Future<void> main() async {
   // const appleProvider = kReleaseMode
   //     ? AppleProvider.appAttestWithDeviceCheckFallback
   //     : AppleProvider.debug;
-  // final webProvider = isWeb ? reCaptcha : null;
-
+  // // final webProvider = isWeb ? reCaptcha : null;
+  //
   // await FirebaseAppCheck.instance
   //     .activate(
   //   androidProvider: androidProvider,

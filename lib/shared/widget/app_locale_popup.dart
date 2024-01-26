@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:elite_academy/l10n/l10n.dart';
 import 'package:elite_academy/shared/pods/locale_pod.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 ///This widget can be used to change the local in a popup
@@ -40,9 +40,9 @@ class AppLocalePopUp extends ConsumerWidget {
 
 class SelectedLocaleItem extends StatelessWidget {
   const SelectedLocaleItem({
-    Key? key,
+    super.key,
     required this.locale,
-  }) : super(key: key);
+  });
   final Locale locale;
 
   @override
@@ -59,9 +59,9 @@ class SelectedLocaleItem extends StatelessWidget {
 
 class UnselectedLocaleItem extends StatelessWidget {
   const UnselectedLocaleItem({
-    Key? key,
+    super.key,
     required this.locale,
-  }) : super(key: key);
+  });
   final Locale locale;
 
   @override

@@ -122,5 +122,5 @@ class CustomRadioButton extends StatelessWidget {
 }
 
 enum RadioFontStyle {
-  GilroyMedium16,
+  gilroyMedium16,
 }

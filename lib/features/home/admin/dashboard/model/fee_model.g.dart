@@ -8,7 +8,7 @@ part of 'fee_model.dart';
 
 class FeeModelAdapter extends TypeAdapter<FeeModel> {
   @override
-  final int typeId = 3;
+  final int typeId = 5;
 
   @override
   FeeModel read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class FeeModelAdapter extends TypeAdapter<FeeModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FeeModel(
-      id: fields[0] as int,
+      id: fields[0] as String,
       studentId: fields[1] as int,
       amount: fields[2] as double,
       dueDate: fields[3] as DateTime,

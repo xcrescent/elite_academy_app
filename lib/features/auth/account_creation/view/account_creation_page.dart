@@ -3,23 +3,32 @@ import 'package:elite_academy/core/theme/app_style.dart';
 import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:elite_academy/core/utils/image_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
+import 'package:elite_academy/features/auth/auth.dart';
+import 'package:elite_academy/features/auth/phone/repository/phone_auth_repository.dart';
 import 'package:elite_academy/shared/widget/custom_button.dart';
 import 'package:elite_academy/shared/widget/custom_icon_button.dart';
 import 'package:elite_academy/shared/widget/custom_image_view.dart';
 import 'package:elite_academy/shared/widget/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-@RoutePage()
-class AccountCreationScreen extends StatelessWidget {
+import '../../phone/controller/phone_auth_state_pod.dart';
+
+@RoutePage(
+  deferredLoading: true,
+)
+class AccountCreationScreen extends ConsumerWidget {
   const AccountCreationScreen({super.key});
+
+  static final formKey = GlobalKey<FormState>();
   @override
-  Widget build(BuildContext context) {
-    TextEditingController group10198Controller = TextEditingController();
-    TextEditingController group10198OneController = TextEditingController();
-    TextEditingController group10198TwoController = TextEditingController();
-    TextEditingController group10198ThreeController = TextEditingController();
-    TextEditingController group10198FourController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(phoneAuthNotifierProvider, (_, state) {
+      if (state.isNewUser == false) {
+        if (!context.mounted) return;
+        context.router.replaceNamed('/home');
+      }
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -98,7 +107,9 @@ class AccountCreationScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198Controller,
+                  onChanged: (value) {
+                    ref.read(firstNameProvider.notifier).state = value;
+                  },
                   hintText: "Enter First Name",
                   margin: getMargin(
                     top: 8,
@@ -117,31 +128,13 @@ class AccountCreationScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198OneController,
+                  onChanged: (value) {
+                    ref.read(lastNameProvider.notifier).state = value;
+                  },
                   hintText: "Enter Last Name",
                   margin: getMargin(
                     top: 7,
                   ),
-                ),
-                Padding(
-                  padding: getPadding(
-                    top: 18,
-                  ),
-                  child: Text(
-                    "Mobile Number",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
-                ),
-                CustomTextFormField(
-                  focusNode: FocusNode(),
-                  controller: group10198TwoController,
-                  hintText: "Enter Mobile Number",
-                  margin: getMargin(
-                    top: 8,
-                  ),
-                  textInputType: TextInputType.phone,
                 ),
                 Padding(
                   padding: getPadding(
@@ -156,36 +149,26 @@ class AccountCreationScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198ThreeController,
+                  onChanged: (value) {
+                    ref.read(emailProvider.notifier).state = value;
+                  },
                   hintText: "Enter Email Id",
                   margin: getMargin(
                     top: 8,
                   ),
                   textInputType: TextInputType.emailAddress,
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 18,
-                  ),
-                  child: Text(
-                    "Set Password",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
-                ),
-                CustomTextFormField(
-                  focusNode: FocusNode(),
-                  controller: group10198FourController,
-                  hintText: "Set Password",
-                  margin: getMargin(
-                    top: 8,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.visiblePassword,
-                  isObscureText: true,
-                ),
                 CustomButton(
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      ref.read(phoneAuthRepositoryProvider).saveUser(
+                            ref.watch(firstNameProvider),
+                            ref.watch(middleNameProvider),
+                            ref.watch(lastNameProvider),
+                            ref.watch(emailProvider),
+                          );
+                    }
+                  },
                   height: getVerticalSize(
                     50,
                   ),

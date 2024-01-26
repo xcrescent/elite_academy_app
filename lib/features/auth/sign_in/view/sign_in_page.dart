@@ -69,7 +69,7 @@ class SignInScreen extends StatelessWidget {
                     controller: group10198OneController,
                     hintText: "Enter Password",
                     margin: getMargin(top: 7),
-                    padding: TextFormFieldPadding.PaddingT12,
+                    padding: TextFormFieldPadding.paddingT12,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.visiblePassword,
                     suffix: Container(
