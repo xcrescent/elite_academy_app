@@ -7,8 +7,8 @@ import '../../dashboard/controller/student_state_pod.dart';
 @RoutePage(
   deferredLoading: true,
 )
-class AddStudentPage extends ConsumerWidget {
-  const AddStudentPage({super.key});
+class AddStaffPage extends ConsumerWidget {
+  const AddStaffPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
