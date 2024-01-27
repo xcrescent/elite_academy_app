@@ -82,6 +82,7 @@ android {
 //            isDebuggable = false
         }
         debug {
+            getIsDefault().set(true)
             applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
             debuggable true
@@ -110,6 +111,7 @@ android {
             ]
         }
         development {
+            getIsDefault().set(true)
             dimension "default"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
