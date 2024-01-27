@@ -8,7 +8,7 @@ part of 'student_model.dart';
 
 class StudentModelAdapter extends TypeAdapter<StudentModel> {
   @override
-  final int typeId = 2;
+  final int typeId = 4;
 
   @override
   StudentModel read(BinaryReader reader) {
@@ -17,34 +17,46 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return StudentModel(
-      id: fields[0] as int,
+      id: fields[0] as String?,
       firstName: fields[1] as String,
-      lastName: fields[2] as String,
-      dateOfBirth: fields[3] as DateTime,
-      phoneNumber: fields[4] as String,
-      email: fields[5] as String,
-      batchId: fields[6] as int,
+      middleName: fields[2] as String?,
+      lastName: fields[3] as String?,
+      dateOfBirth: fields[4] as DateTime?,
+      phoneNumber: fields[5] as String,
+      email: fields[6] as String?,
+      batchId: fields[7] as String?,
+      enrollmentNumber: fields[8] as String?,
+      address: fields[9] as String?,
+      orgId: fields[10] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, StudentModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.firstName)
       ..writeByte(2)
-      ..write(obj.lastName)
+      ..write(obj.middleName)
       ..writeByte(3)
-      ..write(obj.dateOfBirth)
+      ..write(obj.lastName)
       ..writeByte(4)
-      ..write(obj.phoneNumber)
+      ..write(obj.dateOfBirth)
       ..writeByte(5)
-      ..write(obj.email)
+      ..write(obj.phoneNumber)
       ..writeByte(6)
-      ..write(obj.batchId);
+      ..write(obj.email)
+      ..writeByte(7)
+      ..write(obj.batchId)
+      ..writeByte(8)
+      ..write(obj.enrollmentNumber)
+      ..writeByte(9)
+      ..write(obj.address)
+      ..writeByte(10)
+      ..write(obj.orgId);
   }
 
   @override

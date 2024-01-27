@@ -10,7 +10,7 @@ part 'attendance_model.g.dart';
 //   expense,
 // }
 
-@HiveType(typeId: 4)
+@HiveType(typeId: 6)
 class AttendanceModel extends HiveObject {
   @HiveField(0)
   int id;

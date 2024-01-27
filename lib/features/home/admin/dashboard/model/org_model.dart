@@ -10,25 +10,49 @@ part 'org_model.g.dart';
 //   expense,
 // }
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class OrgModel extends HiveObject {
   @HiveField(0)
-  int id;
+  String? id;
   @HiveField(1)
-  String name;
+  String? name;
   @HiveField(2)
-  String address;
+  String? address;
   @HiveField(3)
-  String email;
+  String? email;
   @HiveField(4)
-  String phone;
+  String? phone;
+  @HiveField(5)
+  String? logo;
+  @HiveField(6)
+  String? website;
+  @HiveField(7)
+  String? facebook;
+  @HiveField(8)
+  String? twitter;
+  @HiveField(9)
+  String? instagram;
+  @HiveField(10)
+  String? youtube;
+  @HiveField(11)
+  String? linkedin;
+  @HiveField(12)
+  String? github;
 
   OrgModel({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.email,
-    required this.phone,
+    this.id,
+    this.name,
+    this.address,
+    this.email,
+    this.phone,
+    this.logo,
+    this.website,
+    this.facebook,
+    this.twitter,
+    this.instagram,
+    this.youtube,
+    this.linkedin,
+    this.github,
   });
 
   factory OrgModel.fromMap(Map<String, dynamic> map) {
@@ -38,6 +62,14 @@ class OrgModel extends HiveObject {
       address: map['address'],
       email: map['email'],
       phone: map['phone'],
+      logo: map['logo'],
+      website: map['website'],
+      facebook: map['facebook'],
+      twitter: map['twitter'],
+      instagram: map['instagram'],
+      youtube: map['youtube'],
+      linkedin: map['linkedin'],
+      github: map['github'],
     );
   }
 
@@ -48,6 +80,14 @@ class OrgModel extends HiveObject {
       'address': address,
       'email': email,
       'phone': phone,
+      'logo': logo,
+      'website': website,
+      'facebook': facebook,
+      'twitter': twitter,
+      'instagram': instagram,
+      'youtube': youtube,
+      'linkedin': linkedin,
+      'github': github,
     };
   }
 }

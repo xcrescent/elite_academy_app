@@ -8,7 +8,7 @@ part of 'batch_model.dart';
 
 class BatchModelAdapter extends TypeAdapter<BatchModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
   BatchModel read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class BatchModelAdapter extends TypeAdapter<BatchModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BatchModel(
-      id: fields[0] as int,
+      id: fields[0] as String,
       name: fields[1] as String,
       startDate: fields[2] as DateTime,
       endDate: fields[3] as DateTime,

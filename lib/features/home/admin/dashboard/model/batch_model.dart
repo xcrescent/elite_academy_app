@@ -10,10 +10,10 @@ part 'batch_model.g.dart';
 //   expense,
 // }
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 2)
 class BatchModel extends HiveObject {
   @HiveField(0)
-  final int id;
+  final String id;
   @HiveField(1)
   final String name;
   @HiveField(2)

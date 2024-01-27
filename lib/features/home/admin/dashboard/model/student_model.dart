@@ -10,42 +10,58 @@ part 'student_model.g.dart';
 //   expense,
 // }
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 4)
 class StudentModel extends HiveObject {
   @HiveField(0)
-  final int id;
+  String? id;
   @HiveField(1)
-  final String firstName;
+  String firstName;
   @HiveField(2)
-  final String lastName;
+  String? middleName;
   @HiveField(3)
-  final DateTime dateOfBirth;
+  String? lastName;
   @HiveField(4)
-  final String phoneNumber;
+  DateTime? dateOfBirth;
   @HiveField(5)
-  final String email;
+  String phoneNumber;
   @HiveField(6)
-  final int batchId;
+  String? email;
+  @HiveField(7)
+  String? batchId;
+  @HiveField(8)
+  String? enrollmentNumber;
+  @HiveField(9)
+  String? address;
+  @HiveField(10)
+  String orgId;
 
   StudentModel({
-    required this.id,
+    this.id,
     required this.firstName,
+    this.middleName,
     required this.lastName,
-    required this.dateOfBirth,
+    this.dateOfBirth,
     required this.phoneNumber,
-    required this.email,
-    required this.batchId,
+    this.email,
+    this.batchId,
+    this.enrollmentNumber,
+    this.address,
+    required this.orgId,
   });
 
   factory StudentModel.fromMap(Map<String, dynamic> map) {
     return StudentModel(
       id: map['id'],
       firstName: map['firstName'],
+      middleName: map['middleName'],
       lastName: map['lastName'],
       dateOfBirth: map['dateOfBirth'],
       phoneNumber: map['phoneNumber'],
       email: map['email'],
       batchId: map['batchId'],
+      enrollmentNumber: map['enrollmentNumber'],
+      address: map['address'],
+      orgId: map['orgId'],
     );
   }
 
@@ -53,11 +69,15 @@ class StudentModel extends HiveObject {
     return {
       'id': id,
       'firstName': firstName,
+      'middleName': middleName,
       'lastName': lastName,
       'dateOfBirth': dateOfBirth,
       'phoneNumber': phoneNumber,
       'email': email,
       'batchId': batchId,
+      'enrollmentNumber': enrollmentNumber,
+      'address': address,
+      'orgId': orgId,
     };
   }
 }
