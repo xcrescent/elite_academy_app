@@ -15,7 +15,7 @@ class AddBatchPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Student',
+          'Add Batch',
         ),
       ),
       body: const DefaultTabController(

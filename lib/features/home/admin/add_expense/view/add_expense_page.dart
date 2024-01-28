@@ -15,7 +15,7 @@ class AddExpensePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Student',
+          'Add Expense',
         ),
       ),
       body: const DefaultTabController(

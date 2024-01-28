@@ -15,7 +15,7 @@ class AddExamPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Student',
+          'Add Exam',
         ),
       ),
       body: const DefaultTabController(

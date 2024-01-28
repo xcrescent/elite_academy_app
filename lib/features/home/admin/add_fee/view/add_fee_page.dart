@@ -15,7 +15,7 @@ class AddFeePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Student',
+          'Add Fee',
         ),
       ),
       body: const DefaultTabController(

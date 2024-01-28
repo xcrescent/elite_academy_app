@@ -15,7 +15,7 @@ class AddStaffPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Student',
+          'Add Staff',
         ),
       ),
       body: const DefaultTabController(
