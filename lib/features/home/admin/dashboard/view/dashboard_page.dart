@@ -5,7 +5,6 @@ import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:elite_academy/features/home/admin/dashboard/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/settings/view/settings_page.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +26,7 @@ class AdminDashboardPage extends ConsumerStatefulWidget {
 
 class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
     with SingleTickerProviderStateMixin {
-  // Generate some dummy data for the cahrt
+  // Generate some dummy data for the chart
   // This will be used to draw the red line
   final List<FlSpot> dummyData1 = List.generate(8, (index) {
     return FlSpot(
@@ -51,23 +50,84 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
       index * Random().nextDouble(),
     );
   });
-
-  late Animation<double> _animation;
   late AnimationController _animationController;
+  late Animation<double> _animateIcon;
+  bool isOpened = false;
 
   @override
   void initState() {
-    super.initState();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
-    );
-    final curvedAnimation = CurvedAnimation(
-      curve: Curves.easeInOut,
-      parent: _animationController,
-    );
-    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+    )..addListener(() {
+        setState(() {});
+      });
+
+    _animateIcon =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    super.initState();
   }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void animate() {
+    if (!isOpened) {
+      _animationController.forward();
+      isOpened = !isOpened;
+    } else {
+      _animationController.reverse().then((value) => isOpened = !isOpened);
+    }
+  }
+
+  late Animation<double> _animation;
+  // late AnimationController _animationController;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _animationController = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(milliseconds: 500),
+  //   );
+  //   final curvedAnimation = CurvedAnimation(
+  //     curve: Curves.easeInOut,
+  //     parent: _animationController,
+  //   );
+  //   _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+  // }
+  final List _options = [
+    'Add Student',
+    'Add Staff',
+    'Add Batch',
+    'Add Exam',
+    'Add Fee',
+    'Add Expense',
+    'Add Enquiry'
+  ];
+
+  final List<IconData> _icons = [
+    Icons.person_add,
+    Icons.person_add_alt_1,
+    Icons.group_add,
+    Icons.auto_awesome,
+    Icons.money,
+    Icons.money_off,
+    Icons.add_business
+  ];
+
+  final List<String> _routes = [
+    '/add-student',
+    '/add-staff',
+    '/add-batch',
+    '/add-exam',
+    '/add-fee',
+    '/add-expense',
+    '/add-enquiry'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +137,8 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
       print(
           "${MediaQuery.sizeOf(context).height} ${MediaQuery.sizeOf(context).width}");
     }
-
+    double fabExtend =
+        56.0 + (16.0 * _options.length) + (_options.length * 56.0);
     return Stack(
       children: [
         Scaffold(
@@ -281,6 +342,54 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
               ),
             ),
           ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              // Add as many FABs as you have options, in this case, 6 options:
+              ...List.generate(_options.length, (int index) {
+                Widget optionFAB = FloatingActionButton.extended(
+                  extendedIconLabelSpacing: 16,
+                  onPressed: () {
+                    // Handle the option button press
+                    if (kDebugMode) {
+                      print("Option ${index + 1}");
+                    }
+                    context.router.pushNamed(_routes[index]);
+                    animate();
+                  },
+                  icon: Icon(
+                    _icons[index],
+                  ), // Change the icon for each FAB option
+                  label: SizedBox(
+                    width: 100,
+                    child: Text(
+                      _options[index],
+                    ),
+                  ),
+                );
+
+                // You can adjust the transform origin and distance as needed
+                double transformOrigin =
+                    (fabExtend / _options.length) * (index - 7) * -0.1;
+                return Transform(
+                  transform: Matrix4.translationValues(
+                    0.0,
+                    -_animateIcon.value * transformOrigin,
+                    0.0,
+                  ),
+                  child: isOpened ? optionFAB : const SizedBox.shrink(),
+                );
+              }),
+              FloatingActionButton(
+                onPressed: animate,
+                child: AnimatedIcon(
+                  icon: AnimatedIcons.view_list,
+                  progress: _animateIcon,
+                ),
+              ),
+            ],
+          ),
         ),
         //  Positioned(
         //     bottom: 16.0,
@@ -294,109 +403,173 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
         //     ),
         //   ),
 
-        Positioned(
-          bottom: 16.0,
-          right: 16.0,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: FloatingActionBubble(
-              // animation controller
-              animation: _animation,
-              // On pressed change animation state
-              onPress: () => _animationController.isCompleted
-                  ? _animationController.reverse()
-                  : _animationController.forward(),
-              // Floating Action button Icon color
-              iconColor: Colors.blue,
-              // Floating Action button Icon
-              iconData: Icons.add,
-              backGroundColor: Colors.white,
-              // Menu items
-              items: <Bubble>[
-                Bubble(
-                    icon: Icons.currency_rupee,
-                    iconColor: Colors.brown,
-                    title: "In App Purchase",
-                    titleStyle:
-                        const TextStyle(fontSize: 16, color: Colors.white),
-                    bubbleColor: Colors.red,
-                    onPress: () async {
-                      // final inAppPurchase = InAppPurchase.instance;
-                      // bool available = await inAppPurchase.isAvailable();
-                      // if (available) {
-                      //   if (kDebugMode) {
-                      //     print('available');
-                      //   }
-                      //   await inAppPurchase.restorePurchases();
-                      //   final allProducts = await inAppPurchase
-                      //       .queryProductDetails({'edu.aeronex.elite_academy'});
-                      //   if (allProducts.productDetails.isEmpty) {
-                      //     if (kDebugMode) {
-                      //       print('empty');
-                      //     }
-                      //   }
-                      //   if (allProducts.notFoundIDs.isNotEmpty) {
-                      //     if (kDebugMode) {
-                      //       print('not found');
-                      //     }
-                      //   } else {
-                      //     if (kDebugMode) {
-                      //       print('found');
-                      //     }
-                      //
-                      //     await inAppPurchase.buyConsumable(
-                      //       purchaseParam: PurchaseParam(
-                      //         productDetails: allProducts.productDetails.first,
-                      //       ),
-                      //     );
-                      //   }
-                      // } else {
-                      //   if (kDebugMode) {
-                      //     print('not available');
-                      //   }
-                      //   _animationController.reverse();
-                      // }
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('In App Purchase'),
-                          content: const Text('Coming Soon'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                Bubble(
-                    icon: Icons.abc,
-                    iconColor: Colors.brown,
-                    title: "Add Student",
-                    titleStyle:
-                        const TextStyle(fontSize: 16, color: Colors.white),
-                    bubbleColor: Colors.red,
-                    onPress: () {
-                      context.router.pushNamed('/add-student');
-                      _animationController.reverse();
-                    }),
-                Bubble(
-                    icon: Icons.abc,
-                    iconColor: Colors.brown,
-                    title: "Person",
-                    titleStyle:
-                        const TextStyle(fontSize: 16, color: Colors.white),
-                    bubbleColor: Colors.red,
-                    onPress: () {
-                      _animationController.reverse();
-                    }),
-              ],
-            ),
-          ),
-        ),
+        // Positioned(
+        //   bottom: 16.0,
+        //   right: 16.0,
+        //   child: SizedBox(
+        //     width: MediaQuery.of(context).size.width,
+        //     child: FloatingActionBubble(
+        //       // animation controller
+        //       animation: _animation,
+        //
+        //       // On pressed change animation state
+        //       onPress: () => _animationController.isCompleted
+        //           ? _animationController.reverse()
+        //           : _animationController.forward(),
+        //       // Floating Action button Icon color
+        //       iconColor: Colors.blue,
+        //       // Floating Action button Icon
+        //       iconData: Icons.add,
+        //       backGroundColor: Colors.white,
+        //       // Menu items
+        //       items: <Bubble>[
+        //         // Bubble(
+        //         //   icon: Icons.currency_rupee,
+        //         //   iconColor: Colors.brown,
+        //         //   title: "In App Purchase",
+        //         //   titleStyle:
+        //         //       const TextStyle(fontSize: 16, color: Colors.white),
+        //         //   bubbleColor: Colors.red,
+        //         //   onPress: () async {
+        //         //     // final inAppPurchase = InAppPurchase.instance;
+        //         //     // bool available = await inAppPurchase.isAvailable();
+        //         //     // if (available) {
+        //         //     //   if (kDebugMode) {
+        //         //     //     print('available');
+        //         //     //   }
+        //         //     //   await inAppPurchase.restorePurchases();
+        //         //     //   final allProducts = await inAppPurchase
+        //         //     //       .queryProductDetails({'edu.aeronex.elite_academy'});
+        //         //     //   if (allProducts.productDetails.isEmpty) {
+        //         //     //     if (kDebugMode) {
+        //         //     //       print('empty');
+        //         //     //     }
+        //         //     //   }
+        //         //     //   if (allProducts.notFoundIDs.isNotEmpty) {
+        //         //     //     if (kDebugMode) {
+        //         //     //       print('not found');
+        //         //     //     }
+        //         //     //   } else {
+        //         //     //     if (kDebugMode) {
+        //         //     //       print('found');
+        //         //     //     }
+        //         //     //
+        //         //     //     await inAppPurchase.buyConsumable(
+        //         //     //       purchaseParam: PurchaseParam(
+        //         //     //         productDetails: allProducts.productDetails.first,
+        //         //     //       ),
+        //         //     //     );
+        //         //     //   }
+        //         //     // } else {
+        //         //     //   if (kDebugMode) {
+        //         //     //     print('not available');
+        //         //     //   }
+        //         //     //   _animationController.reverse();
+        //         //     // }
+        //         //     showDialog(
+        //         //       context: context,
+        //         //       builder: (context) => AlertDialog(
+        //         //         title: const Text('In App Purchase'),
+        //         //         content: const Text('Coming Soon'),
+        //         //         actions: [
+        //         //           TextButton(
+        //         //             onPressed: () {
+        //         //               Navigator.pop(context);
+        //         //             },
+        //         //             child: const Text('OK'),
+        //         //           ),
+        //         //         ],
+        //         //       ),
+        //         //     );
+        //         //   },
+        //         // ),
+        //         Bubble(
+        //             icon: Icons.abc,
+        //             iconColor: Colors.brown,
+        //             title: "Add Student",
+        //             titleStyle:
+        //                 const TextStyle(fontSize: 16, color: Colors.white),
+        //             bubbleColor: Colors.red,
+        //             onPress: () {
+        //               context.router.pushNamed('/add-student');
+        //               _animationController.reverse();
+        //             }),
+        //         Bubble(
+        //           icon: Icons.abc,
+        //           iconColor: Colors.brown,
+        //           title: "Add Staff",
+        //           titleStyle:
+        //               const TextStyle(fontSize: 16, color: Colors.white),
+        //           bubbleColor: Colors.red,
+        //           onPress: () {
+        //             context.router.pushNamed('/add-staff');
+        //             _animationController.reverse();
+        //           },
+        //         ),
+        //         Bubble(
+        //           icon: Icons.abc,
+        //           iconColor: Colors.brown,
+        //           title: "Add Batch",
+        //           titleStyle:
+        //               const TextStyle(fontSize: 16, color: Colors.white),
+        //           bubbleColor: Colors.red,
+        //           onPress: () {
+        //             context.router.pushNamed('/add-batch');
+        //             _animationController.reverse();
+        //           },
+        //         ),
+        //         Bubble(
+        //           icon: Icons.abc,
+        //           iconColor: Colors.brown,
+        //           title: "Add Exam",
+        //           titleStyle:
+        //               const TextStyle(fontSize: 16, color: Colors.white),
+        //           bubbleColor: Colors.red,
+        //           onPress: () {
+        //             context.router.pushNamed('/add-exam');
+        //             _animationController.reverse();
+        //           },
+        //         ),
+        //         Bubble(
+        //           icon: Icons.abc,
+        //           iconColor: Colors.brown,
+        //           title: "Add Fee",
+        //           titleStyle:
+        //               const TextStyle(fontSize: 16, color: Colors.white),
+        //           bubbleColor: Colors.red,
+        //           onPress: () {
+        //             context.router.pushNamed('/add-fee');
+        //             _animationController.reverse();
+        //           },
+        //         ),
+        //         Bubble(
+        //           icon: Icons.abc,
+        //           iconColor: Colors.brown,
+        //           title: "Add Expense",
+        //           titleStyle:
+        //               const TextStyle(fontSize: 16, color: Colors.white),
+        //           bubbleColor: Colors.red,
+        //           onPress: () {
+        //             context.router.pushNamed('/add-expense');
+        //             _animationController.reverse();
+        //           },
+        //         ),
+        //         Bubble(
+        //           icon: Icons.abc,
+        //           iconColor: Colors.brown,
+        //           title: "Add Enquiry",
+        //           titleStyle:
+        //               const TextStyle(fontSize: 16, color: Colors.white),
+        //           bubbleColor: Colors.red,
+        //           onPress: () {
+        //             context.router.pushNamed('/add-enquiry');
+        //             _animationController.reverse();
+        //           },
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

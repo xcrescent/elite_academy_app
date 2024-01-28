@@ -41,11 +41,11 @@ class AppRouter extends $AppRouter {
       path: '/phone-verify',
       initial: false,
     ),
-    AutoRoute(
-      page: ContactRoute.page,
-      path: '/contact',
-      initial: false,
-    ),
+    // AutoRoute(
+    //   page: ContactRoute.page,
+    //   path: '/contact',
+    //   initial: false,
+    // ),
     AutoRoute(
       page: QuizWebView.page,
       path: '/quiz-web-view',
@@ -54,6 +54,57 @@ class AppRouter extends $AppRouter {
     AutoRoute(
       page: AddStudentRoute.page,
       path: '/add-student',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AddStaffRoute.page,
+      path: '/add-staff',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AddBatchRoute.page,
+      path: '/add-batch',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AddFeeRoute.page,
+      path: '/add-fee',
+      initial: false,
+    ),
+    // AutoRoute(
+    //   page: AddAttendanceRoute.page,
+    //   path: '/add-attendance',
+    //   initial: false,
+    // ),
+    // AutoRoute(
+    //   page: AddOrgRoute.page,
+    //   path: '/add-org',
+    //   initial: false,
+    // ),
+    // AutoRoute(
+    //   page: AddAdminRoute.page,
+    //   path: '/add-admin',
+    //   initial: false,
+    // ),
+    AutoRoute(
+      page: AddExamRoute.page,
+      path: '/add-exam',
+      initial: false,
+    ),
+    // AutoRoute(
+    //   page: AddSubjectRoute.page,
+    //   path: '/add-subject',
+    //   initial: false,
+    // ),
+    AutoRoute(
+      page: AddExpenseRoute.page,
+      path: '/add-expense',
+      initial: false,
+    ),
+    // EnquiryRoute(),
+    AutoRoute(
+      page: AddEnquiryRoute.page,
+      path: '/add-enquiry',
       initial: false,
     ),
   ];

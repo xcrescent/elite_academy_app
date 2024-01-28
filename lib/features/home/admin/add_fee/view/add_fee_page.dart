@@ -7,15 +7,15 @@ import '../../dashboard/controller/student_state_pod.dart';
 @RoutePage(
   deferredLoading: true,
 )
-class AddStudentPage extends ConsumerWidget {
-  const AddStudentPage({super.key});
+class AddFeePage extends ConsumerWidget {
+  const AddFeePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Student',
+          'Add Fee',
         ),
       ),
       body: const DefaultTabController(
