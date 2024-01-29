@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:elite_academy/features/home/admin/dashboard/view/dashboard_page.dart';
 import 'package:elite_academy/features/home/quiz/quiz.dart';
+import 'package:elite_academy/features/home/student/dashboard/dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     }
     return SafeArea(
+      bottom: false,
       child: Scaffold(
         body: Column(
           children: [
@@ -86,33 +88,33 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Academics',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.quiz),
-              label: 'Quiz',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: pageIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: const [
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.home),
+        //       label: 'Home',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.school),
+        //       label: 'Academics',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.quiz),
+        //       label: 'Quiz',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.calendar_today),
+        //       label: 'Calendar',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.person),
+        //       label: 'Profile',
+        //     ),
+        //   ],
+        //   currentIndex: pageIndex,
+        //   selectedItemColor: Colors.amber[800],
+        //   onTap: _onItemTapped,
+        // ),
       ),
     );
   }
