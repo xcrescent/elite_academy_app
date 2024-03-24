@@ -1,39 +1,15 @@
-import 'package:hive_flutter/hive_flutter.dart';
-
-part 'student_model.g.dart';
-
-// @HiveType(typeId: 1)
-// enum TransactionType {
-//   @HiveField(0)
-//   income,
-//   @HiveField(1)
-//   expense,
-// }
-
-@HiveType(typeId: 4)
-class StudentModel extends HiveObject {
-  @HiveField(0)
+class UserDBModel {
   String? id;
-  @HiveField(1)
   String name;
-  @HiveField(2)
   DateTime? dateOfBirth;
-  @HiveField(3)
   String phoneNumber;
-  @HiveField(4)
   String? email;
-  @HiveField(5)
   String? batchId;
-  @HiveField(6)
   String? enrollmentNumber;
-  @HiveField(7)
   String? address;
-  @HiveField(8)
   String orgId;
-  @HiveField(9)
-  String whatsappNumber;
 
-  StudentModel({
+  UserDBModel({
     this.id,
     required this.name,
     this.dateOfBirth,
@@ -43,11 +19,10 @@ class StudentModel extends HiveObject {
     this.enrollmentNumber,
     this.address,
     required this.orgId,
-    required this.whatsappNumber,
   });
 
-  factory StudentModel.fromMap(Map<String, dynamic> map) {
-    return StudentModel(
+  factory UserDBModel.fromMap(Map<String, dynamic> map) {
+    return UserDBModel(
       id: map['id'],
       name: map['name'],
       dateOfBirth: map['dateOfBirth'],
@@ -57,7 +32,6 @@ class StudentModel extends HiveObject {
       enrollmentNumber: map['enrollmentNumber'],
       address: map['address'],
       orgId: map['orgId'],
-      whatsappNumber: map['whatsappNumber'],
     );
   }
 
@@ -72,7 +46,6 @@ class StudentModel extends HiveObject {
       'enrollmentNumber': enrollmentNumber,
       'address': address,
       'orgId': orgId,
-      'whatsappNumber': whatsappNumber,
     };
   }
 }

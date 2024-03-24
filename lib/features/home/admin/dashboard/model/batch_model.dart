@@ -13,15 +13,23 @@ part 'batch_model.g.dart';
 @HiveType(typeId: 2)
 class BatchModel extends HiveObject {
   @HiveField(0)
-  final String id;
+  String id;
   @HiveField(1)
-  final String name;
+  String name;
   @HiveField(2)
-  final DateTime startDate;
+  DateTime? startDate;
   @HiveField(3)
-  final DateTime endDate;
+  DateTime? endDate;
   @HiveField(4)
-  final int orgId;
+  String orgId;
+  @HiveField(5)
+  String? staffId;
+  @HiveField(6)
+  String? courseId;
+  @HiveField(7)
+  double fees;
+  @HiveField(8)
+  String feeType;
 
   BatchModel({
     required this.id,
@@ -29,6 +37,10 @@ class BatchModel extends HiveObject {
     required this.startDate,
     required this.endDate,
     required this.orgId,
+    this.staffId,
+    this.courseId,
+    required this.fees,
+    this.feeType = "Monthly",
   });
 
   factory BatchModel.fromMap(Map<String, dynamic> map) {
@@ -38,6 +50,10 @@ class BatchModel extends HiveObject {
       startDate: map['startDate'],
       endDate: map['endDate'],
       orgId: map['orgId'],
+      staffId: map['staffId'],
+      courseId: map['courseId'],
+      fees: map['fees'],
+      feeType: map['feeType'],
     );
   }
 
@@ -48,6 +64,10 @@ class BatchModel extends HiveObject {
       'startDate': startDate,
       'endDate': endDate,
       'orgId': orgId,
+      'staffId': staffId,
+      'courseId': courseId,
+      'fees': fees,
+      'feeType': feeType,
     };
   }
 }

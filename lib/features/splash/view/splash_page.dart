@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/features/auth/auth.dart';
 import 'package:elite_academy/features/auth/phone/repository/phone_auth_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
@@ -15,21 +14,21 @@ class SplashScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) {
-      Future.delayed(
-        const Duration(milliseconds: 1900),
-        () {
-          ref.read(authStateNotifierProvider.notifier).setAuthState(
-                AuthState.authenticated,
-              );
-
-          context.router.replaceNamed(
-            '/home',
-          );
-        },
-      );
-      return const SizedBox();
-    }
+    // if (kDebugMode) {
+    //   Future.delayed(
+    //     const Duration(milliseconds: 1900),
+    //     () {
+    //       ref.read(authStateNotifierProvider.notifier).setAuthState(
+    //             AuthState.authenticated,
+    //           );
+    //
+    //       context.router.replaceNamed(
+    //         '/home',
+    //       );
+    //     },
+    //   );
+    //   return const SizedBox();
+    // }
     ref.listen<AuthState>(authStateNotifierProvider, (_, state) {
       if (state == AuthState.authenticated) {
         // if (ref.read(authProvider).currentUser!.role == 'admin') {

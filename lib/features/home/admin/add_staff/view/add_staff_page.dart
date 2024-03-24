@@ -1,20 +1,41 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:elite_academy/features/home/admin/dashboard/controller/staff_state_pod.dart';
+import 'package:elite_academy/features/home/admin/dashboard/repository/staff_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../dashboard/controller/student_state_pod.dart';
 
 @RoutePage(
   deferredLoading: true,
 )
-class AddStaffPage extends ConsumerWidget {
+class AddStaffPage extends ConsumerStatefulWidget {
   //  final emailController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
-  AddStaffPage({super.key});
+  const AddStaffPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AddStaffPage> createState() => _AddStaffPageState();
+}
+
+class _AddStaffPageState extends ConsumerState<AddStaffPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  final formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -22,14 +43,16 @@ class AddStaffPage extends ConsumerWidget {
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: DefaultTabController(
           initialIndex: 0,
           length: 4,
           child: Column(
             children: [
               TabBar(
-                tabs: [
+                isScrollable: true,
+                controller: _tabController,
+                tabs: const [
                   Tab(
                     text: 'Personal',
                     icon: Icon(
@@ -58,11 +81,12 @@ class AddStaffPage extends ConsumerWidget {
               ),
               Expanded(
                 child: TabBarView(
+                  controller: _tabController,
                   children: [
-                    PersonalTab(),
+                    const PersonalTab(),
                     ContactTab(),
-                    AcademicTab(),
-                    InfoTab(),
+                    const AcademicTab(),
+                    const InfoTab(),
                   ],
                 ),
               ),
@@ -71,26 +95,41 @@ class AddStaffPage extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (_formKey.currentState?.validate() == true) {
-            // All form fields are valid, proceed with the logic
-            // ref.read(studentRepositoryProvider).addStudent(
-            //   ref.read(studentControllerProvider),
-            // );
+        onPressed: () async {
+          if (formKey.currentState?.validate() == true) {
+            if (_tabController.index < _tabController.length - 1) {
+              _tabController.animateTo(_tabController.index + 1);
+            } else {
+              if (kDebugMode) {
+                print('validated');
+              }
+              var x = await ref.read(staffRepositoryProvider).addStaff(
+                    ref.read(staffControllerProvider),
+                  );
+              if (!mounted) {
+                return;
+              }
+              if (x) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Staff added successfully',
+                    ),
+                  ),
+                );
+                context.router.pop();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Something went wrong',
+                    ),
+                  ),
+                );
+                return;
+              }
+            }
           }
-
-          // if (pageController.page!.round() == 2) {
-          //   ref.read(studentRepositoryProvider).addStudent(
-          //         ref.read(studentControllerProvider),
-          //       );
-          // } else {
-          //   pageController.nextPage(
-          //     duration: const Duration(
-          //       milliseconds: 300,
-          //     ),
-          //     curve: Curves.ease,
-          //   );
-          // }
         },
         child: const Icon(
           Icons.arrow_forward,
@@ -130,69 +169,61 @@ class PersonalTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setFirstName(value),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setName(value),
               decoration: const InputDecoration(
-                labelText: 'First name',
-                prefixIcon: Icon(Icons.person)
-              ),
+                  labelText: 'First name', prefixIcon: Icon(Icons.person)),
             ),
             const SizedBox(
               height: 16,
             ),
-            TextFormField(
-              // validator: (value) {
-              //   if (value!.isEmpty) {
-              //     return 'Please enter First name';
-              //   }
-              //   return null;
-              // },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setFirstName(value),
-              decoration: const InputDecoration(
-                labelText: 'Middle name (optional)',
-                prefixIcon: Icon(Icons.person)
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              // validator: (value) {
-              //   if (value!.isEmpty) {
-              //     return 'Please enter First name';
-              //   }
-              //   return null;
-              // },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setLastName(value),
-              decoration: const InputDecoration(
-                labelText: 'Last Name (optional)',
-                prefixIcon: Icon(Icons.person)
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              // validator: (value) {
-              //   if (value!.isEmpty) {
-              //     return 'Please enter Date of Birth';
-              //   }
-              //   return null;
-              // },
-              
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setLastName(value),
-              decoration: const InputDecoration(
-                labelText: 'Date of Birth (optional)',
-               prefixIcon: Icon(Icons.cake)
-              ),
-            ),
+            // TextFormField(
+            //   // validator: (value) {
+            //   //   if (value!.isEmpty) {
+            //   //     return 'Please enter First name';
+            //   //   }
+            //   //   return null;
+            //   // },
+            //   onChanged: (value) => ref
+            //       .read(staffControllerProvider.notifier)
+            //       .setName(value),
+            //   decoration: const InputDecoration(
+            //       labelText: 'Middle name (optional)',
+            //       prefixIcon: Icon(Icons.person)),
+            // ),
+            // const SizedBox(
+            //   height: 16,
+            // ),
+            // TextFormField(
+            //   // validator: (value) {
+            //   //   if (value!.isEmpty) {
+            //   //     return 'Please enter First name';
+            //   //   }
+            //   //   return null;
+            //   // },
+            //   onChanged: (value) =>
+            //       ref.read(staffControllerProvider.notifier).setLastName(value),
+            //   decoration: const InputDecoration(
+            //       labelText: 'Last Name (optional)',
+            //       prefixIcon: Icon(Icons.person)),
+            // ),
+            // const SizedBox(
+            //   height: 16,
+            // ),
+            // TextFormField(
+            //   // validator: (value) {
+            //   //   if (value!.isEmpty) {
+            //   //     return 'Please enter Date of Birth';
+            //   //   }
+            //   //   return null;
+            //   // },
+            //
+            //   onChanged: (value) =>
+            //       ref.read(staffControllerProvider.notifier).setLastName(value),
+            //   decoration: const InputDecoration(
+            //       labelText: 'Date of Birth (optional)',
+            //       prefixIcon: Icon(Icons.cake)),
+            // ),
           ],
         ),
       ),
@@ -226,14 +257,11 @@ class ContactTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
-              
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Phone number',
-                prefixIcon: Icon(Icons.phone)
-              ),
+                  labelText: 'Phone number', prefixIcon: Icon(Icons.phone)),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter Phone number';
@@ -247,12 +275,10 @@ class ContactTab extends ConsumerWidget {
             ),
             TextFormField(
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Whatsapp number',
-                prefixIcon: Icon(Icons.phone)
-              ),
+                  labelText: 'Whatsapp number', prefixIcon: Icon(Icons.phone)),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter Whatsapp number';
@@ -265,35 +291,30 @@ class ContactTab extends ConsumerWidget {
               height: 16,
             ),
             TextFormField(
-              
               validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Email',
-                prefixIcon: Icon(Icons.email)
-              ),
+                  labelText: 'Email', prefixIcon: Icon(Icons.email)),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-                validator: (value) {
+              validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter First name';
                 }
                 return null;
               },
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Address',
-                prefixIcon: Icon(Icons.home)
-              ),
+                  labelText: 'Address', prefixIcon: Icon(Icons.home)),
               keyboardType: TextInputType.streetAddress,
             ),
           ],
@@ -334,69 +355,61 @@ class AcademicTab extends ConsumerWidget {
               validator: validatePassword,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Password',
-                prefixIcon: Icon(Icons.password)
-              ),
+                  labelText: 'Password', prefixIcon: Icon(Icons.password)),
               keyboardType: TextInputType.visiblePassword,
             ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-                validator: (value) {
+              validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter First name';
                 }
                 return null;
               },
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Roll Number',
-                prefixIcon: Icon(Icons.numbers)
-              ),
+                  labelText: 'Roll Number', prefixIcon: Icon(Icons.numbers)),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-                validator: (value) {
+              validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please Enter Standard';
                 }
                 return null;
               },
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Standard',
-                prefixIcon: Icon(Icons.class_)
-              ),
+                  labelText: 'Standard', prefixIcon: Icon(Icons.class_)),
               keyboardType: TextInputType.text,
             ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-                validator: (value) {
+              validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please Aadhar Number';
                 }
                 return null;
               },
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Aadhar Number',
-                prefixIcon: Icon(Icons.person)
-              ),
+                  labelText: 'Aadhar Number', prefixIcon: Icon(Icons.person)),
               keyboardType: TextInputType.text,
             ),
           ],
@@ -410,17 +423,17 @@ class InfoTab extends ConsumerWidget {
   const InfoTab({super.key});
 
   String? validatePhoneNumber(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter a phone number';
-  }
+    if (value == null || value.isEmpty) {
+      return 'Please enter a phone number';
+    }
 
-  // Check if the value is exactly 10 digits and contains only numerical characters
-  if (value.length != 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
-    return 'Please enter a valid 10-digit numerical phone number';
-  }
+    // Check if the value is exactly 10 digits and contains only numerical characters
+    if (value.length != 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+      return 'Please enter a valid 10-digit numerical phone number';
+    }
 
-  return null;
-}
+    return null;
+  }
 
   String? _validateEmail(value) {
     if (value!.isEmpty) {
@@ -433,7 +446,6 @@ class InfoTab extends ConsumerWidget {
     return null;
   }
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
@@ -445,19 +457,17 @@ class InfoTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
-                validator: (value) {
+              validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please Father name';
                 }
                 return null;
               },
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Father Name',
-                prefixIcon: Icon(Icons.person)
-              ),
+                  labelText: 'Father Name', prefixIcon: Icon(Icons.person)),
               keyboardType: TextInputType.text,
             ),
             const SizedBox(
@@ -465,52 +475,45 @@ class InfoTab extends ConsumerWidget {
             ),
             TextFormField(
               validator: validatePhoneNumber,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Father Phone Number',
-                prefixIcon: Icon(Icons.phone)
-              ),
+                  labelText: 'Father Phone Number',
+                  prefixIcon: Icon(Icons.phone)),
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-                validator: _validateEmail,
+              validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Father Email',
-                prefixIcon: Icon(Icons.email)
-              ),
+                  labelText: 'Father Email', prefixIcon: Icon(Icons.email)),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-                 validator: (value) {
+              validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please Father Address';
                 }
                 return null;
               },
               onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
+                  .read(staffControllerProvider.notifier)
                   .setPhoneNumber(value),
               decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Father Address',
-                prefixIcon: Icon(Icons.home)
-              ),
+                  border: OutlineInputBorder(),
+                  labelText: 'Father Address',
+                  prefixIcon: Icon(Icons.home)),
               keyboardType: TextInputType.streetAddress,
             ),
           ],

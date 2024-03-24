@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
+import 'package:elite_academy/features/home/admin/dashboard/controller/student_state_pod.dart';
 import 'package:elite_academy/features/home/admin/dashboard/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/settings/view/settings_page.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -103,30 +104,30 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
     'Add Student',
     'Add Staff',
     'Add Batch',
-    'Add Exam',
-    'Add Fee',
-    'Add Expense',
-    'Add Enquiry'
+    // 'Add Exam',
+    // 'Add Fee',
+    // 'Add Expense',
+    // 'Add Enquiry'
   ];
 
   final List<IconData> _icons = [
     Icons.person_add,
     Icons.person_add_alt_1,
     Icons.group_add,
-    Icons.auto_awesome,
-    Icons.money,
-    Icons.money_off,
-    Icons.add_business
+    // Icons.auto_awesome,
+    // Icons.money,
+    // Icons.money_off,
+    // Icons.add_business
   ];
 
   final List<String> _routes = [
     '/add-student',
     '/add-staff',
     '/add-batch',
-    '/add-exam',
-    '/add-fee',
-    '/add-expense',
-    '/add-enquiry'
+    // '/add-exam',
+    // '/add-fee',
+    // '/add-expense',
+    // '/add-enquiry'
   ];
 
   @override
@@ -192,32 +193,53 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         child: Row(
                           children: [
-                            AdditionalInfo(
-                              icon: Icons.group,
-                              label: 'Students',
-                              index1: 0,
-                              index2: 0,
-                            ),
-                            SizedBox(
+                            ref.watch(studentListPod).when(
+                                  data: (data) {
+                                    return AdditionalInfo(
+                                      icon: Icons.group,
+                                      label: 'Students',
+                                      index1: data.length,
+                                      index2: 0,
+                                    );
+                                  },
+                                  loading: () => const AdditionalInfo(
+                                    icon: Icons.group,
+                                    label: 'Students',
+                                    index1: 0,
+                                    index2: 0,
+                                  ),
+                                  error: (e, s) {
+                                    if (kDebugMode) {
+                                      print(e);
+                                    }
+                                    return const AdditionalInfo(
+                                      icon: Icons.group,
+                                      label: 'Students',
+                                      index1: 0,
+                                      index2: 0,
+                                    );
+                                  },
+                                ),
+                            const SizedBox(
                               width: 15,
                             ),
-                            AdditionalInfo(
+                            const AdditionalInfo(
                               icon: Icons.school,
                               label: 'Batches',
                               index1: 0,
                               index2: 0,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            AdditionalInfo(
+                            const AdditionalInfo(
                               icon: Icons.groups,
                               label: 'Staffs',
                               index1: 0,
@@ -635,14 +657,14 @@ class AdditionalInfo extends ConsumerWidget {
               ),
             ],
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Column(
                 children: [
                   Text(
-                    '0',
+                    index1.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
