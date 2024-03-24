@@ -18,45 +18,42 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
     };
     return StudentModel(
       id: fields[0] as String?,
-      firstName: fields[1] as String,
-      middleName: fields[2] as String?,
-      lastName: fields[3] as String?,
-      dateOfBirth: fields[4] as DateTime?,
-      phoneNumber: fields[5] as String,
-      email: fields[6] as String?,
-      batchId: fields[7] as String?,
-      enrollmentNumber: fields[8] as String?,
-      address: fields[9] as String?,
-      orgId: fields[10] as String,
+      name: fields[1] as String,
+      dateOfBirth: fields[2] as DateTime?,
+      phoneNumber: fields[3] as String,
+      email: fields[4] as String?,
+      batchId: fields[5] as String?,
+      enrollmentNumber: fields[6] as String?,
+      address: fields[7] as String?,
+      orgId: fields[8] as String,
+      whatsappNumber: fields[9] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, StudentModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.firstName)
+      ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.middleName)
-      ..writeByte(3)
-      ..write(obj.lastName)
-      ..writeByte(4)
       ..write(obj.dateOfBirth)
-      ..writeByte(5)
+      ..writeByte(3)
       ..write(obj.phoneNumber)
-      ..writeByte(6)
+      ..writeByte(4)
       ..write(obj.email)
-      ..writeByte(7)
+      ..writeByte(5)
       ..write(obj.batchId)
-      ..writeByte(8)
+      ..writeByte(6)
       ..write(obj.enrollmentNumber)
-      ..writeByte(9)
+      ..writeByte(7)
       ..write(obj.address)
-      ..writeByte(10)
-      ..write(obj.orgId);
+      ..writeByte(8)
+      ..write(obj.orgId)
+      ..writeByte(9)
+      ..write(obj.whatsappNumber);
   }
 
   @override

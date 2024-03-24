@@ -1,9 +1,9 @@
 import 'package:hive_flutter/adapters.dart';
 
-part 'faculty_model.g.dart';
+part 'staff_model.g.dart';
 
 @HiveType(typeId: 3)
-class FacultyModel extends HiveObject {
+class StaffModel extends HiveObject {
   @HiveField(0)
   String name;
   @HiveField(1)
@@ -16,24 +16,28 @@ class FacultyModel extends HiveObject {
   String? image;
   @HiveField(5)
   String id;
+  @HiveField(6)
+  String? orgId;
 
-  FacultyModel({
+  StaffModel({
     required this.name,
     this.email,
     required this.phone,
     this.address,
     this.image,
     required this.id,
+    this.orgId,
   });
 
-  factory FacultyModel.fromMap(Map<String, dynamic> map) {
-    return FacultyModel(
+  factory StaffModel.fromMap(Map<String, dynamic> map) {
+    return StaffModel(
       name: map['name'],
       email: map['email'],
       phone: map['phone'],
       address: map['address'],
       image: map['image'],
       id: map['id'],
+      orgId: map['orgId'],
     );
   }
 
@@ -45,6 +49,7 @@ class FacultyModel extends HiveObject {
       'address': address,
       'image': image,
       'id': id,
+      'orgId': orgId,
     };
   }
 }

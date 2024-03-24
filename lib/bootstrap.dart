@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
 import 'package:elite_academy/features/home/admin/dashboard/model/admin_model.dart';
 import 'package:elite_academy/features/home/admin/dashboard/model/attendance_model.dart';
-import 'package:elite_academy/features/home/admin/dashboard/model/faculty_model.dart';
 import 'package:elite_academy/features/home/admin/dashboard/model/fee_model.dart';
 import 'package:elite_academy/features/home/admin/dashboard/model/org_model.dart';
+import 'package:elite_academy/features/home/admin/dashboard/model/staff_model.dart';
 import 'package:elite_academy/init.dart';
 import 'package:elite_academy/shared/riverpod_ext/riverpod_observer.dart';
 import 'package:flutter/foundation.dart';
@@ -60,7 +60,7 @@ Future<void> bootstrap(
   final adminBox = await Hive.openBox<AdminModel>('adminBox');
   final orgBox = await Hive.openBox<OrgModel>('orgBox');
   final batchBox = await Hive.openBox<BatchModel>('batchBox');
-  final facultyBox = await Hive.openBox<FacultyModel>('facultyBox');
+  final facultyBox = await Hive.openBox<StaffModel>('staffBox');
   final studentBox = await Hive.openBox<StudentModel>('studentBox');
   final feeBox = await Hive.openBox<FeeModel>('feeBox');
   final attendanceBox = await Hive.openBox<AttendanceModel>('attendanceBox');
@@ -68,7 +68,7 @@ Future<void> bootstrap(
   Hive.registerAdapter(AdminModelAdapter());
   Hive.registerAdapter(OrgModelAdapter());
   Hive.registerAdapter(BatchModelAdapter());
-  Hive.registerAdapter(FacultyModelAdapter());
+  Hive.registerAdapter(StaffModelAdapter());
   Hive.registerAdapter(StudentModelAdapter());
   Hive.registerAdapter(FeeModelAdapter());
   Hive.registerAdapter(AttendanceModelAdapter());

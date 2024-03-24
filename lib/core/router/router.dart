@@ -66,11 +66,11 @@ class AppRouter extends $AppRouter {
       path: '/add-batch',
       initial: false,
     ),
-    AutoRoute(
-      page: AddFeeRoute.page,
-      path: '/add-fee',
-      initial: false,
-    ),
+    // AutoRoute(
+    //   page: AddFeeRoute.page,
+    //   path: '/add-fee',
+    //   initial: false,
+    // ),
     // AutoRoute(
     //   page: AddAttendanceRoute.page,
     //   path: '/add-attendance',
