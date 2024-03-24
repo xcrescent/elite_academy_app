@@ -37,47 +37,47 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-        email: "dev@eliteacademy.co.in",
-        password: "123456",
-      )
-          .then(
-        (value) {
-          if (kDebugMode) {
-            print("Email Verified: ${value.user!.emailVerified}");
-          }
-          const storage = FlutterSecureStorage();
-          storage.write(
-            key: "uid",
-            value: value.user!.uid,
-          );
-          storage.read(key: "uid").then((value) {
-            if (kDebugMode) {
-              print("UID: $value");
-            }
-          });
-          // ref.read(adminRepositoryProvider).createAdmin(
-          //       AdminModel(
-          //         email: 'usjadon19@gmail.com',
-          //         phone: '+919911168006',
-          //         firstName: 'Utkarsh',
-          //         lastName: 'S Jadon',
-          //         id: value.user!.uid,
-          //       ),
-          //     );
-          //
-          ref.read(phoneAuthNotifierProvider.notifier).setResponse(
-                PhoneAuthResponse(
-                  user: value.user,
-                  error: null,
-                  isNewUser: false,
-                ),
-              );
-        },
-      );
-    }
+    // if (kDebugMode) {
+    //   FirebaseAuth.instance
+    //       .signInWithEmailAndPassword(
+    //     email: "dev@eliteacademy.co.in",
+    //     password: "123456",
+    //   )
+    //       .then(
+    //     (value) {
+    //       if (kDebugMode) {
+    //         print("Email Verified: ${value.user!.emailVerified}");
+    //       }
+    //       const storage = FlutterSecureStorage();
+    //       storage.write(
+    //         key: "uid",
+    //         value: value.user!.uid,
+    //       );
+    //       storage.read(key: "uid").then((value) {
+    //         if (kDebugMode) {
+    //           print("UID: $value");
+    //         }
+    //       });
+    //       // ref.read(adminRepositoryProvider).createAdmin(
+    //       //       AdminModel(
+    //       //         email: 'usjadon19@gmail.com',
+    //       //         phone: '+919911168006',
+    //       //         firstName: 'Utkarsh',
+    //       //         lastName: 'S Jadon',
+    //       //         id: value.user!.uid,
+    //       //       ),
+    //       //     );
+    //       //
+    //       ref.read(phoneAuthNotifierProvider.notifier).setResponse(
+    //             PhoneAuthResponse(
+    //               user: value.user,
+    //               error: null,
+    //               isNewUser: false,
+    //             ),
+    //           );
+    //     },
+    //   );
+    // }
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -87,33 +87,33 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Academics',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.quiz),
-              label: 'Quiz',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: pageIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: const [
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.home),
+        //       label: 'Home',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.school),
+        //       label: 'Academics',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.quiz),
+        //       label: 'Quiz',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.calendar_today),
+        //       label: 'Calendar',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.person),
+        //       label: 'Profile',
+        //     ),
+        //   ],
+        //   currentIndex: pageIndex,
+        //   selectedItemColor: Colors.amber[800],
+        //   onTap: _onItemTapped,
+        // ),
       ),
     );
   }

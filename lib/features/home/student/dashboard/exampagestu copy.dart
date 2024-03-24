@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
+import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,149 +11,41 @@ import 'widgets/additional_info.dart';
 import 'widgets/swipe_card_widget.dart';
 
 @RoutePage(deferredLoading: true)
-class StudentDashboardPage extends ConsumerWidget {
-  const StudentDashboardPage({super.key});
+class ExamsPagestu extends ConsumerStatefulWidget {
+  const ExamsPagestu({super.key});
+  // final String time = DateTime.now();
+  @override
+  ConsumerState<ExamsPagestu> createState() => _ExamsPagestuState();
+}
+
+class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
+  String n = DateTime.now().toString().substring(10, 19);
+  late Timer _timer;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        n = DateTime.now().toString().substring(10, 19);
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            // Container(
-            //   width: double.infinity,
-            //   margin: const EdgeInsets.all(12),
-            //   padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-            //   decoration: BoxDecoration(
-            //     color: ref.watch(themecontrollerProvider) == ThemeMode.dark
-            //         ? Colors.grey.shade900
-            //         : ref.watch(themecontrollerProvider) == ThemeMode.light
-            //             ? Colors.grey.shade200
-            //             : Theme.of(context).brightness == Brightness.dark
-            //                 ? Colors.grey.shade900
-            //                 : Colors.grey.shade200,
-            //     boxShadow: const [
-            //       BoxShadow(
-            //         color: Colors.black12,
-            //         blurRadius: 5,
-            //         offset: Offset(0, 2),
-            //       ),
-            //     ],
-            //     borderRadius: BorderRadius.circular(10),
-            //   ),
-            //   // child: Row(
-            //   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   //   children: [
-            //   //     SizedBox(
-            //   //       width: MediaQuery.of(context).size.width - 180,
-            //   //       child: AnimatedTextKit(
-            //   //         animatedTexts: [
-            //   //           TypewriterAnimatedText(
-            //   //             'Check out what we have done for you!',
-            //   //             textStyle: TextStyle(
-            //   //               fontSize: 18,
-            //   //               fontWeight: FontWeight.bold,
-            //   //               fontFamily: GoogleFonts.poppins().fontFamily,
-            //   //             ),
-            //   //             speed: const Duration(milliseconds: 100),
-            //   //           ),
-            //   //         ],
-            //   //         repeatForever: true,
-            //   //       ),
-            //   //     ),
-            //   //     ElevatedButton(
-            //   //       onPressed: () {
-            //   //         context.router.pushNamed('/what-we-have-done');
-            //   //       },
-            //   //       style: ElevatedButton.styleFrom(
-            //   //         shape: RoundedRectangleBorder(
-            //   //           borderRadius: BorderRadius.circular(10),
-            //   //         ),
-            //   //       ),
-            //   //       child: Text(
-            //   //         'View All',
-            //   //         style: TextStyle(
-            //   //           fontSize: 16,
-            //   //           fontWeight: FontWeight.bold,
-            //   //           fontFamily: GoogleFonts.poppins().fontFamily,
-            //   //         ),
-            //   //       ),
-            //   //     ),
-            //   //   ],
-            //   // ),
-            // ),
-            // ref.watch(attendanceDataProvider).when(
-            //   loading: () {
-            //     // Check the connection state
-            //     return SizedBox(
-            //       height: MediaQuery.of(context).size.height - 200,
-            //       child: const Center(
-            //         child: CircularProgressIndicator(),
-            //       ),
-            //     );
-            //   },
-            //   error: (e, s) {
-            //     // Error fetching data
-            //     return SizedBox(
-            //       height: MediaQuery.of(context).size.height - 200,
-            //       child: const Center(
-            //         child: Text('Error fetching data'),
-            //       ),
-            //     );
-            //   },
-            //   // Add a watch
-            //   data: (AttendanceData? data) {
-            //     // print("Refreshed");
-            //     // If no error occurred
-            //     if (data == null) {
-            //       return SizedBox(
-            //         height: MediaQuery.of(context).size.height - 200,
-            //         child: const Center(
-            //           child: Text(
-            //             'No data found',
-            //             style: TextStyle(fontSize: 20),
-            //           ),
-            //         ),
-            //       );
-            //     }
-            //     String name = '';
-            //     String email = '';
-            //     print(data
-            //         .stdSubAtdDetails!.studentSubjectAttendance[0].userDetails);
-            //     if (jsonDecode(data
-            //             .stdSubAtdDetails!
-            //             .studentSubjectAttendance[0]
-            //             .userDetails)['firstName'] !=
-            //         null) {
-            //       name = jsonDecode(data
-            //               .stdSubAtdDetails!
-            //               .studentSubjectAttendance
-            //               .first
-            //               .userDetails)['firstName'] +
-            //           ' ' +
-            //           jsonDecode(data.stdSubAtdDetails!.studentSubjectAttendance
-            //               .first.userDetails)['lastName'];
-            //       email = jsonDecode(data.stdSubAtdDetails!
-            //           .studentSubjectAttendance.first.userDetails)['email'];
-            //     } else {
-            //       name =
-            //           '${data.stdSubAtdDetails!.studentSubjectAttendance.first.firstName} ${data.stdSubAtdDetails!.studentSubjectAttendance.first.lastName}';
-
-            //       email = data.stdSubAtdDetails!.studentSubjectAttendance.first
-            //               .email ??
-            //           '';
-            //     }
-            //     int totalSubjects = data.stdSubAtdDetails!
-            //         .studentSubjectAttendance[0].subjects.length;
-            //     double overallPercentage =
-            //         data.stdSubAtdDetails!.overallPercentage;
-            //     List<Subject> subjectsList =
-            //         data.stdSubAtdDetails!.studentSubjectAttendance[0].subjects;
-            //     int? totalPresent = data.stdSubAtdDetails?.overallPresent!;
-            //     int? totalClasses = data.stdSubAtdDetails?.overallLecture!;
-            // int totalAbsent = totalClasses - totalPresent;
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -163,111 +58,55 @@ class StudentDashboardPage extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Welcome, xyz",
-                                style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                    // color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "xyz@gmail.com",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  // color: Colors.black,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
-                                ),
-                              ),
-                            ],
-                          ),
-                          // const SizedBox(
-                          //   width: 8,
-                          // ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     showDialog(
-                          //       context: context,
-                          //       builder: (context) {
-                          //         return SizedBox(
-                          //           height: 80,
-                          //           width: 80,
-                          //           child: CircleAvatar(
-                          //             backgroundImage: NetworkImage(
-                          //               profilePhotoUrl!,
-                          //               scale: 0.1,
-                          //             ),
-                          //             radius: 18,
-                          //           ),
-                          //         );
-                          //       },
-                          //     );
-                          //   },
-                          //   child: Container(
-                          //     height: 70,
-                          //     width: 70,
-                          //     decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: Border.all(
-                          //           color: Colors.black,
-                          //         )),
-                          //     child: ClipRRect(
-                          //         borderRadius: BorderRadius.circular(100),
-                          //         child: profilePhotoUrl!.isNotEmpty
-                          //             ? Image.network(profilePhotoUrl!,
-                          //                 fit: BoxFit.cover, loadingBuilder:
-                          //                     (context, child,
-                          //                         loadingProgress) {
-                          //                 if (loadingProgress == null) {
-                          //                   return child;
-                          //                 }
-                          //                 return const Center(
-                          //                   child:
-                          //                       CircularProgressIndicator(),
-                          //                 );
-                          //               }, errorBuilder:
-                          //                     (context, object, stack) {
-                          //                 return const Icon(
-                          //                   Icons.error_outline,
-                          //                   color: Colors.amber,
-                          //                 );
-                          //               })
-                          //             : const Center(
-                          //                 child: CircularProgressIndicator(),
-                          //               )),
-                          //   ),
-                          // ),
-                        ],
-                      )
+                      // Row(
+                      //   children: [
+                      //     Column(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Text(
+                      //           ", dddewwyz",
+                      //           style: GoogleFonts.poppins(
+                      //             textStyle: const TextStyle(
+                      //               fontSize: 23,
+                      //               fontWeight: FontWeight.bold,
+                      //               // color: Colors.black,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         Text(
+                      //           "xyz@gmail.com",
+                      //           style: TextStyle(
+                      //             fontSize: 16,
+                      //             fontWeight: FontWeight.normal,
+                      //             // color: Colors.black,
+                      //             fontFamily: GoogleFonts.poppins().fontFamily,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // )
                     ],
                   ),
                 ),
-                SizedBox(
-                  // height: 120,
-                  width: double.infinity,
-                  child: SwipeCardsScreen(
-                    subjectsList: [],
-                    totalSubjects: 2,
-                    overallPercentage: 99,
-                    //  subjectsList: ,
-                  ),
-                ),
+                // SizedBox(
+                //   height: 120,
+                //   width: double.infinity,
+                //   child: SwipeCardsScreen(
+                //     subjectsList: [],
+                //     totalSubjects: 2,
+                //     overallPercentage: 99,
+                //     //  subjectsList: ,
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20.0,
                     vertical: 2,
                   ),
                   child: Text(
-                    'Your Statistics',
+                    'Upcoming Exam',
                     style: TextStyle(
                       fontSize: 28,
                       fontFamily: GoogleFonts.poppins().fontFamily,
@@ -276,60 +115,84 @@ class StudentDashboardPage extends ConsumerWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 270,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        AdditionalInfo(
-                          index: 0,
-                          text: Text(
-                            '22 - 25',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 36,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.w400,
+                  height: 10,
+                ),
+                Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      // color: Colors.limeAccent,
+                      height: 200,
+                      child: Card(
+                        child: Container(
+                            child: Center(
+                              child: Text("$n", style: TextStyle(fontSize: 80)),
                             ),
-                          ),
-                          label: 'Course',
-                          value: 'Student weak',
-                          category:
-                              'Lorem ipsum dolor sit amet consectetur. Mattis felisid tempor vehicula proin turpis. Neque lorem tristiqueeget vitae in vitae. ',
-                          detail: 'Volunteers needed',
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        // AdditionalInfo(
-                        //   index: 1,
-                        //   image: Image.asset(
-                        //     'assets/images/presentation_760138.png',
-                        //   ),
-                        //   label: 'Attendance Preview',
-                        //   value: '',
+                            decoration: BoxDecoration(color: Colors.pink[200])),
+                        // color: Colors.pink,
+                        // scrollDirection: Axis.horizontal,
+                        // physics: const BouncingScrollPhysics(),
+                        // child: Row(
+                        //   children: [
+                        //     const SizedBox(
+                        //       width: 15,
+                        //     ),
+                        //     AdditionalInfo(
+                        //       index: 0,
+                        //       text: Text(
+                        //         '22 - 25',
+                        //         style: TextStyle(
+                        //           color: Colors.black,
+                        //           fontSize: 36,
+                        //           fontFamily: 'Raleway',
+                        //           fontWeight: FontWeight.w400,
+                        //         ),
+                        //       ),
+                        //       label: 'Course',
+                        //       value: 'Student weak',
+                        //       category:
+                        //           'Lorem ipsum dolor sit amet consectetur. Mattis felisid tempor vehicula proin turpis. Neque lorem tristiqueeget vitae in vitae. ',
+                        //       detail: 'Volunteers needed',
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 15,
+                        //     ),
+                        //     // AdditionalInfo(
+                        //     //   index: 1,
+                        //     //   image: Image.asset(
+                        //     //     'assets/images/presentation_760138.png',
+                        //     //   ),
+                        //     //   label: 'Attendance Preview',
+                        //     //   value: '',
+                        //     // ),
+                        //     // const SizedBox(
+                        //     //   width: 15,
+                        //     // ),
+                        //     // AdditionalInfo(
+                        //     //   index: 2,
+                        //     //   image: Image.asset(
+                        //     //     'assets/images/presentation_760138.png',
+                        //     //   ),
+                        //     //   label: 'Classes Required for 75%:',
+                        //     //   value: '',
+                        //     // ),
+                        //     // const SizedBox(
+                        //     //   width: 20,
+                        //     // ),
+                        //   ],
                         // ),
-                        // const SizedBox(
-                        //   width: 15,
-                        // ),
-                        // AdditionalInfo(
-                        //   index: 2,
-                        //   image: Image.asset(
-                        //     'assets/images/presentation_760138.png',
-                        //   ),
-                        //   label: 'Classes Required for 75%:',
-                        //   value: '',
-                        // ),
-                        // const SizedBox(
-                        //   width: 20,
-                        // ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Spacer(),
+                    Container(
+                      height: 50,
+                      width: 200,
+                      child: Card(
+                        child: Center(child: Text("Upcoming exam : ")),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 15,
@@ -344,7 +207,7 @@ class StudentDashboardPage extends ConsumerWidget {
                       Expanded(
                         child: SizedBox(
                           child: Text(
-                            'Today’s Schedule',
+                            'Previous Results',
                             style: TextStyle(
                               color:
                                   Colors.black.withOpacity(0.800000011920929),
@@ -357,16 +220,19 @@ class StudentDashboardPage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 24),
-                      Text(
-                        'see more',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontFamily: 'Raleway',
-                          fontWeight: FontWeight.w400,
-                          decoration: TextDecoration.underline,
-                          height: 0.09,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          'see more',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Raleway',
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.underline,
+                            height: 0.09,
+                          ),
                         ),
                       ),
                     ],
@@ -420,7 +286,7 @@ class StudentDashboardPage extends ConsumerWidget {
                                     Expanded(
                                       child: SizedBox(
                                         child: Text(
-                                          'Lecture - G7',
+                                          'Score - a89/100',
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
                                             color: Colors.black,
@@ -447,7 +313,7 @@ class StudentDashboardPage extends ConsumerWidget {
                                     SizedBox(
                                       width: double.infinity,
                                       child: Text(
-                                        'Prof. Andrew Grey',
+                                        'Andrew ',
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 12,
@@ -483,7 +349,7 @@ class StudentDashboardPage extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    'Attendance',
+                    'Performances',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

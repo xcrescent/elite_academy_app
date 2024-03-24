@@ -1,18 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AdditionalInfo extends StatelessWidget {
-  final Image image;
+  final Text text;
   final String label;
   final String value;
+  final String category;
   final int index;
+  final String detail;
 
   const AdditionalInfo({
     super.key,
-    required this.image,
+    required this.text,
     required this.label,
     required this.value,
     required this.index,
+    required this.category,
+    required this.detail,
   });
 
 // Color? get randomColor {
@@ -27,7 +32,7 @@ class AdditionalInfo extends StatelessWidget {
   // }
 
   static List<Color> selectedColor = [
-    Colors.orangeAccent,
+    Color(0xFFD9D9D9),
     Colors.greenAccent,
     Colors.cyan,
   ];
@@ -35,10 +40,10 @@ class AdditionalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
+      // alignment: Alignment.topLeft,
       height: 245,
       padding: const EdgeInsets.all(10.0),
-      width: 220,
+      width: 390,
       decoration: BoxDecoration(
         boxShadow: [
           //dark shadow at bottom right
@@ -69,17 +74,17 @@ class AdditionalInfo extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 75,
-            width: 80,
-            padding: const EdgeInsets.all(8),
+            // height: 75,
+            // width: 80,
+            // padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
             ),
-            child: image,
+            child: text,
           ),
           const SizedBox(
             height: 12.0,
@@ -89,18 +94,43 @@ class AdditionalInfo extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontFamily: GoogleFonts.poppins().fontFamily,
             ),
           ),
           const SizedBox(
-            height: 8.0,
+            height: 12.0,
           ),
           Text(
             value,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+          ),
+          const SizedBox(
+            height: 12.0,
+          ),
+          Text(
+            category,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+            maxLines: 2,
+          ),
+          const SizedBox(
+            height: 12.0,
+          ),
+          Text(
+            detail,
+            style: TextStyle(
+              color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
               fontFamily: GoogleFonts.poppins().fontFamily,
