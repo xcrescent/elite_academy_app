@@ -23,7 +23,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   int pageIndex = 0;
 
   static const List<Widget> pages = [
-    AdminDashboardPage(),
+    StudentDashboardPage(),
     QuizPage(),
     QuizPage(),
     QuizPage(),
@@ -37,47 +37,47 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-        email: "dev@eliteacademy.co.in",
-        password: "123456",
-      )
-          .then(
-        (value) {
-          if (kDebugMode) {
-            print("Email Verified: ${value.user!.emailVerified}");
-          }
-          const storage = FlutterSecureStorage();
-          storage.write(
-            key: "uid",
-            value: value.user!.uid,
-          );
-          storage.read(key: "uid").then((value) {
-            if (kDebugMode) {
-              print("UID: $value");
-            }
-          });
-          // ref.read(adminRepositoryProvider).createAdmin(
-          //       AdminModel(
-          //         email: 'usjadon19@gmail.com',
-          //         phone: '+919911168006',
-          //         firstName: 'Utkarsh',
-          //         lastName: 'S Jadon',
-          //         id: value.user!.uid,
-          //       ),
-          //     );
-          //
-          ref.read(phoneAuthNotifierProvider.notifier).setResponse(
-                PhoneAuthResponse(
-                  user: value.user,
-                  error: null,
-                  isNewUser: false,
-                ),
-              );
-        },
-      );
-    }
+    // if (kDebugMode) {
+    //   FirebaseAuth.instance
+    //       .signInWithEmailAndPassword(
+    //     email: "dev@eliteacademy.co.in",
+    //     password: "123456",
+    //   )
+    //       .then(
+    //     (value) {
+    //       if (kDebugMode) {
+    //         print("Email Verified: ${value.user!.emailVerified}");
+    //       }
+    //       const storage = FlutterSecureStorage();
+    //       storage.write(
+    //         key: "uid",
+    //         value: value.user!.uid,
+    //       );
+    //       storage.read(key: "uid").then((value) {
+    //         if (kDebugMode) {
+    //           print("UID: $value");
+    //         }
+    //       });
+    //       // ref.read(adminRepositoryProvider).createAdmin(
+    //       //       AdminModel(
+    //       //         email: 'usjadon19@gmail.com',
+    //       //         phone: '+919911168006',
+    //       //         firstName: 'Utkarsh',
+    //       //         lastName: 'S Jadon',
+    //       //         id: value.user!.uid,
+    //       //       ),
+    //       //     );
+    //       //
+    //       ref.read(phoneAuthNotifierProvider.notifier).setResponse(
+    //             PhoneAuthResponse(
+    //               user: value.user,
+    //               error: null,
+    //               isNewUser: false,
+    //             ),
+    //           );
+    //     },
+    //   );
+    // }
     return SafeArea(
       bottom: false,
       child: Scaffold(
