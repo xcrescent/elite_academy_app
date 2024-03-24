@@ -16,7 +16,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   int pageIndex = 0;
 
   static const List<Widget> pages = [
-    AdminDashboardPage(),
+    StudentDashboardPage(),
     QuizPage(),
     QuizPage(),
     QuizPage(),
