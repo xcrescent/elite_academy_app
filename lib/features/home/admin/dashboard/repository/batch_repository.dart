@@ -28,9 +28,8 @@ class BatchRepository {
 
   Stream<List<BatchModel>> getAllBatch() {
     return _fireStore
-        .collection(Constants.orgs)
-        .doc(_orgRepository.orgId)
         .collection(Constants.batches)
+        .where("orgId", isEqualTo: _orgRepository.orgId)
         .snapshots()
         .map((value) {
       return value.docs
@@ -45,8 +44,6 @@ class BatchRepository {
 
   Future<BatchModel> getBatchById(String batchId) async {
     return await _fireStore
-        .collection(Constants.orgs)
-        .doc(_orgRepository.orgId)
         .collection(Constants.batches)
         .doc(batchId)
         .get()
@@ -55,30 +52,24 @@ class BatchRepository {
     });
   }
 
-  Future<void> addBatch(BatchModel batchModel) async {
-    await _fireStore
-        .collection(Constants.orgs)
-        .doc(_orgRepository.orgId)
-        .collection(Constants.batches)
-        .doc()
-        .set(batchModel.toMap());
+  Future<bool> addBatch(BatchModel batchModel) async {
+    var docId = _fireStore.collection(Constants.batches).doc();
+    batchModel.id = docId.id;
+    var x = await docId
+        .set(batchModel.toMap())
+        .then((value) => true)
+        .catchError((e) => false);
+    return x;
   }
 
   Future<void> updateBatch(BatchModel batchModel) async {
     await _fireStore
-        .collection(Constants.orgs)
-        .doc(_orgRepository.orgId)
         .collection(Constants.batches)
         .doc(batchModel.id)
         .update(batchModel.toMap());
   }
 
   Future<void> deleteBatch(String batchId) async {
-    await _fireStore
-        .collection(Constants.orgs)
-        .doc(_orgRepository.orgId)
-        .collection(Constants.batches)
-        .doc(batchId)
-        .delete();
+    await _fireStore.collection(Constants.batches).doc(batchId).delete();
   }
 }

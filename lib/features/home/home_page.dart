@@ -1,15 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:elite_academy/features/home/admin/dashboard/view/dashboard_page.dart';
 import 'package:elite_academy/features/home/quiz/quiz.dart';
-import 'package:elite_academy/features/home/student/dashboard/dashboard_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../auth/phone/controller/phone_auth_state_pod.dart';
-import '../auth/phone/model/phone_auth_response_model.dart';
 
 @RoutePage()
 class HomePage extends ConsumerStatefulWidget {
