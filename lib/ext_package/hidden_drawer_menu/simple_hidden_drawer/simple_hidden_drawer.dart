@@ -44,7 +44,7 @@ class SimpleHiddenDrawer extends StatefulWidget {
   final List<BoxShadow>? boxShadow;
 
   const SimpleHiddenDrawer({
-    Key? key,
+    super.key,
     this.initPositionSelected = 0,
     this.isDraggable = true,
     this.slidePercent = 80.0,
@@ -55,16 +55,15 @@ class SimpleHiddenDrawer extends StatefulWidget {
     required this.menu,
     this.enableScaleAnimation = true,
     this.enableCornerAnimation = true,
-    this.typeOpen = TypeOpen.FROM_LEFT,
+    this.typeOpen = TypeOpen.fromLeft,
     this.withShadow = true,
     this.boxShadow,
-  }) : super(key: key);
+  });
   @override
   _SimpleHiddenDrawerState createState() => _SimpleHiddenDrawerState();
 }
 
-class _SimpleHiddenDrawerState extends State<SimpleHiddenDrawer>
-    with TickerProviderStateMixin {
+class _SimpleHiddenDrawerState extends State<SimpleHiddenDrawer> with TickerProviderStateMixin {
   late SimpleHiddenDrawerController _simpleHiddenDrawerController;
 
   /// controller responsible to animation of the drawer

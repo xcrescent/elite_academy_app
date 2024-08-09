@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "edu.aeronex" "\0"
-            VALUE "FileDescription", "elite_academy" "\0"
+            VALUE "FileDescription", "elite_academy_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "elite_academy" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 edu.aeronex. All rights reserved." "\0"
-            VALUE "OriginalFilename", "elite_academy.exe" "\0"
-            VALUE "ProductName", "elite_academy" "\0"
+            VALUE "InternalName", "elite_academy_app" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 edu.aeronex. All rights reserved." "\0"
+            VALUE "OriginalFilename", "elite_academy_app.exe" "\0"
+            VALUE "ProductName", "elite_academy_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

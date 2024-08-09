@@ -1,10 +1,8 @@
+import 'package:elite_academy/data/model/staff_model.dart';
+import 'package:elite_academy/data/repository/user_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../auth/phone/repository/user_repository.dart';
-import '../model/staff_model.dart';
-
-final staffControllerProvider =
-    StateNotifierProvider<StaffController, StaffModel>((ref) {
+final staffControllerProvider = StateNotifierProvider<StaffController, StaffModel>((ref) {
   var x = ref.read(userRepositoryProvider).getOrgId();
   return StaffController(x);
 });

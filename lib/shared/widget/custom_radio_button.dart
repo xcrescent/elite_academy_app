@@ -1,4 +1,4 @@
-import 'package:elite_academy/core/utils/color_constant.dart';
+import 'package:elite_academy/const/color_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 

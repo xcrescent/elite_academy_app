@@ -17,8 +17,7 @@ class StudentDashboardPage extends ConsumerWidget {
       appBar: AppBar(),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             // Container(
             //   width: double.infinity,
             //   margin: const EdgeInsets.all(12),
@@ -154,12 +153,11 @@ class StudentDashboardPage extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -251,7 +249,7 @@ class StudentDashboardPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   // height: 120,
                   width: double.infinity,
                   child: SwipeCardsScreen(
@@ -275,14 +273,14 @@ class StudentDashboardPage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 270,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     child: Row(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: 15,
                         ),
                         AdditionalInfo(
@@ -302,7 +300,7 @@ class StudentDashboardPage extends ConsumerWidget {
                               'Lorem ipsum dolor sit amet consectetur. Mattis felisid tempor vehicula proin turpis. Neque lorem tristiqueeget vitae in vitae. ',
                           detail: 'Volunteers needed',
                         ),
-                        const SizedBox(
+                        SizedBox(
                           width: 15,
                         ),
                         // AdditionalInfo(
@@ -331,7 +329,7 @@ class StudentDashboardPage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Padding(
@@ -346,8 +344,7 @@ class StudentDashboardPage extends ConsumerWidget {
                           child: Text(
                             'Today’s Schedule',
                             style: TextStyle(
-                              color:
-                                  Colors.black.withOpacity(0.800000011920929),
+                              color: Colors.black.withOpacity(0.800000011920929),
                               fontSize: 25,
                               fontFamily: 'Raleway',
                               fontWeight: FontWeight.bold,
@@ -357,7 +354,7 @@ class StudentDashboardPage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 24),
-                      Text(
+                      const Text(
                         'see more',
                         textAlign: TextAlign.right,
                         style: TextStyle(
@@ -372,14 +369,14 @@ class StudentDashboardPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
-                      return SizedBox(height: 39);
+                      return const SizedBox(height: 39);
                     },
                     itemCount: 5,
                     itemBuilder: (context, index) {
@@ -388,15 +385,14 @@ class StudentDashboardPage extends ConsumerWidget {
                         child: Container(
                           // width: 326,
                           height: 100,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
-                          child: Column(
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          decoration: const BoxDecoration(color: Color(0xFFD9D9D9)),
+                          child: const Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -416,7 +412,7 @@ class StudentDashboardPage extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 24),
+                                    SizedBox(width: 24),
                                     Expanded(
                                       child: SizedBox(
                                         child: Text(
@@ -435,8 +431,8 @@ class StudentDashboardPage extends ConsumerWidget {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              Container(
+                              SizedBox(height: 12),
+                              SizedBox(
                                 width: double.infinity,
                                 height: 40,
                                 child: Column(
@@ -456,7 +452,7 @@ class StudentDashboardPage extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 4),
+                                    SizedBox(height: 4),
                                     SizedBox(
                                       width: double.infinity,
                                       child: Text(
@@ -477,7 +473,7 @@ class StudentDashboardPage extends ConsumerWidget {
                         ),
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Padding(
@@ -491,15 +487,14 @@ class StudentDashboardPage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 for (int i = 0; i < 5; i++) ...[
                   Consumer(
                     builder: (context, ref, child) {
                       final currentTheme = ref.watch(themecontrollerProvider);
-                      var brightness =
-                          MediaQuery.of(context).platformBrightness;
+                      var brightness = MediaQuery.of(context).platformBrightness;
                       bool isDarkMode = brightness == Brightness.dark;
                       return Container(
                         decoration: BoxDecoration(
@@ -526,7 +521,7 @@ class StudentDashboardPage extends ConsumerWidget {
                             //   ),
                             // );
                           },
-                          child: SubjectCard(
+                          child: const SubjectCard(
                             subject: "3", attendance: 12, totalClasses: 22,
                             totalPresent: 2,
                             // totalPresent: subjectsList[i].presentLeactures,
@@ -650,7 +645,7 @@ class StudentDashboardPage extends ConsumerWidget {
             //   ),
             // ),
           ])),
-      drawer: Drawer(
+      drawer: const Drawer(
         backgroundColor: Colors.black12,
       ),
     );

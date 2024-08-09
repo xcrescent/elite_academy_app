@@ -5,10 +5,10 @@ class MyProvider extends InheritedWidget {
   final SimpleHiddenDrawerController controller;
 
   const MyProvider({
-    Key? key,
+    super.key,
     required this.controller,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;

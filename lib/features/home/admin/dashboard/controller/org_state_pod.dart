@@ -1,7 +1,7 @@
-import 'package:elite_academy/features/home/admin/dashboard/model/org_model.dart';
+import 'package:elite_academy/data/model/org_model.dart';
+import 'package:elite_academy/data/repository/org_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../repository/org_repository.dart';
 //
 // final orgDetailsPod =
 //     StreamProvider.autoDispose.family<OrgModel, String>((ref, orgId) {

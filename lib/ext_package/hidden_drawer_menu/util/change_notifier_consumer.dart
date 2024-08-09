@@ -8,17 +8,15 @@ class ChangeNotifierConsumer<T extends ChangeNotifier> extends StatefulWidget {
   final ChangeNotifierWidgetBuilder<T> builder;
 
   const ChangeNotifierConsumer({
-    Key? key,
+    super.key,
     required this.changeNotifier,
     required this.builder,
-  }) : super(key: key);
+  });
   @override
-  _ChangeNotifierConsumerState<T> createState() =>
-      _ChangeNotifierConsumerState<T>();
+  State<ChangeNotifierConsumer> createState() => _ChangeNotifierConsumerState<T>();
 }
 
-class _ChangeNotifierConsumerState<T extends ChangeNotifier>
-    extends State<ChangeNotifierConsumer> {
+class _ChangeNotifierConsumerState<T extends ChangeNotifier> extends State<ChangeNotifierConsumer> {
   @override
   void initState() {
     widget.changeNotifier.addListener(_listener);
@@ -33,8 +31,7 @@ class _ChangeNotifierConsumerState<T extends ChangeNotifier>
 
   @override
   Widget build(BuildContext context) {
-    return notifierConsumerWidget.builder(
-        context, notifierConsumerWidget.changeNotifier);
+    return notifierConsumerWidget.builder(context, notifierConsumerWidget.changeNotifier);
   }
 
   void _listener() {

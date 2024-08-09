@@ -1,70 +1,72 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/theme/app_style.dart';
-import 'package:elite_academy/core/utils/color_constant.dart';
+import 'package:elite_academy/const/color_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
-import 'package:elite_academy/features/auth/auth.dart';
+import 'package:elite_academy/data/repository/auth_repository.dart';
 import 'package:elite_academy/features/auth/phone/controller/phone_auth_state_pod.dart';
-import 'package:elite_academy/features/auth/phone/repository/phone_auth_repository.dart';
-import 'package:elite_academy/shared/widget/app_bar/appbar_subtitle.dart';
-import 'package:elite_academy/shared/widget/app_bar/custom_app_bar.dart';
 import 'package:elite_academy/shared/widget/custom_button.dart';
-import 'package:elite_academy/shared/widget/custom_text_form_field.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
-class PhoneAuthPage extends ConsumerWidget {
+class PhoneAuthPage extends HookConsumerWidget {
   const PhoneAuthPage({super.key});
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(authStateNotifierProvider, (_, state) {
-      if (state == AuthState.authenticating) {
-        context.router.pushNamed('/phone-verify');
-      } else {
-        if (kDebugMode) {
-          print("state: $state");
-        }
-      }
-    });
+    // final authNotifier = ref.watch(authNotifierProvider);
+    // useEffect(() {
+    //   if (authNotifier is User) {
+    //     context.router.pushNamed('/phone-verify');
+    //   }
+    //   return () {};
+    // }, [authNotifier]);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConstant.gray50,
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(
-          height: getVerticalSize(54),
+        appBar: AppBar(
           centerTitle: true,
-          title: AppbarSubtitle(
-            text: "Login using Phone Number",
+          title: Text(
+            "Sign In",
           ),
+          actions: [],
         ),
         body: Form(
           key: _formKey,
           child: Container(
-            width: double.maxFinite,
-            padding: getPadding(left: 16, right: 16),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   "Phone Number",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
-                  style: AppStyle.txtGilroyMedium16,
+                  style: TextStyle(
+                    color: ColorConstant.gray900,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                CustomTextFormField(
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
                   focusNode: FocusNode(),
-                  onChanged: (value) {
-                    ref.read(phoneNumberProvider.notifier).state = value;
-                  },
-                  hintText: "Enter your Phone Number",
-                  margin: getMargin(top: 7),
+                  controller: ref.watch(phoneNumberControllerPod),
+                  decoration: InputDecoration(
+                    hintText: "Enter your Phone Number",
+                    hintStyle: TextStyle(
+                      color: Colors.grey.shade400,
+                      fontSize: 14,
+                    ),
+                  ),
+                  keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.phone,
                 ),
                 CustomButton(
                   height: getVerticalSize(50),
@@ -73,7 +75,7 @@ class PhoneAuthPage extends ConsumerWidget {
                     top: 24,
                     bottom: 5,
                   ),
-                  onTap: () {
+                  onTap: () async {
                     // if (kDebugMode) {
                     //   context.router.replace(
                     //       PhoneVerificationRoute(verificationId: "123456"));
@@ -83,21 +85,18 @@ class PhoneAuthPage extends ConsumerWidget {
                     if (_formKey.currentState!.validate()) {
                       // sendOTP(context, ref);
                       String phoneNumber =
-                          '+91${ref.watch(phoneNumberProvider).trim()}';
-                      ref
-                          .read(phoneAuthRepositoryProvider)
-                          .sendOtp(
+                          '+91${ref.read(phoneNumberControllerPod.notifier).state.text.trim()}';
+                      var e = await ref.read(authRepositoryProvider).sendOtp(
                             phoneNumber,
-                          )
-                          .then((e) {
-                        if (e != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(e),
-                            ),
                           );
-                        }
-                      });
+
+                      if (e != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(e),
+                          ),
+                        );
+                      }
                     }
                   },
                 ),

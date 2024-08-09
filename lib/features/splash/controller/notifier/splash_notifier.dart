@@ -1,19 +1,26 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:video_player/video_player.dart';
+import 'package:elite_academy/features/splash/controller/splash_state_pod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class VideoPlayerNotifier extends StateNotifier<VideoPlayerController> {
-  VideoPlayerNotifier()
-      : super(VideoPlayerController.asset("assets/splash/elite_academy.mp4")) {
-    state.initialize().then((_) {
-      state.play();
-      state.setLooping(true);
-      // You may call stateChanged() if you need to rebuild the ConsumerWidget whenever the controller updates.
-    });
+part 'splash_notifier.g.dart';
+
+@riverpod
+class SplashNotifier extends _$SplashNotifier {
+  @override
+  Future<bool> build() async {
+    await ref.read(videoPlayerControllerProvider.notifier).state.initialize();
+    return true;
   }
 
-  @override
-  void dispose() {
-    state.dispose();
-    super.dispose();
+  void play() async {
+    ref.read(videoPlayerControllerProvider.notifier).state.play();
+  }
+
+  void pause() async {
+    ref.read(videoPlayerControllerProvider.notifier).state.pause();
+  }
+
+  void dispose() async {
+    ref.read(videoPlayerControllerProvider.notifier).state.dispose();
+    state = const AsyncData(false);
   }
 }

@@ -1,19 +1,19 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:elite_academy/const/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingPage extends StatefulWidget {
+import '../../../../../core/providers/firebase_provider.dart';
+
+@RoutePage(
+  deferredLoading: true,
+)
+class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
-}
-
-class _SettingPageState extends State<SettingPage> {
-  // static Color primaryColor = const Color.fromARGB(255, 101, 181, 245);
-  // static Color primaryColor2 = const Color.fromARGB(255, 2, 45, 62);
-  // static Color primaryColor3 = const Color.fromARGB(255, 12, 107, 145);
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -33,137 +33,104 @@ class _SettingPageState extends State<SettingPage> {
           // color: primaryColor2,
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
                   const Text(
                     "Basics",
-                    style: TextStyle(
-                      fontSize: 16,
-                      // color: primaryColor,
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      // color: primaryColor3,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.message,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "SMS Settings",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.message,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  " Get SMS Automaker",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Divider(),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 5),
-                                child: Icon(
-                                  CupertinoIcons.money_dollar_circle_fill,
-                                  // color: primaryColor,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "Advance Fee",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  // color: primaryColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.phone,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "SMS Settings",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
+                  ),
+                  Column(
+                    children: [
+                      ListTile(
+                        title: const Text(
+                          "Notification",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                        trailing: CupertinoSwitch(
+                          value: true,
+                          onChanged: (value) {},
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          "Dark Mode",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                        trailing: CupertinoSwitch(
+                          value: true,
+                          onChanged: (value) {},
+                        ),
+                      ),
+                      const Divider(),
+                      const ListTile(
+                        leading: Icon(
+                          Icons.message,
+                        ),
+                        title: Text(
+                          "SMS Settings",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      const Divider(),
+                      const ListTile(
+                        leading: Icon(
+                          Icons.message,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Get SMS Automaker",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      const Divider(),
+                      const ListTile(
+                        title: Text(
+                          "Advance Fee",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                        leading: Icon(
+                          CupertinoIcons.money_dollar_circle_fill,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Divider(),
+                      const ListTile(
+                        leading: Icon(
+                          CupertinoIcons.phone,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "SMS Settings",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   const Text(
                     "Data",
@@ -173,72 +140,44 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      // color: primaryColor3,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.upload,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Save backup",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.download,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Restore backUp",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                  const Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.upload,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Save backup",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
+                          Icons.download,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Restore backUp",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   const Text(
                     "Support",
@@ -248,122 +187,72 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      // color: primaryColor3,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Rate App",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.folder,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Suggestion",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Divider(),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 5),
-                                child: Icon(
-                                  CupertinoIcons.phone,
-                                  // color: primaryColor,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "Contact us",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  // color: primaryColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.folder_fill,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "About Us",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                  const Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.star,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Rate App",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
+                          Icons.folder,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Suggestion",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
+                          CupertinoIcons.phone,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Contact us",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
+                          CupertinoIcons.folder_fill,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "About Us",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   const Text(
                     "Legal",
@@ -373,107 +262,61 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      // color: primaryColor3,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.folder,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Terms and Conditions",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.import_contacts,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Privacy Policy",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                  const Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.folder,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Terms and Conditions",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
+                          Icons.import_contacts,
+                          // color: primaryColor,
+                        ),
+                        title: Text(
+                          "Privacy Policy",
+                          style: TextStyle(
+                            fontSize: 18,
+                            // color: primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      // color: primaryColor3,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.logout,
-                                  // color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Log Out",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    // color: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                  InkWell(
+                    onTap: () async {
+                      await ref.read(authProvider).signOut();
+                      context.router.replaceNamed(Routes.signIn);
+                    },
+                    child: const ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        // color: primaryColor,
+                      ),
+                      title: Text(
+                        "Log Out",
+                        style: TextStyle(
+                          fontSize: 18,
+                          // color: primaryColor,
+                        ),
                       ),
                     ),
                   ),

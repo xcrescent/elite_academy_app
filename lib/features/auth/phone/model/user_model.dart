@@ -12,6 +12,7 @@ class UserModel {
   String? whatsappNumber;
   String? password;
   DateTime? dateOfBirth;
+  String? userName;
 
   UserModel({
     required this.uid,
@@ -27,6 +28,7 @@ class UserModel {
     this.whatsappNumber,
     this.password,
     this.dateOfBirth,
+    this.userName,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> data) {

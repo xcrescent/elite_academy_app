@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:elite_academy/data/repository/auth_repository.dart';
 import 'package:elite_academy/features/auth/phone/model/phone_auth_response_model.dart';
-import 'package:elite_academy/features/auth/phone/repository/phone_auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,7 +47,7 @@ class PhoneVerificationPage extends ConsumerWidget {
             maxLength: 6,
             // controller: otpController,
             onChanged: (value) {
-              ref.read(otpProvider.notifier).state = value;
+              ref.read(otpControllerPod.notifier).state = value;
             },
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -71,9 +71,9 @@ class PhoneVerificationPage extends ConsumerWidget {
                 //   return;
                 // }
                 ref
-                    .read(phoneAuthRepositoryProvider)
+                    .read(authRepositoryProvider)
                     .verifyOtp(
-                      ref.watch(otpProvider),
+                      ref.watch(otpControllerPod),
                     )
                     .then(
                   (PhoneAuthResponse value) {

@@ -1,15 +1,14 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/providers/firebase_provider.dart';
-import 'package:elite_academy/features/auth/phone/repository/user_repository.dart';
+import 'package:elite_academy/data/repository/student_repository.dart';
+import 'package:elite_academy/features/home/admin/add_student/notifier/add_student_notifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../dashboard/controller/student_state_pod.dart';
-import '../../dashboard/repository/student_repository.dart';
 
 @RoutePage(
   deferredLoading: true,
@@ -101,7 +100,7 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
       floatingActionButton: Consumer(
         builder: (context, ref, child) {
           return FloatingActionButton.extended(
-            onPressed: () async {
+            onPressed: () {
               if (formKey.currentState?.validate() == true) {
                 if (_tabController.index < 3) {
                   _tabController.animateTo(_tabController.index + 1);
@@ -110,40 +109,40 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
                 if (kDebugMode) {
                   print('validated');
                 }
-                ref.watch(authProvider).fetchSignInMethodsForEmail(
-                      ref.watch(studentControllerProvider).email ??
-                          'admin@eliteacademy.co.in',
-                    );
+                // ref.watch(authProvider).fetchSignInMethodsForEmail(
+                //       ref.watch(addStudentNotifierProvider).email ?? 'admin@eliteacademy.co.in',
+                //     );
 
-                var x = await ref.read(studentRepositoryProvider).addStudent(
-                      ref.read(studentControllerProvider),
-                      ref.watch(passStudentIdPod).toString(),
+                ref
+                    .read(studentRepositoryProvider)
+                    .addStudent(
+                      ref.read(addStudentNotifierProvider),
+                      ref.watch(passStudentIdPod).text.trim(),
+                    )
+                    .then((value) {
+                  if (value) {
+                    ref.read(addStudentNotifierProvider.notifier).reset();
+                    ref.read(passStudentIdPod.notifier).state.clear();
+                    ref.invalidate(studentListPod);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Student added successfully',
+                        ),
+                      ),
                     );
-                if (!mounted) {
-                  return;
-                }
-                if (x) {
-                  ref.read(studentControllerProvider.notifier).reset();
-                  ref.read(passStudentIdPod.notifier).state = '';
-                  var refresh = ref.refresh(studentListPod);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Student added successfully',
+                    context.router.maybePop();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Something went wrong',
+                        ),
                       ),
-                    ),
-                  );
-                  context.router.pop();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Something went wrong',
-                      ),
-                    ),
-                  );
-                  return;
-                }
+                    );
+                    return;
+                  }
+                });
               }
             },
             icon: const Icon(
@@ -183,52 +182,60 @@ class PersonalTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
-              initialValue: ref.watch(studentControllerProvider).name,
+              initialValue: ref.watch(addStudentNotifierProvider).name,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter Student Name';
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setFirstName(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setFirstName(value),
               decoration: const InputDecoration(
                 labelText: 'Name',
                 prefixIcon: Icon(Icons.person),
               ),
             ),
+            // const SizedBox(
+            //   height: 16,
+            // ),
+            // TextFormField(
+            //   // initialValue: ref.watch(addStudentNotifierProvider).userName,
+            //   autovalidateMode: AutovalidateMode.onUserInteraction,
+            //   onChanged: (value) {
+            //     ref.watch(userRepositoryProvider).getOrgId().then(
+            //       (x) {
+            //         ref.read(addStudentNotifierProvider.notifier).setUserName(
+            //               // '${ref.watch(addStudentNotifierProvider).name}@$value',
+            //               '$value@$x',
+            //             );
+            //       },
+            //     );
+            //   },
+            //   controller: TextEditingController(
+            //       text: ref.watch(addStudentNotifierProvider).userName),
+            //   decoration: const InputDecoration(
+            //     labelText: 'Username',
+            //     prefixIcon: Icon(Icons.email),
+            //   ),
+            //   // readOnly: true,
+            //   keyboardType: TextInputType.emailAddress,
+            // ),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) {
-                ref.watch(userRepositoryProvider).getOrgId().then((value) {
-                  ref.read(studentControllerProvider.notifier).setEmail(
-                      '${ref.watch(studentControllerProvider).name}@$value.eliteacademy.co.in');
-                });
-              },
-              decoration: const InputDecoration(
-                labelText: 'Username',
-                prefixIcon: Icon(Icons.email),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              initialValue: ref.watch(studentControllerProvider).dateOfBirth !=
-                      null
-                  ? DateFormat('dd-MM-yyyy')
-                      .format(ref.watch(studentControllerProvider).dateOfBirth!)
-                  : null,
-              onChanged: (value) {},
+              // initialValue: ref.watch(addStudentNotifierProvider).dateOfBirth !=
+              //         null
+              //     ? DateFormat('dd-MM-yyyy')
+              //         .format(ref.watch(addStudentNotifierProvider).dateOfBirth!)
+              //     : null,
+              controller: ref.watch(studentDOBControllerProvider),
               decoration: const InputDecoration(
                 labelText: 'Date of Birth (optional)',
                 prefixIcon: Icon(Icons.cake),
               ),
+              readOnly: true,
               onTap: () async {
                 var x = await showDatePicker(
                   context: context,
@@ -237,9 +244,8 @@ class PersonalTab extends ConsumerWidget {
                   lastDate: DateTime.now(),
                 );
                 if (x != null) {
-                  ref
-                      .read(studentControllerProvider.notifier)
-                      .setDateOfBirth(x);
+                  ref.watch(studentDOBControllerProvider).text = DateFormat('dd-MM-yyyy').format(x);
+                  ref.read(addStudentNotifierProvider.notifier).setDateOfBirth(x);
                 }
               },
             ),
@@ -253,12 +259,9 @@ class PersonalTab extends ConsumerWidget {
                 }
                 return null;
               },
-              controller: TextEditingController(
-                text: ref.watch(passStudentIdPod),
-              ),
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              controller: ref.watch(passStudentIdPod),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: InputDecoration(
                 labelText: 'Password',
                 prefixIcon: const Icon(Icons.password),
@@ -268,15 +271,14 @@ class PersonalTab extends ConsumerWidget {
                   ),
                   onPressed: () {
                     // Generate Password
-                    const chars =
-                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                     final rnd = Random(DateTime.now().millisecondsSinceEpoch);
                     const length = 8;
                     String result = "";
                     for (var i = 0; i < length; i++) {
                       result += chars[rnd.nextInt(chars.length)];
                     }
-                    ref.read(passStudentIdPod.notifier).state = result;
+                    ref.read(passStudentIdPod.notifier).state.text = result;
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
@@ -321,17 +323,15 @@ class ContactTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              initialValue: ref.watch(addStudentNotifierProvider).phoneNumber,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Phone number',
                 prefixIcon: Icon(Icons.phone),
               ),
               buildCounter: (BuildContext context,
-                  {required int currentLength,
-                  required bool isFocused,
-                  required int? maxLength}) {
+                  {required int currentLength, required bool isFocused, required int? maxLength}) {
                 return null;
               },
               maxLength: 10,
@@ -350,17 +350,14 @@ class ContactTab extends ConsumerWidget {
               height: 16,
             ),
             TextFormField(
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Whatsapp number (if not same as above)',
                 prefixIcon: Icon(Icons.numbers),
               ),
               buildCounter: (BuildContext context,
-                  {required int currentLength,
-                  required bool isFocused,
-                  required int? maxLength}) {
+                  {required int currentLength, required bool isFocused, required int? maxLength}) {
                 return null;
               },
               validator: (value) {
@@ -379,14 +376,99 @@ class ContactTab extends ConsumerWidget {
               height: 16,
             ),
             TextFormField(
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              // validator: _validateEmail,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Email (optional)',
+                prefixIcon: Icon(Icons.email),
+              ),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              // validator: (value) {
+              //   if (value!.isEmpty) {
+              //     return 'Please enter Aadhar Number';
+              //   }
+              //   return null;
+              // },
+              // initialValue: ref.watch(addStudentNotifierProvider).aadharNumber,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Aadhar Number (optional)',
+                prefixIcon: Icon(Icons.person),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).address,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Address (optional)',
                 prefixIcon: Icon(Icons.home),
               ),
               keyboardType: TextInputType.streetAddress,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).city,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'City (optional)',
+                prefixIcon: Icon(Icons.location_city),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).state,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'State (optional)',
+                prefixIcon: Icon(Icons.location_city),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).pincode,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Pincode (optional)',
+                prefixIcon: Icon(Icons.location_city),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).country,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Country (optional)',
+                prefixIcon: Icon(Icons.location_city),
+              ),
+              keyboardType: TextInputType.text,
             ),
           ],
         ),
@@ -409,34 +491,34 @@ class AcademicTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter Roll number';
-                }
-                return null;
-              },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                labelText: 'Roll Number',
-                prefixIcon: Icon(Icons.numbers),
-              ),
-              keyboardType: TextInputType.number,
-            ),
+                initialValue: ref.watch(addStudentNotifierProvider).studyIn,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter School Name or College Name';
+                  }
+                  return null;
+                },
+                onChanged: (value) =>
+                    ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+                decoration: const InputDecoration(
+                  labelText: 'School Name or College Name',
+                  prefixIcon: Icon(Icons.school),
+                ),
+                keyboardType: TextInputType.text),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).enrollmentNumber,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter Standard';
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: const InputDecoration(
                 labelText: 'Standard',
                 prefixIcon: Icon(Icons.class_),
@@ -446,21 +528,60 @@ class AcademicTab extends ConsumerWidget {
             const SizedBox(
               height: 16,
             ),
+            // Stream
+            TextFormField(
+              initialValue: ref.watch(addStudentNotifierProvider).stream,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter Stream';
+                }
+                return null;
+              },
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Stream',
+                prefixIcon: Icon(Icons.stream),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+
+            const SizedBox(
+              height: 16,
+            ),
             TextFormField(
               // validator: (value) {
               //   if (value!.isEmpty) {
-              //     return 'Please enter Aadhar Number';
+              //     return 'Please enter Roll number';
               //   }
               //   return null;
               // },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
-                labelText: 'Aadhar Number (optional)',
-                prefixIcon: Icon(Icons.person),
+                labelText: 'Roll Number (optional)',
+                prefixIcon: Icon(Icons.perm_identity_outlined, size: 24),
               ),
               keyboardType: TextInputType.text,
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            TextFormField(
+              // validator: (value) {
+              //   if (value!.isEmpty) {
+              //     return 'Please select Batch';
+              //   }
+              //   return null;
+              // },
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              readOnly: true,
+              decoration: const InputDecoration(
+                labelText: 'Batch',
+                prefixIcon: Icon(Icons.batch_prediction),
+              ),
+              keyboardType: TextInputType.number,
             ),
           ],
         ),
@@ -474,7 +595,7 @@ class InfoTab extends ConsumerWidget {
 
   String? _validateEmail(value) {
     if (value!.isNotEmpty) {
-      RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+      RegExp emailRegExp = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
       if (!emailRegExp.hasMatch(value)) {
         return 'Please enter a valid email';
       }
@@ -499,9 +620,8 @@ class InfoTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Father Name',
                 prefixIcon: Icon(Icons.person),
@@ -518,9 +638,8 @@ class InfoTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Father Phone Number',
                 prefixIcon: Icon(Icons.phone),
@@ -533,9 +652,8 @@ class InfoTab extends ConsumerWidget {
             TextFormField(
               validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Father Email (optional)',
                 prefixIcon: Icon(Icons.email),
@@ -543,7 +661,7 @@ class InfoTab extends ConsumerWidget {
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(
-              height: 16,
+              height: 32,
             ),
             TextFormField(
               // validator: (value) {
@@ -552,15 +670,46 @@ class InfoTab extends ConsumerWidget {
               //   }
               //   return null;
               // },
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Father Address (optional)',
-                prefixIcon: Icon(Icons.home),
+                labelText: 'Mother Name (optional)',
+                prefixIcon: Icon(Icons.person),
               ),
               keyboardType: TextInputType.streetAddress,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              // validator: (value) {
+              //   if (value!.isEmpty) {
+              //     return 'Please enter Phone number';
+              //   }
+              //   return null;
+              // },
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Mother Phone Number (optional)',
+                prefixIcon: Icon(Icons.phone),
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              validator: _validateEmail,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              onChanged: (value) =>
+                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Mother Email (optional)',
+                prefixIcon: Icon(Icons.email),
+              ),
+              keyboardType: TextInputType.emailAddress,
             ),
           ],
         ),

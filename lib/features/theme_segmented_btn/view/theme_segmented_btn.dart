@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/theme/theme_controller.dart';
 import '../../../features/theme_segmented_btn/controller/selection_theme_pod.dart';
 
@@ -31,13 +32,10 @@ class _ThemeSegmentedBtnState extends ConsumerState<ThemeSegmentedBtn> {
         ),
       ],
       selected: ref.watch(themeSelectionPod),
-      onSelectionChanged: (thememodes) {
-        ref
-            .read(themecontrollerProvider.notifier)
-            .changeTheme(thememodes.first);
+      onSelectionChanged: (themeModes) {
+        ref.read(themecontrollerProvider.notifier).changeTheme(themeModes.first);
       },
-      style: const ButtonStyle(
-          maximumSize: MaterialStatePropertyAll(Size.fromWidth(12))),
+      style: const ButtonStyle(maximumSize: WidgetStatePropertyAll(Size.fromWidth(12))),
     );
   }
 }

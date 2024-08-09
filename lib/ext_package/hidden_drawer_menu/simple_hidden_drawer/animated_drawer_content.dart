@@ -1,7 +1,7 @@
 import 'package:elite_academy/ext_package/hidden_drawer_menu/controllers/animated_drawer_controller.dart';
 import 'package:flutter/material.dart';
 
-enum TypeOpen { FROM_LEFT, FROM_RIGHT }
+enum TypeOpen { fromLeft, fromRight }
 
 class AnimatedDrawerContent extends StatefulWidget {
   final AnimatedDrawerController controller;
@@ -18,7 +18,7 @@ class AnimatedDrawerContent extends StatefulWidget {
   final List<BoxShadow>? boxShadow;
 
   const AnimatedDrawerContent({
-    Key? key,
+    super.key,
     required this.controller,
     required this.child,
     this.isDraggable = true,
@@ -29,18 +29,18 @@ class AnimatedDrawerContent extends StatefulWidget {
     this.withShadow = true,
     this.enableScaleAnimation = true,
     this.enableCornerAnimation = true,
-    this.typeOpen = TypeOpen.FROM_LEFT,
+    this.typeOpen = TypeOpen.fromLeft,
     this.boxShadow,
-  }) : super(key: key);
+  });
 
   @override
-  _AnimatedDrawerContentState createState() => _AnimatedDrawerContentState();
+  State<AnimatedDrawerContent> createState() => _AnimatedDrawerContentState();
 }
 
 class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
-  static const double WIDTH_GESTURE = 50.0;
-  static const double HEIGHT_APPBAR = 80.0;
-  static const double BLUR_SHADOW = 20.0;
+  static const double widthGesture = 50.0;
+  static const double heightAppBar = 80.0;
+  static const double blurShadow = 20.0;
   double slideAmount = 0.0;
   double contentScale = 1.0;
   double cornerRadius = 0.0;
@@ -53,28 +53,23 @@ class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
         animation: widget.controller,
         builder: (_, child) {
           var animatePercent = widget.controller.value;
-          slideAmount = ((constraints.maxWidth) / 100 * widget.slidePercent) *
-              animatePercent;
+          slideAmount = ((constraints.maxWidth) / 100 * widget.slidePercent) * animatePercent;
 
           if (widget.enableScaleAnimation) {
-            contentScale = 1.0 -
-                (((100 - widget.verticalScalePercent) / 100) * animatePercent);
+            contentScale = 1.0 - (((100 - widget.verticalScalePercent) / 100) * animatePercent);
           }
 
           if (widget.enableCornerAnimation) {
             cornerRadius = widget.contentCornerRadius * animatePercent;
           }
 
-          slideAmount = widget.typeOpen == TypeOpen.FROM_LEFT
-              ? slideAmount
-              : (-1 * slideAmount);
+          slideAmount = widget.typeOpen == TypeOpen.fromLeft ? slideAmount : (-1 * slideAmount);
 
           return Transform(
             transform: Matrix4.translationValues(slideAmount, 0.0, 0.0)
               ..scale(contentScale, contentScale),
-            alignment: widget.typeOpen == TypeOpen.FROM_LEFT
-                ? Alignment.centerLeft
-                : Alignment.centerRight,
+            alignment:
+                widget.typeOpen == TypeOpen.fromLeft ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: _getShadow(),
@@ -122,7 +117,7 @@ class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
             const BoxShadow(
               color: Color(0x44000000),
               offset: Offset(0.0, 5.0),
-              blurRadius: BLUR_SHADOW,
+              blurRadius: blurShadow,
               spreadRadius: 5.0,
             ),
           ];
@@ -132,8 +127,8 @@ class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
   }
 
   void _myOnHorizontalDragStart(DragStartDetails detail) {
-    if (detail.localPosition.dx <= WIDTH_GESTURE &&
-        !(widget.withPaddingTop && detail.localPosition.dy <= HEIGHT_APPBAR)) {
+    if (detail.localPosition.dx <= widthGesture &&
+        !(widget.withPaddingTop && detail.localPosition.dy <= heightAppBar)) {
       setState(() {
         dragging = true;
       });
@@ -148,8 +143,7 @@ class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
       var globalPosition = detail.globalPosition.dx;
       globalPosition = globalPosition < 0 ? 0 : globalPosition;
       double position = globalPosition / constraints.maxWidth;
-      var realPosition =
-          widget.typeOpen == TypeOpen.FROM_LEFT ? position : (1 - position);
+      var realPosition = widget.typeOpen == TypeOpen.fromLeft ? position : (1 - position);
       widget.controller.move(realPosition);
     }
   }

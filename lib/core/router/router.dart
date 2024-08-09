@@ -1,44 +1,45 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:elite_academy/const/routes.dart';
 import 'package:elite_academy/core/router/router.gr.dart';
 
 /// This class used for defined routes and paths na dother properties
 @AutoRouterConfig()
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   late final List<AutoRoute> routes = [
-    AutoRoute(
-      page: CounterRoute.page,
-      path: '/counter',
-      initial: false,
-    ),
+    // AutoRoute(
+    //   page: CounterRoute.page,
+    //   path: '/counter',
+    //   initial: false,
+    // ),
     AutoRoute(
       page: PhoneAuthRoute.page,
-      path: '/phone-auth',
+      path: Routes.phoneAuth,
       initial: false,
     ),
     AutoRoute(
       page: HomeRoute.page,
-      path: '/home',
+      path: Routes.home,
       initial: false,
     ),
     AutoRoute(
       page: SplashRoute.page,
-      path: '/splash',
+      path: Routes.splash,
       initial: true,
     ),
     AutoRoute(
       page: SignInRoute.page,
-      path: '/sign-in',
+      path: Routes.signIn,
       initial: false,
     ),
     AutoRoute(
       page: AccountCreationRoute.page,
-      path: '/account-creation',
+      path: Routes.accountCreation,
       initial: false,
     ),
     AutoRoute(
       page: PhoneVerificationRoute.page,
-      path: '/phone-verify',
+      path: Routes.phoneVerify,
       initial: false,
     ),
     // AutoRoute(

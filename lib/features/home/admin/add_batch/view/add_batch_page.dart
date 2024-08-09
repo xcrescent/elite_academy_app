@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/features/home/admin/dashboard/repository/batch_repository.dart';
+import 'package:elite_academy/data/repository/batch_repository.dart';
+import 'package:elite_academy/features/home/admin/add_batch/notifier/add_batch_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -45,18 +46,18 @@ class _AddBatchPageState extends ConsumerState<AddBatchPage> {
         onPressed: () async {
           if (_formKey.currentState?.validate() == true) {
             var x = await ref.read(batchRepositoryProvider).addBatch(
-                  ref.read(batchControllerProvider),
+                  ref.read(addBatchNotifierProvider),
                 );
 
             if (!mounted) return;
             if (x) {
-              ref.read(batchControllerProvider.notifier).reset();
+              ref.read(addBatchNotifierProvider.notifier).reset();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Batch Added Successfully'),
                 ),
               );
-              context.router.pop();
+              context.router.maybePop();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -76,14 +77,12 @@ class _AddBatchPageState extends ConsumerState<AddBatchPage> {
 
 class BatchTab extends ConsumerWidget {
   const BatchTab({super.key});
-  static final TextEditingController _startDateController =
-      TextEditingController();
-  static final TextEditingController _endDateController =
-      TextEditingController();
+  static final TextEditingController _startDateController = TextEditingController();
+  static final TextEditingController _endDateController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var batchController = ref.watch(batchControllerProvider);
+    var batchController = ref.watch(addBatchNotifierProvider);
     _startDateController.text = batchController.startDate != null
         ? DateFormat('dd-MM-yyyy').format(batchController.startDate!)
         : "";
@@ -112,8 +111,7 @@ class BatchTab extends ConsumerWidget {
               }
               return null;
             },
-            onChanged: (value) =>
-                ref.read(batchControllerProvider.notifier).setBatchName(value),
+            onChanged: (value) => ref.read(addBatchNotifierProvider.notifier).setBatchName(value),
             decoration: const InputDecoration(
               labelText: 'Batch name',
               prefixIcon: Icon(Icons.person),
@@ -127,7 +125,7 @@ class BatchTab extends ConsumerWidget {
               labelText: 'Fee Type',
               prefixIcon: Icon(Icons.money),
             ),
-            value: ref.watch(batchControllerProvider).feeType,
+            value: ref.watch(addBatchNotifierProvider).feeType,
             items: feeType.map((e) {
               return DropdownMenuItem(
                 value: e.values.first,
@@ -135,9 +133,7 @@ class BatchTab extends ConsumerWidget {
               );
             }).toList(),
             onChanged: (value) {
-              ref
-                  .read(batchControllerProvider.notifier)
-                  .setFeeType(value.toString());
+              ref.read(addBatchNotifierProvider.notifier).setFeeType(value.toString());
             },
           ),
           const SizedBox(
@@ -146,7 +142,7 @@ class BatchTab extends ConsumerWidget {
           TextFormField(
             controller: _startDateController,
             // initialValue:
-            //     ref.watch(batchControllerProvider).startDate.toString(),
+            //     ref.watch(addBatchNotifierProvider).startDate.toString(),
 
             decoration: const InputDecoration(
               labelText: 'Start Date',
@@ -166,7 +162,7 @@ class BatchTab extends ConsumerWidget {
               if (date != null && date != DateTime.now()) {
                 var selectedDate = DateFormat('dd-MM-yyyy').format(date);
                 _startDateController.text = selectedDate;
-                ref.read(batchControllerProvider.notifier).setStartDate(date);
+                ref.read(addBatchNotifierProvider.notifier).setStartDate(date);
               }
             },
           ),
@@ -175,8 +171,8 @@ class BatchTab extends ConsumerWidget {
           ),
           TextFormField(
             controller: _endDateController,
-            // initialValue: ref.watch(batchControllerProvider).endDate != null
-            //     ? ref.watch(batchControllerProvider).endDate.toString()
+            // initialValue: ref.watch(addBatchNotifierProvider).endDate != null
+            //     ? ref.watch(addBatchNotifierProvider).endDate.toString()
             //     : "",
             onChanged: (value) {},
             onTap: () async {
@@ -191,7 +187,7 @@ class BatchTab extends ConsumerWidget {
               if (date != null && date != DateTime.now()) {
                 var selectedDate = DateFormat('dd-MM-yyyy').format(date);
                 _endDateController.text = selectedDate;
-                ref.read(batchControllerProvider.notifier).setEndDate(date);
+                ref.read(addBatchNotifierProvider.notifier).setEndDate(date);
               }
             },
             decoration: const InputDecoration(
@@ -203,10 +199,9 @@ class BatchTab extends ConsumerWidget {
             height: 16,
           ),
           TextFormField(
-            initialValue: ref.watch(batchControllerProvider).fees.toString(),
-            onChanged: (value) => ref
-                .read(batchControllerProvider.notifier)
-                .setFees(double.parse(value)),
+            initialValue: ref.watch(addBatchNotifierProvider).fees.toString(),
+            onChanged: (value) =>
+                ref.read(addBatchNotifierProvider.notifier).setFees(double.parse(value)),
             decoration: const InputDecoration(
               labelText: 'Fee',
               prefixIcon: Icon(Icons.currency_rupee),

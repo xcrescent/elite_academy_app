@@ -1,4 +1,4 @@
-import 'package:elite_academy/core/utils/color_constant.dart';
+import 'package:elite_academy/const/color_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -198,19 +198,19 @@ class CustomIconButton extends StatelessWidget {
 
   _setBorderRadius() {
     switch (shape) {
-      case IconButtonShape.CircleBorder20:
+      case IconButtonShape.circleBorder20:
         return BorderRadius.circular(
           getHorizontalSize(
             20.00,
           ),
         );
-      case IconButtonShape.CircleBorder32:
+      case IconButtonShape.circleBorder32:
         return BorderRadius.circular(
           getHorizontalSize(
             32.00,
           ),
         );
-      case IconButtonShape.RoundedBorder2:
+      case IconButtonShape.roundedBorder2:
         return BorderRadius.circular(
           getHorizontalSize(
             2.00,
@@ -371,10 +371,10 @@ class CustomIconButton extends StatelessWidget {
 }
 
 enum IconButtonShape {
-  RoundedBorder6,
-  CircleBorder20,
-  CircleBorder32,
-  RoundedBorder2,
+  roundedBorder6,
+  circleBorder20,
+  circleBorder32,
+  roundedBorder2,
   CircleBorder15,
   RoundedBorder10,
   RoundedBorder26,

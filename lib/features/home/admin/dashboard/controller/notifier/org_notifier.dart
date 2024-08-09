@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elite_academy/data/model/org_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../../model/org_model.dart';
 
 class OrgNotifier extends StateNotifier<List<OrgModel>> {
   OrgNotifier() : super([]) {
@@ -26,8 +25,7 @@ class OrgNotifier extends StateNotifier<List<OrgModel>> {
         )
         .snapshots()
         .listen((snapshot) {
-      List<OrgModel> remoteOrgs =
-          snapshot.docs.map((doc) => OrgModel.fromMap(doc.data())).toList();
+      List<OrgModel> remoteOrgs = snapshot.docs.map((doc) => OrgModel.fromMap(doc.data())).toList();
 
       // Update local Hive cache
       for (OrgModel org in remoteOrgs) {

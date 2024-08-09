@@ -1,38 +1,50 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/theme/app_style.dart';
-import 'package:elite_academy/core/utils/color_constant.dart';
-import 'package:elite_academy/core/utils/image_constant.dart';
+import 'package:elite_academy/const/image_constant.dart';
+import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:elite_academy/features/auth/auth.dart';
-import 'package:elite_academy/features/auth/phone/repository/phone_auth_repository.dart';
 import 'package:elite_academy/shared/widget/custom_button.dart';
 import 'package:elite_academy/shared/widget/custom_icon_button.dart';
 import 'package:elite_academy/shared/widget/custom_image_view.dart';
-import 'package:elite_academy/shared/widget/custom_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../phone/controller/phone_auth_state_pod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage(
   deferredLoading: true,
 )
-class AccountCreationScreen extends ConsumerWidget {
+class AccountCreationScreen extends HookConsumerWidget {
   const AccountCreationScreen({super.key});
 
   static final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(phoneAuthNotifierProvider, (_, state) {
-      if (state.isNewUser == false) {
-        if (!context.mounted) return;
-        context.router.replaceNamed('/home');
+    final firstNameController = useTextEditingController();
+    final lastNameController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final authNotifier = ref.watch(authNotifierProvider);
+    if (kDebugMode) {
+      firstNameController.text = "Dev";
+      lastNameController.text = "Elite";
+      emailController.text = "dev@eliteacademy.co.in";
+      passwordController.text = "123456";
+    }
+    useEffect(() {
+      if (authNotifier.value is User) {
+        print("Redirecting to Home Page");
+        context.router.replaceNamed(
+          '/home',
+        );
       }
-    });
+
+      return () {};
+    }, [authNotifier]);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConstant.gray50,
         resizeToAvoidBottomInset: false,
         body: Form(
           key: formKey,
@@ -94,78 +106,85 @@ class AccountCreationScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 26,
-                  ),
-                  child: Text(
-                    "First Name",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
                   onChanged: (value) {
                     ref.read(firstNameProvider.notifier).state = value;
                   },
-                  hintText: "Enter First Name",
-                  margin: getMargin(
-                    top: 8,
+                  controller: firstNameController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter First Name",
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "First Name is required";
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 19,
-                  ),
-                  child: Text(
-                    "Last Name",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
                   onChanged: (value) {
                     ref.read(lastNameProvider.notifier).state = value;
                   },
-                  hintText: "Enter Last Name",
-                  margin: getMargin(
-                    top: 7,
+                  controller: lastNameController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Last Name",
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Last Name is required";
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 18,
-                  ),
-                  child: Text(
-                    "Email Id",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
                   onChanged: (value) {
                     ref.read(emailProvider.notifier).state = value;
                   },
-                  hintText: "Enter Email Id",
-                  margin: getMargin(
-                    top: 8,
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Email Id",
                   ),
-                  textInputType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Email Id is required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                TextFormField(
+                  focusNode: FocusNode(),
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Password",
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Password is required";
+                    }
+                    return null;
+                  },
                 ),
                 CustomButton(
-                  onTap: () {
+                  onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      ref.read(phoneAuthRepositoryProvider).saveUser(
-                            ref.watch(firstNameProvider),
-                            ref.watch(middleNameProvider),
-                            ref.watch(lastNameProvider),
-                            ref.watch(emailProvider),
+                      await ref.read(authProvider).createUserWithEmailAndPassword(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
                           );
                     }
                   },

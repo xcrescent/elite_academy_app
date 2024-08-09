@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:elite_academy/data/repository/staff_repository.dart';
 import 'package:elite_academy/features/home/admin/dashboard/controller/staff_state_pod.dart';
-import 'package:elite_academy/features/home/admin/dashboard/repository/staff_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,8 +17,7 @@ class AddStaffPage extends ConsumerStatefulWidget {
   ConsumerState<AddStaffPage> createState() => _AddStaffPageState();
 }
 
-class _AddStaffPageState extends ConsumerState<AddStaffPage>
-    with SingleTickerProviderStateMixin {
+class _AddStaffPageState extends ConsumerState<AddStaffPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -97,6 +96,8 @@ class _AddStaffPageState extends ConsumerState<AddStaffPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (formKey.currentState?.validate() == true) {
+            final scaffoldMessenger = ScaffoldMessenger.of(context);
+            final router = context.router;
             if (_tabController.index < _tabController.length - 1) {
               _tabController.animateTo(_tabController.index + 1);
             } else {
@@ -110,16 +111,16 @@ class _AddStaffPageState extends ConsumerState<AddStaffPage>
                 return;
               }
               if (x) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                scaffoldMessenger.showSnackBar(
                   const SnackBar(
                     content: Text(
                       'Staff added successfully',
                     ),
                   ),
                 );
-                context.router.pop();
+                router.maybePop();
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
+                scaffoldMessenger.showSnackBar(
                   const SnackBar(
                     content: Text(
                       'Something went wrong',
@@ -169,10 +170,9 @@ class PersonalTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) =>
-                  ref.read(staffControllerProvider.notifier).setName(value),
-              decoration: const InputDecoration(
-                  labelText: 'First name', prefixIcon: Icon(Icons.person)),
+              onChanged: (value) => ref.read(staffControllerProvider.notifier).setName(value),
+              decoration:
+                  const InputDecoration(labelText: 'First name', prefixIcon: Icon(Icons.person)),
             ),
             const SizedBox(
               height: 16,
@@ -233,7 +233,7 @@ class PersonalTab extends ConsumerWidget {
 
 class ContactTab extends ConsumerWidget {
   final emailController = TextEditingController();
-  ContactTab({Key? key}) : super(key: key);
+  ContactTab({super.key});
 
   String? _validateEmail(value) {
     if (value!.isEmpty) {
@@ -257,11 +257,10 @@ class ContactTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Phone number', prefixIcon: Icon(Icons.phone)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Phone number', prefixIcon: Icon(Icons.phone)),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter Phone number';
@@ -274,9 +273,8 @@ class ContactTab extends ConsumerWidget {
               height: 16,
             ),
             TextFormField(
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                   labelText: 'Whatsapp number', prefixIcon: Icon(Icons.phone)),
               validator: (value) {
@@ -293,11 +291,9 @@ class ContactTab extends ConsumerWidget {
             TextFormField(
               validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Email', prefixIcon: Icon(Icons.email)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.email)),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(
@@ -310,11 +306,9 @@ class ContactTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Address', prefixIcon: Icon(Icons.home)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration: const InputDecoration(labelText: 'Address', prefixIcon: Icon(Icons.home)),
               keyboardType: TextInputType.streetAddress,
             ),
           ],
@@ -328,8 +322,7 @@ class AcademicTab extends ConsumerWidget {
   const AcademicTab({super.key});
 
   String? validatePassword(value) {
-    RegExp regex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (value.isEmpty) {
       return 'Please enter password';
     } else {
@@ -354,11 +347,10 @@ class AcademicTab extends ConsumerWidget {
             TextFormField(
               validator: validatePassword,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Password', prefixIcon: Icon(Icons.password)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Password', prefixIcon: Icon(Icons.password)),
               keyboardType: TextInputType.visiblePassword,
             ),
             const SizedBox(
@@ -371,11 +363,10 @@ class AcademicTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Roll Number', prefixIcon: Icon(Icons.numbers)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Roll Number', prefixIcon: Icon(Icons.numbers)),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(
@@ -388,11 +379,10 @@ class AcademicTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Standard', prefixIcon: Icon(Icons.class_)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Standard', prefixIcon: Icon(Icons.class_)),
               keyboardType: TextInputType.text,
             ),
             const SizedBox(
@@ -405,11 +395,10 @@ class AcademicTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Aadhar Number', prefixIcon: Icon(Icons.person)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Aadhar Number', prefixIcon: Icon(Icons.person)),
               keyboardType: TextInputType.text,
             ),
           ],
@@ -463,11 +452,10 @@ class InfoTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Father Name', prefixIcon: Icon(Icons.person)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Father Name', prefixIcon: Icon(Icons.person)),
               keyboardType: TextInputType.text,
             ),
             const SizedBox(
@@ -476,12 +464,10 @@ class InfoTab extends ConsumerWidget {
             TextFormField(
               validator: validatePhoneNumber,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
-                  labelText: 'Father Phone Number',
-                  prefixIcon: Icon(Icons.phone)),
+                  labelText: 'Father Phone Number', prefixIcon: Icon(Icons.phone)),
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(
@@ -490,11 +476,10 @@ class InfoTab extends ConsumerWidget {
             TextFormField(
               validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
-              decoration: const InputDecoration(
-                  labelText: 'Father Email', prefixIcon: Icon(Icons.email)),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
+              decoration:
+                  const InputDecoration(labelText: 'Father Email', prefixIcon: Icon(Icons.email)),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(
@@ -507,9 +492,8 @@ class InfoTab extends ConsumerWidget {
                 }
                 return null;
               },
-              onChanged: (value) => ref
-                  .read(staffControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              onChanged: (value) =>
+                  ref.read(staffControllerProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Father Address',

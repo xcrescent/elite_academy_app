@@ -1,113 +1,68 @@
 import 'package:auto_route/annotations.dart';
-import 'package:elite_academy/features/home/admin/dashboard/view/dashboard_page.dart';
+import 'package:elite_academy/features/home/faculty/dashboard/view/dashboard_page.dart';
 import 'package:elite_academy/features/home/quiz/quiz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-@RoutePage()
-class HomePage extends ConsumerStatefulWidget {
+@RoutePage(
+  deferredLoading: true,
+)
+class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageIndex = useState<int>(0);
 
-class _HomePageState extends ConsumerState<HomePage> {
-  int pageIndex = 0;
+    const List<Widget> pages = [
+      // AdminDashboardPage()
+      FacultyDashboardPage(),
+      QuizPage(),
+      QuizPage(),
+      QuizPage(),
+      QuizPage(),
+    ];
 
-  static const List<Widget> pages = [
-    StudentDashboardPage(),
-    QuizPage(),
-    QuizPage(),
-    QuizPage(),
-    QuizPage(),
-  ];
-  void _onItemTapped(int index) {
-    setState(() {
-      pageIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // if (kDebugMode) {
-    //   FirebaseAuth.instance
-    //       .signInWithEmailAndPassword(
-    //     email: "dev@eliteacademy.co.in",
-    //     password: "123456",
-    //   )
-    //       .then(
-    //     (value) {
-    //       if (kDebugMode) {
-    //         print("Email Verified: ${value.user!.emailVerified}");
-    //       }
-    //       const storage = FlutterSecureStorage();
-    //       storage.write(
-    //         key: "uid",
-    //         value: value.user!.uid,
-    //       );
-    //       storage.read(key: "uid").then((value) {
-    //         if (kDebugMode) {
-    //           print("UID: $value");
-    //         }
-    //       });
-    //       // ref.read(adminRepositoryProvider).createAdmin(
-    //       //       AdminModel(
-    //       //         email: 'usjadon19@gmail.com',
-    //       //         phone: '+919911168006',
-    //       //         firstName: 'Utkarsh',
-    //       //         lastName: 'S Jadon',
-    //       //         id: value.user!.uid,
-    //       //       ),
-    //       //     );
-    //       //
-    //       ref.read(phoneAuthNotifierProvider.notifier).setResponse(
-    //             PhoneAuthResponse(
-    //               user: value.user,
-    //               error: null,
-    //               isNewUser: false,
-    //             ),
-    //           );
-    //     },
-    //   );
-    // }
     return SafeArea(
       bottom: false,
       child: Scaffold(
         body: Column(
           children: [
             Expanded(
-              child: pages[pageIndex],
+              child: pages[pageIndex.value],
             ),
           ],
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: const [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.home),
-        //       label: 'Home',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.school),
-        //       label: 'Academics',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.quiz),
-        //       label: 'Quiz',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.calendar_today),
-        //       label: 'Calendar',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.person),
-        //       label: 'Profile',
-        //     ),
-        //   ],
-        //   currentIndex: pageIndex,
-        //   selectedItemColor: Colors.amber[800],
-        //   onTap: _onItemTapped,
-        // ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'Academics',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.quiz),
+              label: 'Quiz',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: 'Calendar',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: pageIndex.value,
+          selectedItemColor: Colors.amber[800],
+          onTap: (index) {
+            pageIndex.value = index;
+          },
+        ),
       ),
     );
   }

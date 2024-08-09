@@ -2,14 +2,13 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
+import 'package:elite_academy/data/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/dashboard/controller/student_state_pod.dart';
-import 'package:elite_academy/features/home/admin/dashboard/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/settings/view/settings_page.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ColorConst {
@@ -64,8 +63,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
         setState(() {});
       });
 
-    _animateIcon =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _animateIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     super.initState();
   }
 
@@ -135,11 +133,9 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
     bool isMobile = MediaQuery.of(context).size.height < 600;
 
     if (kDebugMode) {
-      print(
-          "${MediaQuery.sizeOf(context).height} ${MediaQuery.sizeOf(context).width}");
+      print("${MediaQuery.sizeOf(context).height} ${MediaQuery.sizeOf(context).width}");
     }
-    double fabExtend =
-        56.0 + (16.0 * _options.length) + (_options.length * 56.0);
+    double fabExtend = 56.0 + (16.0 * _options.length) + (_options.length * 56.0);
     return Stack(
       children: [
         Scaffold(
@@ -216,8 +212,46 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                                     index2: 0,
                                   ),
                                   error: (e, s) {
-                                    if (kDebugMode) {
-                                      print(e);
+                                    if (e
+                                        .toString()
+                                        .contains("Exception: Organization ID not found")) {
+                                      return Container(
+                                        height: 120,
+                                        width: MediaQuery.sizeOf(context).width * 0.42,
+                                        decoration: BoxDecoration(
+                                          // color: ColorConst.primaryColor3,
+                                          color: ref.watch(themecontrollerProvider) ==
+                                                  ThemeMode.light
+                                              ? Theme.of(context).primaryColorDark
+                                              : ref.watch(themecontrollerProvider) == ThemeMode.dark
+                                                  ? Theme.of(context).primaryColorLight
+                                                  : Theme.of(context).primaryColorDark,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(8),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                              "Organization ID not found",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+
+                                            // Create Organization Button
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                context.router.pushNamed('/add-student');
+                                              },
+                                              child: const Text('Create Now'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
                                     }
                                     return const AdditionalInfo(
                                       icon: Icons.group,
@@ -287,9 +321,8 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                               padding: const EdgeInsets.all(5.0),
                               child: SizedBox(
                                 // color: const Color.fromARGB(255, 99, 120, 100),
-                                height: isMobile
-                                    ? 100
-                                    : 200, // Set the height as per your requirement
+                                height:
+                                    isMobile ? 100 : 200, // Set the height as per your requirement
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
@@ -297,19 +330,14 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                                       Container(
                                         width: isMobile
                                             ? MediaQuery.of(context).size.width
-                                            : MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                2,
+                                            : MediaQuery.of(context).size.width * 2,
                                         decoration: BoxDecoration(
                                           // // border: Border.all(color: Colors.black, width: 5),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: LineChart(
                                           LineChartData(
-                                            borderData:
-                                                FlBorderData(show: false),
+                                            borderData: FlBorderData(show: false),
                                             lineBarsData: [
                                               // The red line
                                               LineChartBarData(
@@ -392,8 +420,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                 );
 
                 // You can adjust the transform origin and distance as needed
-                double transformOrigin =
-                    (fabExtend / _options.length) * (index - 7) * -0.1;
+                double transformOrigin = (fabExtend / _options.length) * (index - 7) * -0.1;
                 return Transform(
                   transform: Matrix4.translationValues(
                     0.0,
@@ -665,13 +692,13 @@ class AdditionalInfo extends ConsumerWidget {
                 children: [
                   Text(
                     index1.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Active',
                     style: TextStyle(
                       color: Colors.white,
@@ -679,7 +706,7 @@ class AdditionalInfo extends ConsumerWidget {
                   )
                 ],
               ),
-              Column(
+              const Column(
                 children: [
                   Text(
                     '0',

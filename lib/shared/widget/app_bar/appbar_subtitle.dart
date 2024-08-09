@@ -1,5 +1,3 @@
-import 'package:elite_academy/core/theme/app_style.dart';
-import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -24,8 +22,9 @@ class AppbarSubtitle extends StatelessWidget {
           text,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
-          style: AppStyle.txtGilroySemiBold24.copyWith(
-            color: ColorConstant.blueGray900,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
