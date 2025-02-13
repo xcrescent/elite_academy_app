@@ -1,16 +1,16 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
 import 'package:elite_academy/core/theme/app_theme.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:elite_academy/features/counter/counter.dart';
 import 'package:elite_academy/features/theme_segmented_btn/controller/selection_theme_pod.dart';
 import 'package:elite_academy/features/theme_segmented_btn/view/theme_segmented_btn.dart';
-import 'package:elite_academy/l10n/l10n.dart';
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
 import 'package:elite_academy/shared/pods/internet_checker_pod.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../helpers/helpers.dart';
 
@@ -141,8 +141,7 @@ void main() {
             () async {
               await tester.tap(find.byIcon(Icons.dark_mode));
               expect(container.read(themeSelectionPod).length, 1);
-              expect(
-                  container.read(themeSelectionPod), equals({ThemeMode.dark}));
+              expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
             },
           );
         },
@@ -179,8 +178,7 @@ void main() {
             () async {
               await tester.tap(find.byIcon(Icons.dark_mode));
               expect(container.read(themeSelectionPod).length, 1);
-              expect(
-                  container.read(themeSelectionPod), equals({ThemeMode.dark}));
+              expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
             },
           );
           await tester.pump();
@@ -229,8 +227,7 @@ void main() {
             () async {
               await tester.tap(find.byIcon(Icons.light_mode));
               expect(container.read(themeSelectionPod).length, 1);
-              expect(
-                  container.read(themeSelectionPod), equals({ThemeMode.light}));
+              expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
             },
           );
           await tester.pump();
@@ -279,8 +276,7 @@ void main() {
             () async {
               await tester.tap(find.byIcon(Icons.light_mode));
               expect(container.read(themeSelectionPod).length, 1);
-              expect(
-                  container.read(themeSelectionPod), equals({ThemeMode.light}));
+              expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
             },
           );
           await tester.pump();

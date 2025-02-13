@@ -8,10 +8,10 @@ class FacultyDashboardPage extends StatelessWidget {
   const FacultyDashboardPage({super.key});
   Future<void> _createLivestream(BuildContext context) async {
     // Get the user's name and id
-
+    StreamVideo.reset();
     StreamVideo(
       'mmhfdzb5evj2',
-      user: User(
+      user: const User(
         info: UserInfo(name: 'Test User', id: 'Mace_Windu'
             // id: userId
             ),
@@ -31,9 +31,17 @@ class FacultyDashboardPage extends StatelessWidget {
     call.connectOptions = CallConnectOptions(
       camera: TrackOption.disabled(),
       microphone: TrackOption.disabled(),
-      screenShare: TrackOption.disabled(),
+      screenShare: TrackOption.enabled(),
     );
+    // final screenShare = await call.requestPermissions([CallPermission.screenshare]);
+    //
+    // debugPrint('Screen share permission: ${screenShare.isSuccess}');
+    // if (!screenShare.isSuccess) {
+    //   return;
+    // }
 
+    // Start the screen sharing notification service
+    await StreamBackgroundService().startScreenSharingNotificationService(call);
     // Get or create the call object
     final result = await call.getOrCreate(); // Call object is created
 
@@ -66,7 +74,7 @@ class FacultyDashboardPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VideoCallPage()),
+                  MaterialPageRoute(builder: (context) => const VideoCallPage()),
                 );
               },
               child: const Text('Join Call'),
@@ -128,7 +136,7 @@ class VideoCallPage extends ConsumerWidget {
 }
 
 class LiveScreen extends StatefulWidget {
-  final liveStreamCall;
+  final Call liveStreamCall;
   const LiveScreen({super.key, required this.liveStreamCall});
 
   @override
@@ -370,6 +378,7 @@ class _LiveScreenState extends State<LiveScreen> {
         initialData: livestreamCall.state.value,
         builder: (context, snapshot) {
           final callState = snapshot.data!;
+          debugPrint('Call state: $callState');
           final participant = callState.callParticipants.first;
           return Scaffold(
             body: Stack(
@@ -378,18 +387,32 @@ class _LiveScreenState extends State<LiveScreen> {
                   Column(
                     children: [
                       Container(
-                          height: 325,
-                          width: double.infinity,
-                          // child: StreamVideoRenderer(
-                          //   videoFit: VideoFit.cover,
-                          //   call: livestreamCall,
-                          //   videoTrackType: SfuTrackType.screenShare,
-                          //   participant: participant,
-                          // ),
-                          child: LivestreamPlayer(
-                            call: livestreamCall,
-                          )),
-                      const Text("HELLO"),
+                        height: 325,
+                        width: MediaQuery.of(context).size.width,
+                        child: StreamVideoRenderer(
+                          videoFit: VideoFit.cover,
+                          call: livestreamCall,
+                          videoTrackType: SfuTrackType.screenShare,
+                          participant: participant,
+                        ),
+                        // child: LiveScreen(
+                        //   liveStreamCall: livestreamCall,
+                        // ),
+                      ),
+                      // Container(
+                      //   height: 325,
+                      //   width: double.infinity,
+                      //   // child: StreamVideoRenderer(
+                      //   //   videoFit: VideoFit.cover,
+                      //   //   call: livestreamCall,
+                      //   //   videoTrackType: SfuTrackType.screenShare,
+                      //   //   participant: participant,
+                      //   // ),
+                      //   child: LivestreamPlayer(
+                      //     call: livestreamCall,
+                      //   ),
+                      // ),
+                      // const Text("HELLO"),
                       // Container(
                       //   height: 325,
                       //   width: double.infinity,
@@ -525,7 +548,7 @@ class LiveWidget extends StatelessWidget {
                   height: 22,
                   padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
                   decoration: ShapeDecoration(
-                    color: Color(0xff4C4452).withOpacity(0.5),
+                    color: const Color(0xff4C4452).withOpacity(0.5),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                   ),
                   child: SvgPicture.asset(
@@ -562,14 +585,14 @@ class LiveWidget extends StatelessWidget {
                   height: 21,
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: ShapeDecoration(
-                    color: Color(0xFF7D23E0),
+                    color: const Color(0xFF7D23E0),
                     shape: RoundedRectangleBorder(
                       // side: BorderSide(width: 0.40, color: Color(0xFF7D23E0)),
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: Center(
-                    child: const Text(
+                  child: const Center(
+                    child: Text(
                       'Follow',
                       style: TextStyle(
                         color: Colors.white,
@@ -581,14 +604,14 @@ class LiveWidget extends StatelessWidget {
                       ),
                     ),
                   )),
-              SizedBox(
+              const SizedBox(
                 width: 3,
               ),
               Container(
                 height: 21,
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
                 decoration: ShapeDecoration(
-                  color: Color(0x7F4C4452),
+                  color: const Color(0x7F4C4452),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                 ),
                 child: Row(
@@ -598,7 +621,7 @@ class LiveWidget extends StatelessWidget {
                   children: [
                     SvgPicture.asset('assets/icons/account_icon.svg'),
                     const SizedBox(width: 4),
-                    Center(
+                    const Center(
                       child: Text(
                         '37.8k',
                         style: TextStyle(
@@ -735,7 +758,7 @@ class ChatTab extends StatelessWidget {
             children: [
               Card(
                 elevation: 4,
-                shadowColor: Color(0xff979797).withOpacity(0.3),
+                shadowColor: const Color(0xff979797).withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

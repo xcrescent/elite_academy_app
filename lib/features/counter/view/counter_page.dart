@@ -1,6 +1,6 @@
 import 'package:auto_route/annotations.dart';
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../features/counter/controller/counter_state_pod.dart';
@@ -42,8 +42,7 @@ class CounterView extends StatelessWidget {
               final boolPod = ref.watch(boolPodNotifier);
               return Switch(
                 value: boolPod,
-                onChanged: (value) =>
-                    ref.read(boolPodNotifier.notifier).switchValue(),
+                onChanged: (value) => ref.read(boolPodNotifier.notifier).switchValue(),
               );
             }),
           ],

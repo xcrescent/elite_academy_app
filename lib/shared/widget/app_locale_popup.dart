@@ -1,4 +1,4 @@
-import 'package:elite_academy/l10n/l10n.dart';
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
 import 'package:elite_academy/shared/pods/locale_pod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,8 +17,7 @@ class AppLocalePopUp extends ConsumerWidget {
         onSelected: (locale) {
           ref.read(localePod.notifier).changeLocale(locale: locale);
         },
-        itemBuilder: (BuildContext context) =>
-            AppLocalizations.supportedLocales.map(
+        itemBuilder: (BuildContext context) => AppLocalizations.supportedLocales.map(
               (e) {
                 final currentLocale = ref.watch(localePod);
                 return PopupMenuItem<Locale>(
