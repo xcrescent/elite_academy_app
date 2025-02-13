@@ -33,7 +33,6 @@ Future<void> main() async {
       print("Firebase App Check Activation Error: $e");
     }
   }
-  ;
 
   ///You can override your environment variable in bootstrap method here for providers
   bootstrap(() => const App());

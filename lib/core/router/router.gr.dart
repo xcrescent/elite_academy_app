@@ -11,20 +11,15 @@
 import 'package:auto_route/auto_route.dart' as _i17;
 import 'package:elite_academy/features/auth/account_creation/view/account_creation_page.dart'
     deferred as _i1;
-import 'package:elite_academy/features/auth/phone/view/phone_auth_page.dart'
-    as _i10;
-import 'package:elite_academy/features/auth/phone/view/phone_verify_page.dart'
-    as _i11;
-import 'package:elite_academy/features/auth/sign_in/view/sign_in_page.dart'
-    deferred as _i14;
-import 'package:elite_academy/features/counter/view/counter_page.dart'
-    deferred as _i8;
+import 'package:elite_academy/features/auth/phone/view/phone_auth_page.dart' as _i10;
+import 'package:elite_academy/features/auth/phone/view/phone_verify_page.dart' as _i11;
+import 'package:elite_academy/features/auth/sign_in/view/sign_in_page.dart' deferred as _i14;
+import 'package:elite_academy/features/counter/view/counter_page.dart' deferred as _i8;
 import 'package:elite_academy/features/home/admin/add_batch/view/add_batch_page.dart'
     deferred as _i2;
 import 'package:elite_academy/features/home/admin/add_enquiry/view/add_enquiry_page.dart'
     deferred as _i3;
-import 'package:elite_academy/features/home/admin/add_exam/view/add_exam_page.dart'
-    deferred as _i4;
+import 'package:elite_academy/features/home/admin/add_exam/view/add_exam_page.dart' deferred as _i4;
 import 'package:elite_academy/features/home/admin/add_expense/view/add_expense_page.dart'
     deferred as _i5;
 import 'package:elite_academy/features/home/admin/add_staff/view/add_staff_page.dart'
@@ -33,13 +28,10 @@ import 'package:elite_academy/features/home/admin/add_student/view/add_student_p
     deferred as _i7;
 import 'package:elite_academy/features/home/admin/settings/view/settings_page.dart'
     deferred as _i13;
-import 'package:elite_academy/features/home/home_page.dart' deferred as _i9;
-import 'package:elite_academy/features/home/quiz/web_view_page.dart'
-    deferred as _i12;
-import 'package:elite_academy/features/home/student/dashboard/dashboard_page.dart'
-    deferred as _i16;
-import 'package:elite_academy/features/splash/view/splash_page.dart'
-    deferred as _i15;
+import 'package:elite_academy/features/home/quiz/web_view_page.dart' deferred as _i12;
+import 'package:elite_academy/features/home/student/dashboard/dashboard_page.dart' deferred as _i16;
+import 'package:elite_academy/features/home/view/home_page.dart' deferred as _i9;
+import 'package:elite_academy/features/splash/view/splash_page.dart' deferred as _i15;
 import 'package:flutter/material.dart' as _i18;
 
 /// generated route for
@@ -103,8 +95,7 @@ class AddEnquiryRoute extends _i17.PageRouteInfo<AddEnquiryRouteArgs> {
   static _i17.PageInfo page = _i17.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<AddEnquiryRouteArgs>(
-          orElse: () => const AddEnquiryRouteArgs());
+      final args = data.argsAs<AddEnquiryRouteArgs>(orElse: () => const AddEnquiryRouteArgs());
       return _i17.DeferredWidget(
         _i3.loadLibrary,
         () => _i3.AddEnquiryPage(key: args.key),
@@ -141,8 +132,7 @@ class AddExamRoute extends _i17.PageRouteInfo<AddExamRouteArgs> {
   static _i17.PageInfo page = _i17.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<AddExamRouteArgs>(orElse: () => const AddExamRouteArgs());
+      final args = data.argsAs<AddExamRouteArgs>(orElse: () => const AddExamRouteArgs());
       return _i17.DeferredWidget(
         _i4.loadLibrary,
         () => _i4.AddExamPage(key: args.key),
@@ -179,8 +169,7 @@ class AddExpenseRoute extends _i17.PageRouteInfo<AddExpenseRouteArgs> {
   static _i17.PageInfo page = _i17.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<AddExpenseRouteArgs>(
-          orElse: () => const AddExpenseRouteArgs());
+      final args = data.argsAs<AddExpenseRouteArgs>(orElse: () => const AddExpenseRouteArgs());
       return _i17.DeferredWidget(
         _i5.loadLibrary,
         () => _i5.AddExpensePage(key: args.key),

@@ -386,7 +386,7 @@ class _LiveScreenState extends State<LiveScreen> {
                 if (snapshot.hasData)
                   Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 325,
                         width: MediaQuery.of(context).size.width,
                         child: StreamVideoRenderer(
@@ -570,7 +570,7 @@ class LiveWidget extends StatelessWidget {
                     letterSpacing: -0.32,
                   ),
                 ),
-                Container(
+                SizedBox(
                     width: 25,
                     height: 30,
                     child: Image.asset(
@@ -762,7 +762,7 @@ class ChatTab extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Container(
+                child: SizedBox(
                   height: 50,
                   child: TextField(
                       decoration: InputDecoration(
