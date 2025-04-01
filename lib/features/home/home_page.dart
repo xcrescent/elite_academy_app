@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
-import 'package:elite_academy/features/home/admin/dashboard/view/dashboard_page.dart';
+// import 'package:elite_academy/features/home/admin/dashboard/view/dashboard_page.dart';
 import 'package:elite_academy/features/home/quiz/quiz.dart';
+import 'package:elite_academy/features/home/student/dashboard/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
