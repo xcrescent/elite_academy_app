@@ -134,10 +134,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.height < 600;
 
-    if (kDebugMode) {
-      print(
-          "${MediaQuery.sizeOf(context).height} ${MediaQuery.sizeOf(context).width}");
-    }
+    // Screen dimensions: ${MediaQuery.sizeOf(context).height} x ${MediaQuery.sizeOf(context).width}
     double fabExtend =
         56.0 + (16.0 * _options.length) + (_options.length * 56.0);
     return Stack(
@@ -216,9 +213,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                                     index2: 0,
                                   ),
                                   error: (e, s) {
-                                    if (kDebugMode) {
-                                      print(e);
-                                    }
+                                    // Error loading students: $e
                                     return const AdditionalInfo(
                                       icon: Icons.group,
                                       label: 'Students',
@@ -374,9 +369,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                   extendedIconLabelSpacing: 16,
                   onPressed: () {
                     // Handle the option button press
-                    if (kDebugMode) {
-                      print("Option ${index + 1}");
-                    }
+                    // Option ${index + 1} selected
                     context.router.pushNamed(_routes[index]);
                     animate();
                   },

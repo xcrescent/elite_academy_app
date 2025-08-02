@@ -25,9 +25,7 @@ class PhoneAuthPage extends ConsumerWidget {
       if (state == AuthState.authenticating) {
         context.router.pushNamed('/phone-verify');
       } else {
-        if (kDebugMode) {
-          print("state: $state");
-        }
+        // State changed to: $state
       }
     });
     return SafeArea(

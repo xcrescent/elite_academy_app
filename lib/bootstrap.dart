@@ -56,6 +56,16 @@ Future<void> bootstrap(
   unawaited(init());
   await Hive.initFlutter();
 
+  // Register adapters BEFORE opening boxes
+  Hive.registerAdapter(AdminModelAdapter());
+  Hive.registerAdapter(OrgModelAdapter());
+  Hive.registerAdapter(BatchModelAdapter());
+  Hive.registerAdapter(StaffModelAdapter());
+  Hive.registerAdapter(StudentModelAdapter());
+  Hive.registerAdapter(FeeModelAdapter());
+  Hive.registerAdapter(AttendanceModelAdapter());
+
+  // Open boxes AFTER registering adapters
   final appBox = await Hive.openBox('appBox');
   final adminBox = await Hive.openBox<AdminModel>('adminBox');
   final orgBox = await Hive.openBox<OrgModel>('orgBox');
@@ -64,14 +74,6 @@ Future<void> bootstrap(
   final studentBox = await Hive.openBox<StudentModel>('studentBox');
   final feeBox = await Hive.openBox<FeeModel>('feeBox');
   final attendanceBox = await Hive.openBox<AttendanceModel>('attendanceBox');
-
-  Hive.registerAdapter(AdminModelAdapter());
-  Hive.registerAdapter(OrgModelAdapter());
-  Hive.registerAdapter(BatchModelAdapter());
-  Hive.registerAdapter(StaffModelAdapter());
-  Hive.registerAdapter(StudentModelAdapter());
-  Hive.registerAdapter(FeeModelAdapter());
-  Hive.registerAdapter(AttendanceModelAdapter());
 
   runApp(
     ProviderScope(

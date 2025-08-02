@@ -75,6 +75,10 @@ class StudentController extends StateNotifier<StudentModel> {
     state.address = address;
   }
 
+  void setPassword(String password) {
+    state.password = password;
+  }
+
   void reset() {
     state = StudentModel(
       name: "",

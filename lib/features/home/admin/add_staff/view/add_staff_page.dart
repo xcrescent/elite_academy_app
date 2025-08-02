@@ -100,9 +100,7 @@ class _AddStaffPageState extends ConsumerState<AddStaffPage>
             if (_tabController.index < _tabController.length - 1) {
               _tabController.animateTo(_tabController.index + 1);
             } else {
-              if (kDebugMode) {
-                print('validated');
-              }
+              // Form validated successfully
               var x = await ref.read(staffRepositoryProvider).addStaff(
                     ref.read(staffControllerProvider),
                   );

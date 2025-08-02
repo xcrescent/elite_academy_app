@@ -42,14 +42,10 @@ class UserRepository {
           .then((value) => value.data()!['orgId']);
       await _secureStorage.write(key: "orgId", value: orgId);
 
-      if (kDebugMode) {
-        print(orgId);
-      }
+      // Retrieved orgId: $orgId
       return orgId!;
     } else {
-      if (kDebugMode) {
-        print("orgId from secure storage");
-      }
+      // orgId retrieved from secure storage
       return orgId;
     }
   }

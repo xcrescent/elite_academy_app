@@ -24,17 +24,29 @@ class AddStudentPage extends ConsumerStatefulWidget {
 class _AddStudentPageState extends ConsumerState<AddStudentPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    _passwordController = TextEditingController();
   }
 
   @override
   dispose() {
     _tabController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final password = ref.watch(passStudentIdPod);
+    if (_passwordController.text != password) {
+      _passwordController.text = password;
+    }
   }
 
   @override
@@ -107,9 +119,7 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
                   _tabController.animateTo(_tabController.index + 1);
                   return;
                 }
-                if (kDebugMode) {
-                  print('validated');
-                }
+                // Form validated successfully
                 ref.watch(authProvider).fetchSignInMethodsForEmail(
                       ref.watch(studentControllerProvider).email ??
                           'admin@eliteacademy.co.in',
@@ -253,12 +263,11 @@ class PersonalTab extends ConsumerWidget {
                 }
                 return null;
               },
-              controller: TextEditingController(
-                text: ref.watch(passStudentIdPod),
-              ),
-              onChanged: (value) => ref
-                  .read(studentControllerProvider.notifier)
-                  .setPhoneNumber(value),
+              controller: _passwordController,
+              onChanged: (value) {
+                ref.read(studentControllerProvider.notifier).setPassword(value);
+                ref.read(passStudentIdPod.notifier).state = value;
+              },
               decoration: InputDecoration(
                 labelText: 'Password',
                 prefixIcon: const Icon(Icons.password),
