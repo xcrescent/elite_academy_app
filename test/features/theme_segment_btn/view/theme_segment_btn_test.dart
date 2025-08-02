@@ -1,3 +1,4 @@
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

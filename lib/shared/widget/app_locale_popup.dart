@@ -1,3 +1,4 @@
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
 import 'package:elite_academy/l10n/l10n.dart';
 import 'package:elite_academy/shared/pods/locale_pod.dart';
 import 'package:flutter/material.dart';
