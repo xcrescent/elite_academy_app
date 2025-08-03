@@ -1,11 +1,8 @@
-import 'package:elite_academy/core/router/router_pod.dart';
-import 'package:elite_academy/core/utils/image_constant.dart';
 import 'package:elite_academy/features/home/student/dashboard/classworkstu.dart';
 import 'package:elite_academy/features/home/student/dashboard/exampagestu%20copy.dart';
 import 'package:elite_academy/features/home/student/dashboard/feespagestu.dart';
 import 'package:elite_academy/features/home/student/dashboard/widgets/contextgrid.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 //
 // final initialAttAnimationPod = Provider((ref) => false);
@@ -78,19 +75,19 @@ class _SwipeCardsScreenState extends State<SwipeCardsScreen> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GridView.builder(
                   shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisExtent: 90,
                     crossAxisCount: 4,
                     mainAxisSpacing: 4,
                     crossAxisSpacing: 2,
                   ),
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
@@ -100,7 +97,7 @@ class _SwipeCardsScreenState extends State<SwipeCardsScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ExamsPagestu(),
+                                builder: (context) => const ExamsPagestu(),
                               ),
                             );
                             break;
@@ -108,7 +105,7 @@ class _SwipeCardsScreenState extends State<SwipeCardsScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FeesPagestu(),
+                                builder: (context) => const FeesPagestu(),
                               ),
                             );
                             break;
@@ -116,14 +113,14 @@ class _SwipeCardsScreenState extends State<SwipeCardsScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Classworkstu(),
+                                builder: (context) => const Classworkstu(),
                               ),
                             );
                             break;
                           // Add more cases as needed
                         }
                       },
-                      child: Gridcontext(
+                      child: GridContext(
                         title: items[index]['title'] ?? '',
                         iconData: items[index]['iconData'] ??
                             Icons.error, // Default icon in case of missing data
@@ -134,13 +131,13 @@ class _SwipeCardsScreenState extends State<SwipeCardsScreen> {
                 if (additional)
                   GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisExtent: 90,
                       crossAxisCount: 4,
                       mainAxisSpacing: 4,
                       crossAxisSpacing: 2,
                     ),
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: add.length, // Provide additional items
                     itemBuilder: (context, index) {
                       return GestureDetector(
@@ -150,7 +147,7 @@ class _SwipeCardsScreenState extends State<SwipeCardsScreen> {
                             // Existing cases for additional items
                           }
                         },
-                        child: Gridcontext(
+                        child: GridContext(
                           title: add[index]['title'] ?? '',
                           iconData: add[index]['iconData'] ?? Icons.error,
                         ),

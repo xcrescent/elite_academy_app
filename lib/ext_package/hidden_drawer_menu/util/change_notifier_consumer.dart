@@ -8,12 +8,12 @@ class ChangeNotifierConsumer<T extends ChangeNotifier> extends StatefulWidget {
   final ChangeNotifierWidgetBuilder<T> builder;
 
   const ChangeNotifierConsumer({
-    Key? key,
+    super.key,
     required this.changeNotifier,
     required this.builder,
-  }) : super(key: key);
+  });
   @override
-  _ChangeNotifierConsumerState<T> createState() =>
+  State<ChangeNotifierConsumer> createState() =>
       _ChangeNotifierConsumerState<T>();
 }
 

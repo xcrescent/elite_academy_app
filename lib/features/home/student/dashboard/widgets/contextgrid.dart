@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class Gridcontext extends StatelessWidget {
+class GridContext extends StatelessWidget {
   final String title;
   final IconData iconData;
 
-  const Gridcontext({
-    Key? key,
+  const GridContext({
+    super.key,
     required this.title,
     required this.iconData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 123,
       height: 17,
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: Color(0xFFDFE0F0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -26,7 +26,7 @@ class Gridcontext extends StatelessWidget {
           ),
         ),
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 7,
         vertical: 6,
       ),
@@ -34,9 +34,9 @@ class Gridcontext extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Spacer(),
+          const Spacer(),
           Icon(iconData),
-          Spacer(),
+          const Spacer(),
           // Spacer(),
           // SizedBox(height: 4   ),
           SizedBox(
@@ -49,8 +49,8 @@ class Gridcontext extends StatelessWidget {
               // style: CustomTextStyles.labelLargeSemiBold_1,
             ),
           ),
-          SizedBox(height: 6),
-          Spacer(),
+          const SizedBox(height: 6),
+          const Spacer(),
         ],
       ),
     );

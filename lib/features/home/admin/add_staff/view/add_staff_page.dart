@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/features/home/admin/dashboard/controller/staff_state_pod.dart';
 import 'package:elite_academy/features/home/admin/dashboard/repository/staff_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -231,7 +230,7 @@ class PersonalTab extends ConsumerWidget {
 
 class ContactTab extends ConsumerWidget {
   final emailController = TextEditingController();
-  ContactTab({Key? key}) : super(key: key);
+  ContactTab({super.key});
 
   String? _validateEmail(value) {
     if (value!.isEmpty) {

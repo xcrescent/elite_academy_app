@@ -1,7 +1,7 @@
 import 'package:elite_academy/ext_package/hidden_drawer_menu/controllers/animated_drawer_controller.dart';
 import 'package:flutter/material.dart';
 
-enum TypeOpen { FROM_LEFT, FROM_RIGHT }
+enum TypeOpen { fromLeft, fromRight }
 
 class AnimatedDrawerContent extends StatefulWidget {
   final AnimatedDrawerController controller;
@@ -18,7 +18,7 @@ class AnimatedDrawerContent extends StatefulWidget {
   final List<BoxShadow>? boxShadow;
 
   const AnimatedDrawerContent({
-    Key? key,
+    super.key,
     required this.controller,
     required this.child,
     this.isDraggable = true,
@@ -29,12 +29,12 @@ class AnimatedDrawerContent extends StatefulWidget {
     this.withShadow = true,
     this.enableScaleAnimation = true,
     this.enableCornerAnimation = true,
-    this.typeOpen = TypeOpen.FROM_LEFT,
+    this.typeOpen = TypeOpen.fromLeft,
     this.boxShadow,
-  }) : super(key: key);
+  });
 
   @override
-  _AnimatedDrawerContentState createState() => _AnimatedDrawerContentState();
+  State<AnimatedDrawerContent> createState() => _AnimatedDrawerContentState();
 }
 
 class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
@@ -65,14 +65,14 @@ class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
             cornerRadius = widget.contentCornerRadius * animatePercent;
           }
 
-          slideAmount = widget.typeOpen == TypeOpen.FROM_LEFT
+          slideAmount = widget.typeOpen == TypeOpen.fromLeft
               ? slideAmount
               : (-1 * slideAmount);
 
           return Transform(
             transform: Matrix4.translationValues(slideAmount, 0.0, 0.0)
               ..scale(contentScale, contentScale),
-            alignment: widget.typeOpen == TypeOpen.FROM_LEFT
+            alignment: widget.typeOpen == TypeOpen.fromLeft
                 ? Alignment.centerLeft
                 : Alignment.centerRight,
             child: Container(
@@ -149,7 +149,7 @@ class _AnimatedDrawerContentState extends State<AnimatedDrawerContent> {
       globalPosition = globalPosition < 0 ? 0 : globalPosition;
       double position = globalPosition / constraints.maxWidth;
       var realPosition =
-          widget.typeOpen == TypeOpen.FROM_LEFT ? position : (1 - position);
+          widget.typeOpen == TypeOpen.fromLeft ? position : (1 - position);
       widget.controller.move(realPosition);
     }
   }

@@ -47,7 +47,6 @@ Future<void> bootstrap(
   FutureOr<Widget> Function() builder, {
   List<Override> overrides = const [],
   List<ProviderObserver>? observers,
-  ProviderContainer? parent,
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -67,13 +66,13 @@ Future<void> bootstrap(
 
   // Open boxes AFTER registering adapters
   final appBox = await Hive.openBox('appBox');
-  final adminBox = await Hive.openBox<AdminModel>('adminBox');
-  final orgBox = await Hive.openBox<OrgModel>('orgBox');
-  final batchBox = await Hive.openBox<BatchModel>('batchBox');
-  final facultyBox = await Hive.openBox<StaffModel>('staffBox');
-  final studentBox = await Hive.openBox<StudentModel>('studentBox');
-  final feeBox = await Hive.openBox<FeeModel>('feeBox');
-  final attendanceBox = await Hive.openBox<AttendanceModel>('attendanceBox');
+  await Hive.openBox<AdminModel>('adminBox');
+  await Hive.openBox<OrgModel>('orgBox');
+  await Hive.openBox<BatchModel>('batchBox');
+  await Hive.openBox<StaffModel>('staffBox');
+  await Hive.openBox<StudentModel>('studentBox');
+  await Hive.openBox<FeeModel>('feeBox');
+  await Hive.openBox<AttendanceModel>('attendanceBox');
 
   runApp(
     ProviderScope(
@@ -87,7 +86,6 @@ Future<void> bootstrap(
         ),
         ...?observers,
       ],
-      parent: parent,
       child: await builder(),
     ),
   );

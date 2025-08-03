@@ -95,36 +95,36 @@ class CustomIconButton extends StatelessWidget {
 
   _setColor() {
     switch (variant) {
-      case IconButtonVariant.OutlineBluegray400:
+      case IconButtonVariant.outlineBluegray400:
         return ColorConstant.whiteA700;
-      case IconButtonVariant.OutlineBlueA700:
+      case IconButtonVariant.outlineBlueA700:
         return ColorConstant.whiteA700;
-      case IconButtonVariant.OutlineBlack9004d:
+      case IconButtonVariant.outlineBlack9004d:
         return ColorConstant.whiteA700;
-      case IconButtonVariant.OutlineBlack9004d_1:
+      case IconButtonVariant.outlineBlack9004d1:
         return ColorConstant.redA200;
-      case IconButtonVariant.Outline:
+      case IconButtonVariant.outline:
         return ColorConstant.black90099;
-      case IconButtonVariant.FillBlueA700:
+      case IconButtonVariant.fillBlueA700:
         return ColorConstant.blueA700;
-      case IconButtonVariant.OutlineGray60019:
+      case IconButtonVariant.outlineGray60019:
         return ColorConstant.whiteA700;
-      case IconButtonVariant.FillWhiteA700:
+      case IconButtonVariant.fillWhiteA700:
         return ColorConstant.whiteA700;
-      case IconButtonVariant.FillGray10001:
+      case IconButtonVariant.fillGray10001:
         return ColorConstant.gray10001;
-      case IconButtonVariant.OutlineGray80049:
+      case IconButtonVariant.outlineGray80049:
         return ColorConstant.whiteA700;
-      case IconButtonVariant.FillBluegray30087:
+      case IconButtonVariant.fillBluegray30087:
         return ColorConstant.blueGray30087;
-      case IconButtonVariant.FillGray30001:
+      case IconButtonVariant.fillGray30001:
         return ColorConstant.gray30001;
-      case IconButtonVariant.FillBlue50:
+      case IconButtonVariant.fillBlue50:
         return ColorConstant.blue50;
-      case IconButtonVariant.GradientBlack90066Black90066:
-      case IconButtonVariant.OutlineGray100:
-      case IconButtonVariant.OutlineBluegray10087:
-      case IconButtonVariant.OutlineBlueA700_1:
+      case IconButtonVariant.gradientBlack90066Black90066:
+      case IconButtonVariant.outlineGray100:
+      case IconButtonVariant.outlineBluegray10087:
+      case IconButtonVariant.outlineBlueA7001:
         return null;
       default:
         return ColorConstant.whiteA700;
@@ -133,58 +133,58 @@ class CustomIconButton extends StatelessWidget {
 
   _setBorder() {
     switch (variant) {
-      case IconButtonVariant.OutlineBluegray400:
+      case IconButtonVariant.outlineBluegray400:
         return Border.all(
           color: ColorConstant.blueGray400,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case IconButtonVariant.OutlineBlueA700:
+      case IconButtonVariant.outlineBlueA700:
         return Border.all(
           color: ColorConstant.blueA700,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case IconButtonVariant.OutlineGray100:
+      case IconButtonVariant.outlineGray100:
         return Border.all(
           color: ColorConstant.gray100,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case IconButtonVariant.OutlineBluegray10087:
+      case IconButtonVariant.outlineBluegray10087:
         return Border.all(
           color: ColorConstant.blueGray10087,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case IconButtonVariant.OutlineBlueA700_1:
+      case IconButtonVariant.outlineBlueA7001:
         return Border.all(
           color: ColorConstant.blueA700,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case IconButtonVariant.OutlineGray80049:
+      case IconButtonVariant.outlineGray80049:
         return Border.all(
           color: ColorConstant.gray80049,
           width: getHorizontalSize(
             1.00,
           ),
         );
-      case IconButtonVariant.GradientBlack90066Black90066:
-      case IconButtonVariant.OutlineBlack9004d:
-      case IconButtonVariant.OutlineBlack9004d_1:
-      case IconButtonVariant.FillBlueA700:
-      case IconButtonVariant.OutlineGray60019:
-      case IconButtonVariant.FillWhiteA700:
-      case IconButtonVariant.FillGray10001:
-      case IconButtonVariant.FillBluegray30087:
-      case IconButtonVariant.FillGray30001:
-      case IconButtonVariant.FillBlue50:
+      case IconButtonVariant.gradientBlack90066Black90066:
+      case IconButtonVariant.outlineBlack9004d:
+      case IconButtonVariant.outlineBlack9004d1:
+      case IconButtonVariant.fillBlueA700:
+      case IconButtonVariant.outlineGray60019:
+      case IconButtonVariant.fillWhiteA700:
+      case IconButtonVariant.fillGray10001:
+      case IconButtonVariant.fillBluegray30087:
+      case IconButtonVariant.fillGray30001:
+      case IconButtonVariant.fillBlue50:
         return null;
       default:
         return Border.all(
@@ -245,7 +245,7 @@ class CustomIconButton extends StatelessWidget {
 
   _setGradient() {
     switch (variant) {
-      case IconButtonVariant.GradientBlack90066Black90066:
+      case IconButtonVariant.gradientBlack90066Black90066:
         return LinearGradient(
           begin: const Alignment(
             -0.11,
@@ -260,23 +260,23 @@ class CustomIconButton extends StatelessWidget {
             ColorConstant.black90066,
           ],
         );
-      case IconButtonVariant.OutlineBluegray100:
-      case IconButtonVariant.OutlineBluegray400:
-      case IconButtonVariant.OutlineBlueA700:
-      case IconButtonVariant.OutlineBlack9004d:
-      case IconButtonVariant.OutlineBlack9004d_1:
-      case IconButtonVariant.Outline:
-      case IconButtonVariant.FillBlueA700:
-      case IconButtonVariant.OutlineGray100:
-      case IconButtonVariant.OutlineBluegray10087:
-      case IconButtonVariant.OutlineGray60019:
-      case IconButtonVariant.FillWhiteA700:
-      case IconButtonVariant.OutlineBlueA700_1:
-      case IconButtonVariant.FillGray10001:
-      case IconButtonVariant.OutlineGray80049:
-      case IconButtonVariant.FillBluegray30087:
-      case IconButtonVariant.FillGray30001:
-      case IconButtonVariant.FillBlue50:
+      case IconButtonVariant.outlineBluegray100:
+      case IconButtonVariant.outlineBluegray400:
+      case IconButtonVariant.outlineBlueA700:
+      case IconButtonVariant.outlineBlack9004d:
+      case IconButtonVariant.outlineBlack9004d1:
+      case IconButtonVariant.outline:
+      case IconButtonVariant.fillBlueA700:
+      case IconButtonVariant.outlineGray100:
+      case IconButtonVariant.outlineBluegray10087:
+      case IconButtonVariant.outlineGray60019:
+      case IconButtonVariant.fillWhiteA700:
+      case IconButtonVariant.outlineBlueA7001:
+      case IconButtonVariant.fillGray10001:
+      case IconButtonVariant.outlineGray80049:
+      case IconButtonVariant.fillBluegray30087:
+      case IconButtonVariant.fillGray30001:
+      case IconButtonVariant.fillBlue50:
         return null;
       default:
         return null;
@@ -285,7 +285,7 @@ class CustomIconButton extends StatelessWidget {
 
   _setBoxShadow() {
     switch (variant) {
-      case IconButtonVariant.OutlineBlack9004d:
+      case IconButtonVariant.outlineBlack9004d:
         return [
           BoxShadow(
             color: ColorConstant.black9004d,
@@ -301,7 +301,7 @@ class CustomIconButton extends StatelessWidget {
             ),
           ),
         ];
-      case IconButtonVariant.OutlineBlack9004d_1:
+      case IconButtonVariant.outlineBlack9004d1:
         return [
           BoxShadow(
             color: ColorConstant.black9004d,
@@ -317,7 +317,7 @@ class CustomIconButton extends StatelessWidget {
             ),
           ),
         ];
-      case IconButtonVariant.OutlineGray60019:
+      case IconButtonVariant.outlineGray60019:
         return [
           BoxShadow(
             color: ColorConstant.gray60019,
@@ -333,7 +333,7 @@ class CustomIconButton extends StatelessWidget {
             ),
           ),
         ];
-      case IconButtonVariant.OutlineBlueA700_1:
+      case IconButtonVariant.outlineBlueA7001:
         return [
           BoxShadow(
             color: ColorConstant.indigoA20033,
@@ -349,20 +349,20 @@ class CustomIconButton extends StatelessWidget {
             ),
           ),
         ];
-      case IconButtonVariant.OutlineBluegray100:
-      case IconButtonVariant.GradientBlack90066Black90066:
-      case IconButtonVariant.OutlineBluegray400:
-      case IconButtonVariant.OutlineBlueA700:
-      case IconButtonVariant.Outline:
-      case IconButtonVariant.FillBlueA700:
-      case IconButtonVariant.OutlineGray100:
-      case IconButtonVariant.OutlineBluegray10087:
-      case IconButtonVariant.FillWhiteA700:
-      case IconButtonVariant.FillGray10001:
-      case IconButtonVariant.OutlineGray80049:
-      case IconButtonVariant.FillBluegray30087:
-      case IconButtonVariant.FillGray30001:
-      case IconButtonVariant.FillBlue50:
+      case IconButtonVariant.outlineBluegray100:
+      case IconButtonVariant.gradientBlack90066Black90066:
+      case IconButtonVariant.outlineBluegray400:
+      case IconButtonVariant.outlineBlueA700:
+      case IconButtonVariant.outline:
+      case IconButtonVariant.fillBlueA700:
+      case IconButtonVariant.outlineGray100:
+      case IconButtonVariant.outlineBluegray10087:
+      case IconButtonVariant.fillWhiteA700:
+      case IconButtonVariant.fillGray10001:
+      case IconButtonVariant.outlineGray80049:
+      case IconButtonVariant.fillBluegray30087:
+      case IconButtonVariant.fillGray30001:
+      case IconButtonVariant.fillBlue50:
         return null;
       default:
         return null;
@@ -389,22 +389,22 @@ enum IconButtonPadding {
 }
 
 enum IconButtonVariant {
-  OutlineBluegray100,
-  GradientBlack90066Black90066,
-  OutlineBluegray400,
-  OutlineBlueA700,
-  OutlineBlack9004d,
-  OutlineBlack9004d_1,
-  Outline,
-  FillBlueA700,
-  OutlineGray100,
-  OutlineBluegray10087,
-  OutlineGray60019,
-  FillWhiteA700,
-  OutlineBlueA700_1,
-  FillGray10001,
-  OutlineGray80049,
-  FillBluegray30087,
-  FillGray30001,
-  FillBlue50,
+  outlineBluegray100,
+  gradientBlack90066Black90066,
+  outlineBluegray400,
+  outlineBlueA700,
+  outlineBlack9004d,
+  outlineBlack9004d1,
+  outline,
+  fillBlueA700,
+  outlineGray100,
+  outlineBluegray10087,
+  outlineGray60019,
+  fillWhiteA700,
+  outlineBlueA7001,
+  fillGray10001,
+  outlineGray80049,
+  fillBluegray30087,
+  fillGray30001,
+  fillBlue50,
 }

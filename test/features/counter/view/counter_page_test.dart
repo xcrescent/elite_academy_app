@@ -46,17 +46,13 @@ void main() {
     testWidgets('renders current count', (tester) async {
       const state = 42;
 
-      final container = ProviderContainer(
-        overrides: [
-          enableInternetCheckerPod.overrideWithValue(false),
-          appBoxProvider.overrideWithValue(appBox),
-          intialCounterValuePod.overrideWithValue(state),
-        ],
-      );
-      addTearDown(container.dispose);
       await tester.pumpApp(
         ProviderScope(
-          parent: container,
+          overrides: [
+            enableInternetCheckerPod.overrideWithValue(false),
+            appBoxProvider.overrideWithValue(appBox),
+            intialCounterValuePod.overrideWithValue(state),
+          ],
           child: const CounterView(),
         ),
       );
@@ -88,17 +84,13 @@ void main() {
     testWidgets('calls decrement when decrement button is tapped',
         (tester) async {
       const state = 42;
-      final container = ProviderContainer(
-        overrides: [
-          enableInternetCheckerPod.overrideWithValue(false),
-          appBoxProvider.overrideWithValue(appBox),
-          intialCounterValuePod.overrideWithValue(state),
-        ],
-      );
-      addTearDown(container.dispose);
       await tester.pumpApp(
         ProviderScope(
-          parent: container,
+          overrides: [
+            enableInternetCheckerPod.overrideWithValue(false),
+            appBoxProvider.overrideWithValue(appBox),
+            intialCounterValuePod.overrideWithValue(state),
+          ],
           child: const CounterView(),
         ),
       );

@@ -82,7 +82,7 @@ class AccountCreationScreen extends ConsumerWidget {
                             top: 5,
                             right: 2,
                           ),
-                          variant: IconButtonVariant.FillBlueA700,
+                          variant: IconButtonVariant.fillBlueA700,
                           shape: IconButtonShape.CircleBorder15,
                           padding: IconButtonPadding.PaddingAll4,
                           alignment: Alignment.topRight,

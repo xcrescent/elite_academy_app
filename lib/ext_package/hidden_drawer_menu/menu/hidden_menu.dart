@@ -26,15 +26,14 @@ class HiddenMenu extends StatefulWidget {
   final TypeOpen typeOpen;
 
   const HiddenMenu(
-      {Key? key,
+      {super.key,
       required this.background,
       required this.items,
       this.selectedListen,
       required this.initPositionSelected,
       this.backgroundColorMenu,
       this.enableShadowItemsMenu = false,
-      this.typeOpen = TypeOpen.FROM_LEFT})
-      : super(key: key);
+      this.typeOpen = TypeOpen.fromLeft});
 
   @override
   State<HiddenMenu> createState() => _HiddenMenuState();

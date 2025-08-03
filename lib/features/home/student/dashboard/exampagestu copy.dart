@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
-import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'widgets/additional_info.dart';
-import 'widgets/swipe_card_widget.dart';
 
 @RoutePage(deferredLoading: true)
 class ExamsPagestu extends ConsumerStatefulWidget {
@@ -24,7 +21,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
 
   @override
   void initState() {
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       setState(() {
         n = DateTime.now().toString().substring(10, 19);
       });
@@ -49,11 +46,11 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
+                const Padding(
+                  padding: EdgeInsets.symmetric(
                       horizontal: 20.0, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,22 +111,22 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Stack(
                   alignment: Alignment.topCenter,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       // color: Colors.limeAccent,
                       height: 200,
                       child: Card(
                         child: Container(
+                            decoration: BoxDecoration(color: Colors.pink[200]),
                             child: Center(
-                              child: Text("$n", style: TextStyle(fontSize: 80)),
-                            ),
-                            decoration: BoxDecoration(color: Colors.pink[200])),
+                              child: Text(n, style: const TextStyle(fontSize: 80)),
+                            )),
                         // color: Colors.pink,
                         // scrollDirection: Axis.horizontal,
                         // physics: const BouncingScrollPhysics(),
@@ -184,8 +181,8 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                         // ),
                       ),
                     ),
-                    Spacer(),
-                    Container(
+                    const Spacer(),
+                    const SizedBox(
                       height: 50,
                       width: 200,
                       child: Card(
@@ -194,7 +191,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Padding(
@@ -222,7 +219,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                       const SizedBox(width: 24),
                       GestureDetector(
                         onTap: () {},
-                        child: Text(
+                        child: const Text(
                           'see more',
                           textAlign: TextAlign.right,
                           style: TextStyle(
@@ -238,14 +235,14 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
-                      return SizedBox(height: 39);
+                      return const SizedBox(height: 39);
                     },
                     itemCount: 5,
                     itemBuilder: (context, index) {
@@ -256,13 +253,13 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                           height: 100,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
-                          decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
-                          child: Column(
+                          decoration: const BoxDecoration(color: Color(0xFFD9D9D9)),
+                          child: const Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -282,7 +279,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 24),
+                                    SizedBox(width: 24),
                                     Expanded(
                                       child: SizedBox(
                                         child: Text(
@@ -301,8 +298,8 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              Container(
+                              SizedBox(height: 12),
+                              SizedBox(
                                 width: double.infinity,
                                 height: 40,
                                 child: Column(
@@ -322,7 +319,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 4),
+                                    SizedBox(height: 4),
                                     SizedBox(
                                       width: double.infinity,
                                       child: Text(
@@ -343,7 +340,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                         ),
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Padding(
@@ -357,7 +354,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 for (int i = 0; i < 5; i++) ...[
@@ -392,7 +389,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                             //   ),
                             // );
                           },
-                          child: SubjectCard(
+                          child: const SubjectCard(
                             subject: "3", attendance: 12, totalClasses: 22,
                             totalPresent: 2,
                             // totalPresent: subjectsList[i].presentLeactures,
@@ -516,7 +513,7 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
             //   ),
             // ),
           ])),
-      drawer: Drawer(
+      drawer: const Drawer(
         backgroundColor: Colors.black12,
       ),
     );

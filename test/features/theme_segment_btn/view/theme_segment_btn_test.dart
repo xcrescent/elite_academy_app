@@ -10,7 +10,6 @@ import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:elite_academy/features/counter/counter.dart';
 import 'package:elite_academy/features/theme_segmented_btn/controller/selection_theme_pod.dart';
 import 'package:elite_academy/features/theme_segmented_btn/view/theme_segmented_btn.dart';
-import 'package:elite_academy/l10n/l10n.dart';
 import 'package:elite_academy/shared/pods/internet_checker_pod.dart';
 
 import '../../../helpers/helpers.dart';
@@ -31,16 +30,12 @@ void main() {
       testWidgets(
         'renderes ThemeSegmentBtn',
         (tester) async {
-          final container = ProviderContainer(
-            overrides: [
-              enableInternetCheckerPod.overrideWithValue(false),
-              appBoxProvider.overrideWithValue(appBox),
-            ],
-          );
-          addTearDown(container.dispose);
           await tester.pumpApp(
             ProviderScope(
-              parent: container,
+              overrides: [
+                enableInternetCheckerPod.overrideWithValue(false),
+                appBoxProvider.overrideWithValue(appBox),
+              ],
               child: const CounterView(),
             ),
           );
@@ -51,16 +46,12 @@ void main() {
       testWidgets(
         'renderes ThemeSefementBtn with ThemeMode.System at Intial',
         (tester) async {
-          final container = ProviderContainer(
-            overrides: [
-              enableInternetCheckerPod.overrideWithValue(false),
-              appBoxProvider.overrideWithValue(appBox),
-            ],
-          );
-          addTearDown(container.dispose);
           await tester.pumpApp(
             ProviderScope(
-              parent: container,
+              overrides: [
+                enableInternetCheckerPod.overrideWithValue(false),
+                appBoxProvider.overrideWithValue(appBox),
+              ],
               child: const CounterView(),
             ),
           );
@@ -83,8 +74,8 @@ void main() {
           addTearDown(container.dispose);
           final currentTheme = container.read(themecontrollerProvider);
           await tester.pumpApp(
-            ProviderScope(
-              parent: container,
+            UncontrolledProviderScope(
+              container: container,
               child: MaterialApp(
                 theme: Themes.theme,
                 darkTheme: Themes.darkTheme,
@@ -123,8 +114,8 @@ void main() {
           addTearDown(container.dispose);
           final currentTheme = container.read(themecontrollerProvider);
           await tester.pumpApp(
-            ProviderScope(
-              parent: container,
+            UncontrolledProviderScope(
+              container: container,
               child: MaterialApp(
                 theme: Themes.theme,
                 darkTheme: Themes.darkTheme,
@@ -160,8 +151,8 @@ void main() {
           addTearDown(container.dispose);
           final currentTheme = container.read(themecontrollerProvider);
           await tester.pumpApp(
-            ProviderScope(
-              parent: container,
+            UncontrolledProviderScope(
+              container: container,
               child: MaterialApp(
                 theme: Themes.theme,
                 darkTheme: Themes.darkTheme,
@@ -210,8 +201,8 @@ void main() {
           addTearDown(container.dispose);
           final currentTheme = container.read(themecontrollerProvider);
           await tester.pumpApp(
-            ProviderScope(
-              parent: container,
+            UncontrolledProviderScope(
+              container: container,
               child: MaterialApp(
                 theme: Themes.theme,
                 darkTheme: Themes.darkTheme,
@@ -260,8 +251,8 @@ void main() {
           addTearDown(container.dispose);
           final currentTheme = container.read(themecontrollerProvider);
           await tester.pumpApp(
-            ProviderScope(
-              parent: container,
+            UncontrolledProviderScope(
+              container: container,
               child: MaterialApp(
                 theme: Themes.theme,
                 darkTheme: Themes.darkTheme,

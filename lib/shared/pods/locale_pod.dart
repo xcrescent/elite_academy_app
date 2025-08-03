@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
-import 'package:elite_academy/l10n/l10n.dart';
 import 'package:elite_academy/shared/exception/base_exception.dart';
 
 ///This Notifier class used to get current locale and change local in DB

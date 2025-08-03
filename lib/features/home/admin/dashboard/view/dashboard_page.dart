@@ -6,10 +6,8 @@ import 'package:elite_academy/features/home/admin/dashboard/controller/student_s
 import 'package:elite_academy/features/home/admin/dashboard/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/settings/view/settings_page.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ColorConst {
@@ -658,13 +656,13 @@ class AdditionalInfo extends ConsumerWidget {
                 children: [
                   Text(
                     index1.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Active',
                     style: TextStyle(
                       color: Colors.white,
@@ -672,7 +670,7 @@ class AdditionalInfo extends ConsumerWidget {
                   )
                 ],
               ),
-              Column(
+              const Column(
                 children: [
                   Text(
                     '0',
