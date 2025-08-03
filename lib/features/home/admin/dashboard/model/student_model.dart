@@ -32,6 +32,8 @@ class StudentModel extends HiveObject {
   String orgId;
   @HiveField(9)
   String whatsappNumber;
+  @HiveField(10)
+  String? password;
 
   StudentModel({
     this.id,
@@ -44,6 +46,7 @@ class StudentModel extends HiveObject {
     this.address,
     required this.orgId,
     required this.whatsappNumber,
+    this.password,
   });
 
   factory StudentModel.fromMap(Map<String, dynamic> map) {
@@ -58,6 +61,7 @@ class StudentModel extends HiveObject {
       address: map['address'],
       orgId: map['orgId'],
       whatsappNumber: map['whatsappNumber'],
+      password: map['password'],
     );
   }
 
@@ -73,6 +77,7 @@ class StudentModel extends HiveObject {
       'address': address,
       'orgId': orgId,
       'whatsappNumber': whatsappNumber,
+      'password': password,
     };
   }
 }
