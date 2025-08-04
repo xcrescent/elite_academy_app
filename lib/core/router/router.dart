@@ -7,11 +7,6 @@ class AppRouter extends $AppRouter {
   @override
   late final List<AutoRoute> routes = [
     AutoRoute(
-      page: CounterRoute.page,
-      path: '/counter',
-      initial: false,
-    ),
-    AutoRoute(
       page: PhoneAuthRoute.page,
       path: '/phone-auth',
       initial: false,

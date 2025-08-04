@@ -65,7 +65,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                    const Icon(Icons.error_outline,
+                        size: 64, color: Colors.red),
                     const SizedBox(height: 16),
                     Text('Error loading students: ${error.toString()}'),
                     const SizedBox(height: 16),
@@ -111,8 +112,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   }
 
   Widget _buildStudentsList(List<StudentModel> students) {
-    final filteredStudents = selectedClass == 'All' 
-        ? students 
+    final filteredStudents = selectedClass == 'All'
+        ? students
         : students.where((s) => s.standard == selectedClass).toList();
 
     if (filteredStudents.isEmpty) {
@@ -123,7 +124,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
             const Icon(Icons.school_outlined, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              selectedClass == 'All' 
+              selectedClass == 'All'
                   ? 'No students found'
                   : 'No students found for $selectedClass',
               style: const TextStyle(fontSize: 18, color: Colors.grey),
@@ -141,7 +142,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
             children: [
               Text(
                 '${filteredStudents.length} students',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               const Spacer(),
               TextButton.icon(
@@ -167,7 +169,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
 
   Widget _buildStudentAttendanceCard(StudentModel student) {
     final status = attendanceMap[student.id!] ?? AttendanceStatus.absent;
-    
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ListTile(
@@ -190,8 +192,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
           children: [
             if (student.rollNumber != null)
               Text('Roll No: ${student.rollNumber}'),
-            if (student.standard != null)
-              Text('Class: ${student.standard}'),
+            if (student.standard != null) Text('Class: ${student.standard}'),
           ],
         ),
         trailing: Container(
@@ -258,13 +259,15 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   }
 
   Future<void> _selectClass() async {
-    final studentsAsync = ref.read(studentListPod);
-    final students = await studentsAsync.future;
-    
-    final classes = ['All', ...students.map((s) => s.standard).where((s) => s != null).toSet()];
-    
+    final students = await ref.read(studentListPod.future);
+
+    final classes = [
+      'All',
+      ...students.map((s) => s.standard).where((s) => s != null).toSet()
+    ];
+
     if (!mounted) return;
-    
+
     final selectedValue = await showDialog<String>(
       context: context,
       builder: (context) => SimpleDialog(
@@ -333,7 +336,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
     try {
       // TODO: Save attendance to Firebase/local storage
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

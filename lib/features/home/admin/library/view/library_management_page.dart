@@ -771,17 +771,17 @@ class _LibraryManagementPageState extends ConsumerState<LibraryManagementPage>
                 children: [
                   Expanded(
                     child: _buildBookInfoChip(
-                      Icons.inventory,
-                      '${book.availableCopies}/${book.totalCopies} Available',
-                      book.isAvailable ? Colors.green : Colors.red,
+                      icon: Icons.inventory,
+                      text: '${book.availableCopies}/${book.totalCopies} Available',
+                      color: book.isAvailable ? Colors.green : Colors.red,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: _buildBookInfoChip(
-                      Icons.category,
-                      book.category.displayName,
-                      book.category.color,
+                     icon:  Icons.category,
+                      text:book.category.displayName,
+                      color:book.category.color,
                     ),
                   ),
                 ],
@@ -822,7 +822,7 @@ class _LibraryManagementPageState extends ConsumerState<LibraryManagementPage>
     );
   }
 
-  Widget _buildBookInfoChip(String text, String label, Color color) {
+  Widget _buildBookInfoChip({IconData? icon, required String text, required Color color}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -832,11 +832,11 @@ class _LibraryManagementPageState extends ConsumerState<LibraryManagementPage>
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.info_outline, size: 14, color: color),
+          Icon(icon ?? Icons.info_outline, size: 14, color: color),
           const SizedBox(width: 4),
           Flexible(
             child: Text(
-              label,
+              text,
               style: TextStyle(
                 fontSize: 11,
                 color: color,

@@ -1,14 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../auth/phone/repository/user_repository.dart';
 import '../model/grade_model.dart';
-import '../repository/grade_repository.dart';
 
 // Sample data provider - replace with real Firebase integration
 final gradeListPod = FutureProvider<List<GradeModel>>((ref) async {
   // Simulate loading delay
   await Future.delayed(const Duration(seconds: 1));
-  
+
   return [
     GradeModel(
       id: '1',
@@ -60,7 +57,7 @@ final gradeListPod = FutureProvider<List<GradeModel>>((ref) async {
 
 final subjectListPod = FutureProvider<List<SubjectModel>>((ref) async {
   await Future.delayed(const Duration(milliseconds: 500));
-  
+
   return [
     SubjectModel(
       id: 'math101',
@@ -98,7 +95,7 @@ final subjectListPod = FutureProvider<List<SubjectModel>>((ref) async {
   ];
 });
 
-final gradeControllerProvider = 
+final gradeControllerProvider =
     StateNotifierProvider<GradeController, GradeModel>((ref) {
   return GradeController();
 });
