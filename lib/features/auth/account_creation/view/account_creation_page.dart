@@ -83,8 +83,8 @@ class AccountCreationScreen extends ConsumerWidget {
                             right: 2,
                           ),
                           variant: IconButtonVariant.fillBlueA700,
-                          shape: IconButtonShape.CircleBorder15,
-                          padding: IconButtonPadding.PaddingAll4,
+                          shape: IconButtonShape.circleBorder15,
+                          padding: IconButtonPadding.paddingAll4,
                           alignment: Alignment.topRight,
                           child: CustomImageView(
                             svgPath: ImageConstant.imgForward,

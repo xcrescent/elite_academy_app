@@ -70,19 +70,19 @@ class CustomIconButton extends StatelessWidget {
 
   _setPadding() {
     switch (padding) {
-      case IconButtonPadding.PaddingAll4:
+      case IconButtonPadding.paddingAll4:
         return getPadding(
           all: 4,
         );
-      case IconButtonPadding.PaddingAll7:
+      case IconButtonPadding.paddingAll7:
         return getPadding(
           all: 7,
         );
-      case IconButtonPadding.PaddingAll1:
+      case IconButtonPadding.paddingAll1:
         return getPadding(
           all: 1,
         );
-      case IconButtonPadding.PaddingAll10:
+      case IconButtonPadding.paddingAll10:
         return getPadding(
           all: 10,
         );
@@ -198,37 +198,37 @@ class CustomIconButton extends StatelessWidget {
 
   _setBorderRadius() {
     switch (shape) {
-      case IconButtonShape.CircleBorder20:
+      case IconButtonShape.circleBorder20:
         return BorderRadius.circular(
           getHorizontalSize(
             20.00,
           ),
         );
-      case IconButtonShape.CircleBorder32:
+      case IconButtonShape.circleBorder32:
         return BorderRadius.circular(
           getHorizontalSize(
             32.00,
           ),
         );
-      case IconButtonShape.RoundedBorder2:
+      case IconButtonShape.roundedBorder2:
         return BorderRadius.circular(
           getHorizontalSize(
             2.00,
           ),
         );
-      case IconButtonShape.CircleBorder15:
+      case IconButtonShape.circleBorder15:
         return BorderRadius.circular(
           getHorizontalSize(
             15.00,
           ),
         );
-      case IconButtonShape.RoundedBorder10:
+      case IconButtonShape.roundedBorder10:
         return BorderRadius.circular(
           getHorizontalSize(
             10.00,
           ),
         );
-      case IconButtonShape.RoundedBorder26:
+      case IconButtonShape.roundedBorder26:
         return BorderRadius.circular(
           getHorizontalSize(
             26.00,
@@ -371,21 +371,21 @@ class CustomIconButton extends StatelessWidget {
 }
 
 enum IconButtonShape {
-  RoundedBorder6,
-  CircleBorder20,
-  CircleBorder32,
-  RoundedBorder2,
-  CircleBorder15,
-  RoundedBorder10,
-  RoundedBorder26,
+  roundedBorder6,
+  circleBorder20,
+  circleBorder32,
+  roundedBorder2,
+  circleBorder15,
+  roundedBorder10,
+  roundedBorder26,
 }
 
 enum IconButtonPadding {
-  PaddingAll14,
-  PaddingAll4,
-  PaddingAll7,
-  PaddingAll1,
-  PaddingAll10,
+  paddingAll14,
+  paddingAll4,
+  paddingAll7,
+  paddingAll1,
+  paddingAll10,
 }
 
 enum IconButtonVariant {
