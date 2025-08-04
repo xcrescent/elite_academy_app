@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/features/auth/phone/repository/user_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -98,11 +97,11 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
-                  children: const [
-                    PersonalTab(),
-                    ContactTab(),
-                    AcademicTab(),
-                    InfoTab(),
+                  children: [
+                    PersonalTab(passwordController: _passwordController),
+                    const ContactTab(),
+                    const AcademicTab(),
+                    const InfoTab(),
                   ],
                 ),
               ),
@@ -135,7 +134,7 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
                 if (x) {
                   ref.read(studentControllerProvider.notifier).reset();
                   ref.read(passStudentIdPod.notifier).state = '';
-                  var refresh = ref.refresh(studentListPod);
+                  ref.refresh(studentListPod);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
@@ -170,7 +169,9 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
 }
 
 class PersonalTab extends ConsumerWidget {
-  const PersonalTab({super.key});
+  final TextEditingController passwordController;
+  
+  const PersonalTab({super.key, required this.passwordController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -263,7 +264,7 @@ class PersonalTab extends ConsumerWidget {
                 }
                 return null;
               },
-              controller: _passwordController,
+              controller: passwordController,
               onChanged: (value) {
                 ref.read(studentControllerProvider.notifier).setPassword(value);
                 ref.read(passStudentIdPod.notifier).state = value;
