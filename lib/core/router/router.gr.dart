@@ -17,8 +17,6 @@ import 'package:elite_academy/features/auth/phone/view/phone_verify_page.dart'
     as _i11;
 import 'package:elite_academy/features/auth/sign_in/view/sign_in_page.dart'
     as _i13;
-import 'package:elite_academy/features/counter/view/counter_page.dart'
-    deferred as _i8;
 import 'package:elite_academy/features/home/admin/add_batch/view/add_batch_page.dart'
     deferred as _i2;
 import 'package:elite_academy/features/home/admin/add_enquiry/view/add_enquiry_page.dart'
@@ -108,15 +106,6 @@ abstract class $AppRouter extends _i15.RootStackRouter {
         child: _i15.DeferredWidget(
           _i7.loadLibrary,
           () => _i7.AddStudentPage(),
-        ),
-      );
-    },
-    CounterRoute.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i15.DeferredWidget(
-          _i8.loadLibrary,
-          () => _i8.CounterPage(),
         ),
       );
     },

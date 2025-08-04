@@ -22,6 +22,10 @@ final passStudentIdPod = StateProvider<String>((ref) {
   return "";
 });
 
+final studentLoadingPod = StateProvider<bool>((ref) {
+  return false;
+});
+
 class StudentController extends StateNotifier<StudentModel> {
   StudentController(Future<String> x)
       : super(
@@ -32,51 +36,121 @@ class StudentController extends StateNotifier<StudentModel> {
             whatsappNumber: "",
           ),
         ) {
-    x.then((value) => state.orgId = value);
+    x.then((value) => _updateState(orgId: value));
+  }
+
+  void _updateState({
+    String? id,
+    String? name,
+    DateTime? dateOfBirth,
+    String? phoneNumber,
+    String? email,
+    String? batchId,
+    String? enrollmentNumber,
+    String? address,
+    String? orgId,
+    String? whatsappNumber,
+    String? password,
+    String? rollNumber,
+    String? standard,
+    String? aadharNumber,
+    String? fatherName,
+    String? fatherPhone,
+    String? fatherEmail,
+    String? fatherAddress,
+  }) {
+    state = StudentModel(
+      id: id ?? state.id,
+      name: name ?? state.name,
+      dateOfBirth: dateOfBirth ?? state.dateOfBirth,
+      phoneNumber: phoneNumber ?? state.phoneNumber,
+      email: email ?? state.email,
+      batchId: batchId ?? state.batchId,
+      enrollmentNumber: enrollmentNumber ?? state.enrollmentNumber,
+      address: address ?? state.address,
+      orgId: orgId ?? state.orgId,
+      whatsappNumber: whatsappNumber ?? state.whatsappNumber,
+      password: password ?? state.password,
+      rollNumber: rollNumber ?? state.rollNumber,
+      standard: standard ?? state.standard,
+      aadharNumber: aadharNumber ?? state.aadharNumber,
+      fatherName: fatherName ?? state.fatherName,
+      fatherPhone: fatherPhone ?? state.fatherPhone,
+      fatherEmail: fatherEmail ?? state.fatherEmail,
+      fatherAddress: fatherAddress ?? state.fatherAddress,
+    );
   }
 
   void setFirstName(String name) {
-    state.name = name;
+    _updateState(name: name);
   }
 
   void setPhoneNumber(String phoneNumber) {
-    state.phoneNumber = phoneNumber;
+    _updateState(phoneNumber: phoneNumber);
   }
 
   void setOrgId(String orgId) {
-    state.orgId = orgId;
+    _updateState(orgId: orgId);
   }
 
   void setStudentId(String studentId) {
-    state.id = studentId;
+    _updateState(id: studentId);
   }
 
   void setWhatsappNumber(String whatsappNumber) {
-    state.whatsappNumber = whatsappNumber;
+    _updateState(whatsappNumber: whatsappNumber);
   }
 
   void setBatchId(String batchId) {
-    state.batchId = batchId;
+    _updateState(batchId: batchId);
   }
 
   void setEnrollmentNumber(String enrollmentNumber) {
-    state.enrollmentNumber = enrollmentNumber;
+    _updateState(enrollmentNumber: enrollmentNumber);
   }
 
   void setDateOfBirth(DateTime dateOfBirth) {
-    state.dateOfBirth = dateOfBirth;
+    _updateState(dateOfBirth: dateOfBirth);
   }
 
   void setEmail(String username) {
-    state.email = username;
+    _updateState(email: username);
   }
 
   void setAddress(String address) {
-    state.address = address;
+    _updateState(address: address);
   }
 
   void setPassword(String password) {
-    state.password = password;
+    _updateState(password: password);
+  }
+
+  void setRollNumber(String rollNumber) {
+    _updateState(rollNumber: rollNumber);
+  }
+
+  void setStandard(String standard) {
+    _updateState(standard: standard);
+  }
+
+  void setAadharNumber(String aadharNumber) {
+    _updateState(aadharNumber: aadharNumber);
+  }
+
+  void setFatherName(String fatherName) {
+    _updateState(fatherName: fatherName);
+  }
+
+  void setFatherPhone(String fatherPhone) {
+    _updateState(fatherPhone: fatherPhone);
+  }
+
+  void setFatherEmail(String fatherEmail) {
+    _updateState(fatherEmail: fatherEmail);
+  }
+
+  void setFatherAddress(String fatherAddress) {
+    _updateState(fatherAddress: fatherAddress);
   }
 
   void reset() {

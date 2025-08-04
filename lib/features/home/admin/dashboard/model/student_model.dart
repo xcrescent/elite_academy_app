@@ -34,6 +34,20 @@ class StudentModel extends HiveObject {
   String whatsappNumber;
   @HiveField(10)
   String? password;
+  @HiveField(11)
+  String? rollNumber;
+  @HiveField(12)
+  String? standard;
+  @HiveField(13)
+  String? aadharNumber;
+  @HiveField(14)
+  String? fatherName;
+  @HiveField(15)
+  String? fatherPhone;
+  @HiveField(16)
+  String? fatherEmail;
+  @HiveField(17)
+  String? fatherAddress;
 
   StudentModel({
     this.id,
@@ -47,6 +61,13 @@ class StudentModel extends HiveObject {
     required this.orgId,
     required this.whatsappNumber,
     this.password,
+    this.rollNumber,
+    this.standard,
+    this.aadharNumber,
+    this.fatherName,
+    this.fatherPhone,
+    this.fatherEmail,
+    this.fatherAddress,
   });
 
   factory StudentModel.fromMap(Map<String, dynamic> map) {
@@ -62,6 +83,13 @@ class StudentModel extends HiveObject {
       orgId: map['orgId'],
       whatsappNumber: map['whatsappNumber'],
       password: map['password'],
+      rollNumber: map['rollNumber'],
+      standard: map['standard'],
+      aadharNumber: map['aadharNumber'],
+      fatherName: map['fatherName'],
+      fatherPhone: map['fatherPhone'],
+      fatherEmail: map['fatherEmail'],
+      fatherAddress: map['fatherAddress'],
     );
   }
 
@@ -78,6 +106,13 @@ class StudentModel extends HiveObject {
       'orgId': orgId,
       'whatsappNumber': whatsappNumber,
       'password': password,
+      'rollNumber': rollNumber,
+      'standard': standard,
+      'aadharNumber': aadharNumber,
+      'fatherName': fatherName,
+      'fatherPhone': fatherPhone,
+      'fatherEmail': fatherEmail,
+      'fatherAddress': fatherAddress,
     };
   }
 }
