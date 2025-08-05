@@ -102,5 +102,10 @@ class AppRouter extends $AppRouter {
       path: '/add-enquiry',
       initial: false,
     ),
+    AutoRoute(
+      page: AnalyticsDashboardRoute.page,
+      path: '/analytics-dashboard',
+      initial: false,
+    ),
   ];
 }

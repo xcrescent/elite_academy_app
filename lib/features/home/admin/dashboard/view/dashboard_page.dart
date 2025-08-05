@@ -163,6 +163,15 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
             actions: [
               IconButton(
                 icon: const Icon(
+                  Icons.analytics,
+                  size: 30,
+                ),
+                onPressed: () {
+                  context.push('/analytics-dashboard');
+                },
+              ),
+              IconButton(
+                icon: const Icon(
                   Icons.settings,
                   size: 30,
                 ),
