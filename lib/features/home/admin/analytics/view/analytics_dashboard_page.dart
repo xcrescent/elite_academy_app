@@ -1214,7 +1214,6 @@ class _AnalyticsDashboardPageState extends ConsumerState<AnalyticsDashboardPage>
   Widget _buildAcademicStatsGrid(List<AcademicAnalytics> academic) {
     final avgScore = academic.fold<double>(0, (sum, a) => sum + a.averageScore) / academic.length;
     final totalAppeared = academic.fold<int>(0, (sum, a) => sum + a.studentsAppeared);
-    final totalAbsent = academic.fold<int>(0, (sum, a) => sum + a.studentsAbsent);
     final avgAttendance = academic.fold<double>(0, (sum, a) => sum + a.attendanceRate) / academic.length;
 
     return GridView.count(

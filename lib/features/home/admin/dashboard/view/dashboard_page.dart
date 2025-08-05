@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
+import '../../../../../../core/router/router.gr.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:elite_academy/features/home/admin/dashboard/controller/student_state_pod.dart';
 import 'package:elite_academy/features/home/admin/dashboard/repository/student_repository.dart';
@@ -167,7 +168,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                   size: 30,
                 ),
                 onPressed: () {
-                  context.push('/analytics-dashboard');
+                  context.router.push(const AnalyticsDashboardRoute());
                 },
               ),
               IconButton(
