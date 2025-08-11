@@ -8,8 +8,8 @@ import '../../dashboard/controller/student_state_pod.dart';
   deferredLoading: true,
 )
 class AddExpensePage extends ConsumerWidget {
-  final _formKey = GlobalKey<FormState>();
-  AddExpensePage({super.key});
+  static final _formKey = GlobalKey<FormState>();
+  const AddExpensePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

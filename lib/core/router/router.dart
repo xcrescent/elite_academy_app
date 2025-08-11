@@ -3,7 +3,7 @@ import 'package:elite_academy/core/router/router.gr.dart';
 
 /// This class used for defined routes and paths na dother properties
 @AutoRouterConfig()
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   late final List<AutoRoute> routes = [
     AutoRoute(
@@ -42,8 +42,8 @@ class AppRouter extends $AppRouter {
     //   initial: false,
     // ),
     AutoRoute(
-      page: QuizWebView.page,
-      path: '/quiz-web-view',
+      page: WebViewRoute.page,
+      path: '/web-view',
       initial: false,
     ),
     AutoRoute(

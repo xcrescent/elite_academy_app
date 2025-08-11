@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/features/auth/phone/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -137,10 +136,10 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
                 ref.read(studentLoadingPod.notifier).state = true;
                 
                 try {
-                  ref.watch(authProvider).fetchSignInMethodsForEmail(
-                        ref.watch(studentControllerProvider).email ??
-                            'admin@eliteacademy.co.in',
-                      );
+                  // ref.watch(authProvider).fetchSignInMethodsForEmail(
+                  //       ref.watch(studentControllerProvider).email ??
+                  //           'admin@eliteacademy.co.in',
+                  //     );
 
                   var x = await ref.read(studentRepositoryProvider).addStudent(
                         ref.read(studentControllerProvider),

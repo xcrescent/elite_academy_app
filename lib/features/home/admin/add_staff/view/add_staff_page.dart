@@ -114,7 +114,7 @@ class _AddStaffPageState extends ConsumerState<AddStaffPage>
                     ),
                   ),
                 );
-                context.router.pop();
+                context.router.maybePop();
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

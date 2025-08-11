@@ -56,7 +56,7 @@ class _AddBatchPageState extends ConsumerState<AddBatchPage> {
                   content: Text('Batch Added Successfully'),
                 ),
               );
-              context.router.pop();
+              context.router.maybePop();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

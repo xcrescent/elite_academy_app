@@ -5,15 +5,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 @RoutePage(
   deferredLoading: true,
 )
-class QuizWebView extends StatefulWidget {
-  const QuizWebView({super.key, required this.url});
+class WebViewPage extends StatefulWidget {
+  const WebViewPage({super.key, required this.url});
   final String url;
 
   @override
-  State<QuizWebView> createState() => _QuizWebViewState();
+  State<WebViewPage> createState() => _WebViewPageState();
 }
 
-class _QuizWebViewState extends State<QuizWebView> {
+class _WebViewPageState extends State<WebViewPage> {
   var loadingPercentage = 0;
 
   final _key = UniqueKey();
