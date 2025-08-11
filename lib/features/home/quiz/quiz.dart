@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:elite_academy/core/router/router.gr.dart';
 import 'package:elite_academy/features/home/quiz/quiz_model.dart';
+import 'package:elite_academy/features/home/quiz/web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -80,7 +81,7 @@ class _QuizPageState extends State<QuizPage> {
                       );
                       // print(snapshot.data!);
                       context.router.push(
-                        QuizWebView(url: snapshot.data![index].href),
+                        WebViewRoute(url: snapshot.data![index].href),
                       );
                     },
                     child: Padding(

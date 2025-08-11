@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elite_academy/bootstrap.dart';
 import 'package:elite_academy/const/strings.dart';
 import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/data/model/student_model.dart';
@@ -21,9 +22,7 @@ class StudentRepository {
   final FirebaseFirestore _fireStore;
 
   Future<List<StudentModel>> getAllStudent(String orgId) async {
-    if (kDebugMode) {
-      print(orgId);
-    }
+    // Fetching students for orgId: $orgId
     var docs = await _fireStore
         .collection(StringConstants.users)
         .where("role", isEqualTo: "student")
@@ -77,19 +76,32 @@ class StudentRepository {
       photoUrl: "",
     );
 
-    var y = x.set(userModel.toMap()).then((value) => true).catchError((e) => false);
-    return y;
+    try {
+      await x.set(userModel.toMap());
+      return true;
+    } catch (e) {
+      // Log error with talker for debugging
+      if (kDebugMode) {
+        talker.error('Failed to add student: $e');
+      }
+      return false;
+    }
   }
 
   Future<bool> updateStudent(StudentModel studentModel) async {
-    var x = await _fireStore
-        .collection(StringConstants.users)
-        .doc(studentModel.id)
-        .update(studentModel.toMap())
-        .then((value) => true)
-        .catchError((e) => false);
-
-    return x;
+    try {
+      await _fireStore
+          .collection(Constants.users)
+          .doc(studentModel.id)
+          .update(studentModel.toMap());
+      return true;
+    } catch (e) {
+      // Log error with talker for debugging
+      if (kDebugMode) {
+        talker.error('Failed to update student: $e');
+      }
+      return false;
+    }
   }
 
   Future<void> deleteStudent(StudentModel studentModel) async {

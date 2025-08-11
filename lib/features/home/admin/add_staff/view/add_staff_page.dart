@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/data/repository/staff_repository.dart';
 import 'package:elite_academy/features/home/admin/dashboard/controller/staff_state_pod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:elite_academy/features/home/admin/dashboard/repository/staff_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -101,9 +102,7 @@ class _AddStaffPageState extends ConsumerState<AddStaffPage> with SingleTickerPr
             if (_tabController.index < _tabController.length - 1) {
               _tabController.animateTo(_tabController.index + 1);
             } else {
-              if (kDebugMode) {
-                print('validated');
-              }
+              // Form validated successfully
               var x = await ref.read(staffRepositoryProvider).addStaff(
                     ref.read(staffControllerProvider),
                   );
@@ -118,7 +117,7 @@ class _AddStaffPageState extends ConsumerState<AddStaffPage> with SingleTickerPr
                     ),
                   ),
                 );
-                router.maybePop();
+                context.router.maybePop();
               } else {
                 scaffoldMessenger.showSnackBar(
                   const SnackBar(

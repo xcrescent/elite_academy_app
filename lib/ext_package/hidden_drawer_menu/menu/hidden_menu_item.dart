@@ -61,7 +61,9 @@ class HiddenMenuItem extends StatelessWidget {
                 child: Text(
                   name,
                   style: _getStyle().merge(_getStyleSelected()),
-                  textAlign: typeOpen == TypeOpen.fromRight ? TextAlign.right : TextAlign.left,
+                  textAlign: typeOpen == TypeOpen.fromRight
+                      ? TextAlign.right
+                      : TextAlign.left,
                 ),
               ),
             ),

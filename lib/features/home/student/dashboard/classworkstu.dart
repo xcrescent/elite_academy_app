@@ -197,7 +197,8 @@ class Classworkstu extends ConsumerWidget {
                         child: Container(
                           // width: 326,
                           height: 100,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
                           decoration: const BoxDecoration(color: Color(0xFFD9D9D9)),
                           child: const Column(
                             mainAxisSize: MainAxisSize.min,

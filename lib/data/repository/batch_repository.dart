@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elite_academy/bootstrap.dart';
 import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/data/model/batch_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,8 +52,16 @@ class BatchRepository {
   Future<bool> addBatch(BatchModel batchModel) async {
     var docId = _fireStore.collection(StringConstants.batches).doc();
     batchModel.id = docId.id;
-    var x = await docId.set(batchModel.toMap()).then((value) => true).catchError((e) => false);
-    return x;
+    try {
+      await docId.set(batchModel.toMap());
+      return true;
+    } catch (e) {
+      // Log error with talker for debugging
+      if (kDebugMode) {
+        talker.error('Failed to add batch: $e');
+      }
+      return false;
+    }
   }
 
   Future<void> updateBatch(BatchModel batchModel) async {

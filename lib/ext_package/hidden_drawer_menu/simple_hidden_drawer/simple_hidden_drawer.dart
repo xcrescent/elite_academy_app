@@ -60,7 +60,7 @@ class SimpleHiddenDrawer extends StatefulWidget {
     this.boxShadow,
   });
   @override
-  _SimpleHiddenDrawerState createState() => _SimpleHiddenDrawerState();
+  State<SimpleHiddenDrawer> createState() => _SimpleHiddenDrawerState();
 }
 
 class _SimpleHiddenDrawerState extends State<SimpleHiddenDrawer> with TickerProviderStateMixin {

@@ -56,7 +56,8 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           final mediaquery = MediaQuery.of(context);
           child = MediaQuery(
             data: mediaquery.copyWith(
-              textScaler: TextScaler.linear(mediaquery.textScaleFactor.clamp(0, 1.5)),
+              textScaler:
+                  TextScaler.linear(mediaquery.textScaler.scale(1.0).clamp(0, 1.5)),
             ),
             child: child,
           );
@@ -66,20 +67,20 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           child = AnnotatedRegion<SystemUiOverlayStyle>(
             value: currentTheme == ThemeMode.dark
                 ? SystemUiOverlayStyle.light.copyWith(
-                    statusBarColor: Colors.white.withOpacity(0.4),
+                    statusBarColor: Colors.white.withValues(alpha: 0.4),
                     systemNavigationBarColor: Colors.black,
                     systemNavigationBarDividerColor: Colors.black,
                     systemNavigationBarIconBrightness: Brightness.dark,
                   )
                 : currentTheme == ThemeMode.light
                     ? SystemUiOverlayStyle.dark.copyWith(
-                        statusBarColor: Colors.white.withOpacity(0.4),
+                        statusBarColor: Colors.white.withValues(alpha: 0.4),
                         systemNavigationBarColor: Colors.grey,
                         systemNavigationBarDividerColor: Colors.grey,
                         systemNavigationBarIconBrightness: Brightness.light,
                       )
                     : SystemUiOverlayStyle.dark.copyWith(
-                        statusBarColor: Colors.white.withOpacity(0.4),
+                        statusBarColor: Colors.white.withValues(alpha: 0.4),
                         systemNavigationBarColor: Colors.grey,
                         systemNavigationBarDividerColor: Colors.grey,
                         systemNavigationBarIconBrightness: Brightness.light,

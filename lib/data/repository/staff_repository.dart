@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elite_academy/const/strings.dart';
+import 'package:elite_academy/bootstrap.dart';
 import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/data/model/staff_model.dart';
+import 'package:elite_academy/features/home/admin/dashboard/model/staff_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final staffRepositoryProvider = Provider(
@@ -38,8 +41,16 @@ class StaffRepository {
   Future<bool> addStaff(StaffModel staffModel) async {
     var x = _fireStore.collection(StringConstants.users).doc();
     staffModel.id = x.id;
-    var y = await x.set(staffModel.toMap()).then((value) => true).catchError((e) => false);
-    return y;
+    try {
+      await x.set(staffModel.toMap());
+      return true;
+    } catch (e) {
+      // Log error with talker for debugging
+      if (kDebugMode) {
+        talker.error('Failed to add staff: $e');
+      }
+      return false;
+    }
   }
 
   Future<void> updateStaff(StaffModel staffModel) async {

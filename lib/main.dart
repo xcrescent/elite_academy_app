@@ -28,13 +28,9 @@ Future<void> main() async {
     // webRecaptchaSiteKey: _webProvider,
   )
       .then((value) {
-    if (kDebugMode) {
-      print('Firebase App Check Activated');
-    }
+    // Firebase App Check Activated successfully
   }).catchError((e) {
-    if (kDebugMode) {
-      print("Firebase App Check Activation Error: $e");
-    }
+    // Firebase App Check Activation Error
   });
 
   ///You can override your environment variable in bootstrap method here for providers

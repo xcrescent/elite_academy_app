@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 @RoutePage(deferredLoading: true)
 class ExamsPagestu extends ConsumerStatefulWidget {
   const ExamsPagestu({super.key});
@@ -48,7 +49,8 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                   height: 10,
                 ),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -120,11 +122,10 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                       height: 200,
                       child: Card(
                         child: Container(
-                          decoration: BoxDecoration(color: Colors.pink[200]),
-                          child: Center(
-                            child: Text(n, style: const TextStyle(fontSize: 80)),
-                          ),
-                        ),
+                            decoration: BoxDecoration(color: Colors.pink[200]),
+                            child: Center(
+                              child: Text(n, style: const TextStyle(fontSize: 80)),
+                            )),
                         // color: Colors.pink,
                         // scrollDirection: Axis.horizontal,
                         // physics: const BouncingScrollPhysics(),
@@ -248,7 +249,8 @@ class _ExamsPagestuState extends ConsumerState<ExamsPagestu> {
                         child: Container(
                           // width: 326,
                           height: 100,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
                           decoration: const BoxDecoration(color: Color(0xFFD9D9D9)),
                           child: const Column(
                             mainAxisSize: MainAxisSize.min,

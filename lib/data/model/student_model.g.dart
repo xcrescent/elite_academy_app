@@ -40,6 +40,14 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       coverPic: fields[20] as String?,
       studyIn: fields[21] as String,
       stream: fields[22] as String,
+      password: fields[10] as String?,
+      rollNumber: fields[11] as String?,
+      standard: fields[12] as String?,
+      aadharNumber: fields[13] as String?,
+      fatherName: fields[14] as String?,
+      fatherPhone: fields[15] as String?,
+      fatherEmail: fields[16] as String?,
+      fatherAddress: fields[17] as String?,
     );
   }
 
@@ -93,6 +101,23 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       ..write(obj.studyIn)
       ..writeByte(22)
       ..write(obj.stream);
+      ..write(obj.whatsappNumber)
+      ..writeByte(10)
+      ..write(obj.password)
+      ..writeByte(11)
+      ..write(obj.rollNumber)
+      ..writeByte(12)
+      ..write(obj.standard)
+      ..writeByte(13)
+      ..write(obj.aadharNumber)
+      ..writeByte(14)
+      ..write(obj.fatherName)
+      ..writeByte(15)
+      ..write(obj.fatherPhone)
+      ..writeByte(16)
+      ..write(obj.fatherEmail)
+      ..writeByte(17)
+      ..write(obj.fatherAddress);
   }
 
   @override

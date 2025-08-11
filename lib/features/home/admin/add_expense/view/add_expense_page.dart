@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
   deferredLoading: true,
 )
 class AddExpensePage extends ConsumerWidget {
-  final _formKey = GlobalKey<FormState>();
-  AddExpensePage({super.key});
+  static final _formKey = GlobalKey<FormState>();
+  const AddExpensePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

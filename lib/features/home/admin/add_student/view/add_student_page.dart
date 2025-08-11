@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:elite_academy/data/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/add_student/notifier/add_student_notifier.dart';
 import 'package:flutter/foundation.dart';
+import 'package:elite_academy/features/auth/phone/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -23,17 +24,43 @@ class AddStudentPage extends ConsumerStatefulWidget {
 class _AddStudentPageState extends ConsumerState<AddStudentPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late TextEditingController _passwordController;
+
+  void _showSnackBar(String message) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    }
+  }
+
+  void _navigateBack() {
+    if (mounted) {
+      context.router.maybePop();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    _passwordController = TextEditingController();
   }
 
   @override
   dispose() {
     _tabController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final password = ref.watch(passStudentIdPod);
+    if (_passwordController.text != password) {
+      _passwordController.text = password;
+    }
   }
 
   @override
@@ -85,11 +112,11 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
-                  children: const [
-                    PersonalTab(),
-                    ContactTab(),
-                    AcademicTab(),
-                    InfoTab(),
+                  children: [
+                    PersonalTab(passwordController: _passwordController),
+                    const ContactTab(),
+                    const AcademicTab(),
+                    const InfoTab(),
                   ],
                 ),
               ),
@@ -99,57 +126,58 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
       ),
       floatingActionButton: Consumer(
         builder: (context, ref, child) {
+          final isLoading = ref.watch(studentLoadingPod);
           return FloatingActionButton.extended(
-            onPressed: () {
+            onPressed: isLoading ? null : () async {
               if (formKey.currentState?.validate() == true) {
                 if (_tabController.index < 3) {
                   _tabController.animateTo(_tabController.index + 1);
                   return;
                 }
-                if (kDebugMode) {
-                  print('validated');
-                }
-                // ref.watch(authProvider).fetchSignInMethodsForEmail(
-                //       ref.watch(addStudentNotifierProvider).email ?? 'admin@eliteacademy.co.in',
-                //     );
+                // Form validated successfully
+                ref.read(studentLoadingPod.notifier).state = true;
 
-                ref
-                    .read(studentRepositoryProvider)
-                    .addStudent(
-                      ref.read(addStudentNotifierProvider),
-                      ref.watch(passStudentIdPod).text.trim(),
-                    )
-                    .then((value) {
-                  if (value) {
-                    ref.read(addStudentNotifierProvider.notifier).reset();
-                    ref.read(passStudentIdPod.notifier).state.clear();
-                    ref.invalidate(studentListPod);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Student added successfully',
-                        ),
-                      ),
-                    );
-                    context.router.maybePop();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Something went wrong',
-                        ),
-                      ),
-                    );
+                try {
+                  // ref.watch(authProvider).fetchSignInMethodsForEmail(
+                  //       ref.watch(studentControllerProvider).email ??
+                  //           'admin@eliteacademy.co.in',
+                  //     );
+
+                  var x = await ref.read(studentRepositoryProvider).addStudent(
+                        ref.read(studentControllerProvider),
+                        ref.watch(passStudentIdPod).toString(),
+                      );
+                  if (!mounted) {
                     return;
                   }
-                });
+                  if (x) {
+                    ref.read(studentControllerProvider.notifier).reset();
+                    ref.read(passStudentIdPod.notifier).state = '';
+                    // ignore: unused_result
+                    ref.refresh(studentListPod);
+                    _showSnackBar('Student added successfully');
+                    _navigateBack();
+                  } else {
+                    _showSnackBar('Failed to add student. Please try again.');
+                  }
+                } catch (e) {
+                  _showSnackBar('Error: ${e.toString()}');
+                } finally {
+                  ref.read(studentLoadingPod.notifier).state = false;
+                }
               }
             },
-            icon: const Icon(
-              Icons.arrow_forward,
-            ),
+            icon: isLoading
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.arrow_forward),
             label: Text(
-              (_tabController.index < 3) ? 'Next' : 'Submit',
+              isLoading
+                  ? 'Processing...'
+                  : (_tabController.index < 3) ? 'Next' : 'Submit',
             ),
           );
         },
@@ -159,7 +187,9 @@ class _AddStudentPageState extends ConsumerState<AddStudentPage>
 }
 
 class PersonalTab extends ConsumerWidget {
-  const PersonalTab({super.key});
+  final TextEditingController passwordController;
+
+  const PersonalTab({super.key, required this.passwordController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -184,13 +214,17 @@ class PersonalTab extends ConsumerWidget {
             TextFormField(
               initialValue: ref.watch(addStudentNotifierProvider).name,
               validator: (value) {
-                if (value!.isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Please enter Student Name';
+                }
+                if (value.trim().length < 2) {
+                  return 'Name must be at least 2 characters long';
                 }
                 return null;
               },
-              onChanged: (value) =>
-                  ref.read(addStudentNotifierProvider.notifier).setFirstName(value),
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setFirstName(value.trim()),
               decoration: const InputDecoration(
                 labelText: 'Name',
                 prefixIcon: Icon(Icons.person),
@@ -254,14 +288,22 @@ class PersonalTab extends ConsumerWidget {
             ),
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty) {
+                if (value == null || value.isEmpty) {
                   return 'Please enter Password';
+                }
+                if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
                 }
                 return null;
               },
               controller: ref.watch(passStudentIdPod),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              controller: passwordController,
+              onChanged: (value) {
+                ref.read(studentControllerProvider.notifier).setPassword(value);
+                ref.read(passStudentIdPod.notifier).state = value;
+              },
               decoration: InputDecoration(
                 labelText: 'Password',
                 prefixIcon: const Icon(Icons.password),
@@ -336,11 +378,14 @@ class ContactTab extends ConsumerWidget {
               },
               maxLength: 10,
               validator: (value) {
-                if (value!.isEmpty) {
+                if (value == null || value.isEmpty) {
                   return 'Please enter Phone number';
                 }
                 if (value.length != 10) {
-                  return 'Please enter valid Phone number';
+                  return 'Phone number must be exactly 10 digits';
+                }
+                if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  return 'Phone number must contain only digits';
                 }
                 return null;
               },
@@ -350,8 +395,9 @@ class ContactTab extends ConsumerWidget {
               height: 16,
             ),
             TextFormField(
-              onChanged: (value) =>
-                  ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setWhatsappNumber(value),
               decoration: const InputDecoration(
                 labelText: 'Whatsapp number (if not same as above)',
                 prefixIcon: Icon(Icons.numbers),
@@ -376,6 +422,9 @@ class ContactTab extends ConsumerWidget {
               height: 16,
             ),
             TextFormField(
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setAddress(value),
               // validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: (value) =>
@@ -491,6 +540,24 @@ class AcademicTab extends ConsumerWidget {
               height: 32,
             ),
             TextFormField(
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Please enter Roll number';
+                }
+                if (!RegExp(r'^[0-9]+$').hasMatch(value.trim())) {
+                  return 'Roll number must contain only numbers';
+                }
+                return null;
+              },
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setRollNumber(value),
+              decoration: const InputDecoration(
+                labelText: 'Roll Number',
+                prefixIcon: Icon(Icons.numbers),
+              ),
+              keyboardType: TextInputType.number,
+            ),
                 initialValue: ref.watch(addStudentNotifierProvider).studyIn,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -511,11 +578,14 @@ class AcademicTab extends ConsumerWidget {
             TextFormField(
               initialValue: ref.watch(addStudentNotifierProvider).enrollmentNumber,
               validator: (value) {
-                if (value!.isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Please enter Standard';
                 }
                 return null;
               },
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setStandard(value),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -556,6 +626,9 @@ class AcademicTab extends ConsumerWidget {
               //   }
               //   return null;
               // },
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setAadharNumber(value),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
@@ -615,11 +688,17 @@ class InfoTab extends ConsumerWidget {
             ),
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty) {
+                if (value == null || value.trim().isEmpty) {
                   return 'Please enter Father name';
+                }
+                if (value.trim().length < 2) {
+                  return 'Father name must be at least 2 characters long';
                 }
                 return null;
               },
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setFatherName(value),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
@@ -633,11 +712,20 @@ class InfoTab extends ConsumerWidget {
             ),
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter Phone number';
+                if (value == null || value.isEmpty) {
+                  return 'Please enter Father Phone number';
+                }
+                if (value.length != 10) {
+                  return 'Phone number must be exactly 10 digits';
+                }
+                if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  return 'Phone number must contain only digits';
                 }
                 return null;
               },
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setFatherPhone(value),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
@@ -652,6 +740,9 @@ class InfoTab extends ConsumerWidget {
             TextFormField(
               validator: _validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setFatherEmail(value),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(
@@ -670,6 +761,9 @@ class InfoTab extends ConsumerWidget {
               //   }
               //   return null;
               // },
+              onChanged: (value) => ref
+                  .read(studentControllerProvider.notifier)
+                  .setFatherAddress(value),
               onChanged: (value) =>
                   ref.read(addStudentNotifierProvider.notifier).setPhoneNumber(value),
               decoration: const InputDecoration(

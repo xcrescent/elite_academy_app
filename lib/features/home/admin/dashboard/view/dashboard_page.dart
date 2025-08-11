@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
+import '../../../../../../core/router/router.gr.dart';
 import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:elite_academy/data/repository/student_repository.dart';
 import 'package:elite_academy/features/home/admin/dashboard/controller/student_state_pod.dart';
 import 'package:elite_academy/features/home/admin/settings/view/settings_page.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -132,10 +132,9 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.height < 600;
 
-    if (kDebugMode) {
-      print("${MediaQuery.sizeOf(context).height} ${MediaQuery.sizeOf(context).width}");
-    }
-    double fabExtend = 56.0 + (16.0 * _options.length) + (_options.length * 56.0);
+    // Screen dimensions: ${MediaQuery.sizeOf(context).height} x ${MediaQuery.sizeOf(context).width}
+    double fabExtend =
+        56.0 + (16.0 * _options.length) + (_options.length * 56.0);
     return Stack(
       children: [
         Scaffold(
@@ -162,6 +161,15 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                   );
                 }),
             actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.analytics,
+                  size: 30,
+                ),
+                onPressed: () {
+                  context.router.push(const AnalyticsDashboardRoute());
+                },
+              ),
               IconButton(
                 icon: const Icon(
                   Icons.settings,
@@ -402,9 +410,7 @@ class _AdminDashboardPageState extends ConsumerState<AdminDashboardPage>
                   extendedIconLabelSpacing: 16,
                   onPressed: () {
                     // Handle the option button press
-                    if (kDebugMode) {
-                      print("Option ${index + 1}");
-                    }
+                    // Option ${index + 1} selected
                     context.router.pushNamed(_routes[index]);
                     animate();
                   },

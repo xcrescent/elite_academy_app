@@ -7,11 +7,6 @@ import 'package:elite_academy/core/router/router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   late final List<AutoRoute> routes = [
-    // AutoRoute(
-    //   page: CounterRoute.page,
-    //   path: '/counter',
-    //   initial: false,
-    // ),
     AutoRoute(
       page: PhoneAuthRoute.page,
       path: Routes.phoneAuth,
@@ -48,8 +43,8 @@ class AppRouter extends RootStackRouter {
     //   initial: false,
     // ),
     AutoRoute(
-      page: QuizWebView.page,
-      path: '/quiz-web-view',
+      page: WebViewRoute.page,
+      path: '/web-view',
       initial: false,
     ),
     AutoRoute(
@@ -106,6 +101,11 @@ class AppRouter extends RootStackRouter {
     AutoRoute(
       page: AddEnquiryRoute.page,
       path: '/add-enquiry',
+      initial: false,
+    ),
+    AutoRoute(
+      page: AnalyticsDashboardRoute.page,
+      path: '/analytics-dashboard',
       initial: false,
     ),
   ];

@@ -7,9 +7,8 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
-// Create a variable called keystorePropertiesFile, and initialize it to your
-// keystore.properties file, in the rootProject folder.
-val keystorePropertiesFile = rootProject.file("keystore.properties")
+// Create a variable called keystorePropertiesFile, and initialize it to your key.properties file, in the rootProject folder.
+val keystorePropertiesFile = rootProject.file("key.properties")
 
 // Initialize a new Properties() object called keystoreProperties.
 val keystoreProperties = Properties()
@@ -41,6 +40,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+
     signingConfigs {
         create("release") {
             keyAlias = keystoreProperties["keyAlias"] as String
@@ -49,6 +49,7 @@ android {
             storePassword = keystoreProperties["storePassword"] as String
         }
     }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
@@ -66,31 +67,22 @@ android {
     }
     flavorDimensions("default")
     productFlavors {
-        create("production") {
-            dimension = "default"
-            resValue("string", "app_name", "Elite Academy")
-//            manifestPlaceholders = [
-//                appName: "Elite Academy"
-//            ]
-        }
         create("development") {
             isDefault = true
             dimension = "default"
             resValue("string", "app_name", "[DEV] Elite Academy")
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-//            manifestPlaceholders = [
-//                appName: "[DEV] Elite Academy"
-//            ]
         }
         create("staging") {
             dimension = "default"
             resValue("string", "app_name", "[STG] Elite Academy")
             applicationIdSuffix = ".stg"
             versionNameSuffix = "-stg"
-//            manifestPlaceholders = [
-//                appName: "[STG] Elite Academy"
-//            ]
+        }
+        create("production") {
+            dimension = "default"
+            resValue("string", "app_name", "Elite Academy")
         }
     }
 }

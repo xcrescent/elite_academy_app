@@ -13,7 +13,8 @@ class ChangeNotifierConsumer<T extends ChangeNotifier> extends StatefulWidget {
     required this.builder,
   });
   @override
-  State<ChangeNotifierConsumer> createState() => _ChangeNotifierConsumerState<T>();
+  State<ChangeNotifierConsumer> createState() =>
+      _ChangeNotifierConsumerState<T>();
 }
 
 class _ChangeNotifierConsumerState<T extends ChangeNotifier> extends State<ChangeNotifierConsumer> {

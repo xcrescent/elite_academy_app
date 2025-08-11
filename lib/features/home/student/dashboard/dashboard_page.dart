@@ -1,11 +1,58 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
-import 'widgets/additional_info.dart';
-import 'widgets/swipe_card_widget.dart';
+
+// Sample student data provider
+final currentStudentProvider = StateProvider<Map<String, dynamic>>((ref) {
+  return {
+    'id': 'student1',
+    'name': 'John Doe',
+    'rollNumber': '101',
+    'className': 'Class 10-A',
+    'email': 'john.doe@eliteacademy.co.in',
+    'profileImage': null,
+  };
+});
+
+final studentGradesProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
+  await Future.delayed(const Duration(seconds: 1));
+  return [
+    {
+      'subject': 'Mathematics',
+      'grade': 'A',
+      'marks': '85/100',
+      'percentage': 85.0,
+      'lastExam': 'Mid-term',
+      'trend': 'up', // up, down, stable
+    },
+    {
+      'subject': 'Physics',
+      'grade': 'A+',
+      'marks': '92/100',
+      'percentage': 92.0,
+      'lastExam': 'Assignment',
+      'trend': 'up',
+    },
+    {
+      'subject': 'Chemistry',
+      'grade': 'B+',
+      'marks': '78/100',
+      'percentage': 78.0,
+      'lastExam': 'Quiz',
+      'trend': 'down',
+    },
+    {
+      'subject': 'English',
+      'grade': 'A',
+      'marks': '88/100',
+      'percentage': 88.0,
+      'lastExam': 'Essay',
+      'trend': 'stable',
+    },
+  ];
+});
 
 @RoutePage(deferredLoading: true)
 class StudentDashboardPage extends ConsumerWidget {
@@ -13,6 +60,9 @@ class StudentDashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final student = ref.watch(currentStudentProvider);
+    final gradesAsync = ref.watch(studentGradesProvider);
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -678,51 +728,241 @@ class SubjectCard extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Icon(icon, size: 32, color: color),
+              const SizedBox(height: 8),
               Text(
-                subject,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  // color: Colors.black54,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                ),
-              ),
-              const SizedBox(
-                height: 6.0,
-              ),
-              Text(
-                'Attendance: $totalPresent / $totalClasses ($attendance%)',
-                style: TextStyle(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  // color: Colors.black45,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          width: 50,
-          child: TweenAnimationBuilder(
-            tween: Tween<double>(begin: 0, end: attendance / 100),
-            duration: const Duration(seconds: 3),
-            builder: (BuildContext context, double value, Widget? child) =>
-                CircularProgressIndicator(
-              value: value,
-              backgroundColor: Colors.white60,
-              color: attendance >= 75
-                  ? Colors.green
-                  : attendance >= 50
-                      ? Colors.orange
-                      : Colors.red,
+      ),
+    );
+  }
+
+  Widget _buildRecentGrades(AsyncValue<List<Map<String, dynamic>>> gradesAsync) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Recent Grades',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        gradesAsync.when(
+          data: (grades) => Card(
+            child: Column(
+              children: grades
+                  .map((grade) => _buildGradeItem(grade))
+                  .expand((widget) => [widget, const Divider(height: 1)])
+                  .take(grades.length * 2 - 1)
+                  .toList(),
             ),
           ),
-        )
+          loading: () => Card(
+            child: Column(
+              children: List.generate(
+                3,
+                (index) => const ListTile(
+                  leading: CircleAvatar(child: SizedBox()),
+                  title: SizedBox(width: 100, height: 16),
+                  subtitle: SizedBox(width: 80, height: 14),
+                ),
+              ),
+            ),
+          ),
+          error: (_, __) => const Card(
+            child: ListTile(
+              leading: Icon(Icons.error, color: Colors.red),
+              title: Text('Error loading grades'),
+            ),
+          ),
+        ),
       ],
+    );
+  }
+
+  Widget _buildGradeItem(Map<String, dynamic> grade) {
+    final percentage = grade['percentage'] as double;
+    final gradeColor = _getGradeColor(percentage);
+    final trendIcon = _getTrendIcon(grade['trend'] as String);
+
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: gradeColor.withValues(alpha: 0.2),
+        child: Text(
+          grade['grade'],
+          style: TextStyle(
+            color: gradeColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      title: Text(
+        grade['subject'],
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      subtitle: Text(
+        '${grade['marks']} • ${grade['lastExam']}',
+        style: const TextStyle(fontSize: 12),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '${percentage.toStringAsFixed(0)}%',
+            style: TextStyle(
+              color: gradeColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Icon(trendIcon, size: 16, color: _getTrendColor(grade['trend'])),
+        ],
+      ),
+      onTap: () {
+        // TODO: Navigate to subject details
+      },
+    );
+  }
+
+  Widget _buildUpcomingEvents() {
+    final events = [
+      {
+        'title': 'Mathematics Quiz',
+        'date': DateTime.now().add(const Duration(days: 2)),
+        'type': 'exam',
+      },
+      {
+        'title': 'Physics Lab Report Due',
+        'date': DateTime.now().add(const Duration(days: 5)),
+        'type': 'assignment',
+      },
+      {
+        'title': 'Parent-Teacher Meeting',
+        'date': DateTime.now().add(const Duration(days: 7)),
+        'type': 'meeting',
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Upcoming Events',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        Card(
+          child: Column(
+            children: events
+                .map((event) => _buildEventItem(event))
+                .expand((widget) => [widget, const Divider(height: 1)])
+                .take(events.length * 2 - 1)
+                .toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEventItem(Map<String, dynamic> event) {
+    final IconData eventIcon;
+    final Color eventColor;
+
+    switch (event['type']) {
+      case 'exam':
+        eventIcon = Icons.quiz;
+        eventColor = Colors.red;
+        break;
+      case 'assignment':
+        eventIcon = Icons.assignment;
+        eventColor = Colors.blue;
+        break;
+      case 'meeting':
+        eventIcon = Icons.people;
+        eventColor = Colors.green;
+        break;
+      default:
+        eventIcon = Icons.event;
+        eventColor = Colors.grey;
+    }
+
+    final date = event['date'] as DateTime;
+    final daysUntil = date.difference(DateTime.now()).inDays;
+
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: eventColor.withValues(alpha: 0.2),
+        child: Icon(eventIcon, color: eventColor, size: 20),
+      ),
+      title: Text(
+        event['title'],
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      subtitle: Text(
+        DateFormat('MMM dd, yyyy').format(date),
+      ),
+      trailing: Text(
+        daysUntil == 0
+            ? 'Today'
+            : daysUntil == 1
+                ? 'Tomorrow'
+                : '$daysUntil days',
+        style: TextStyle(
+          color: daysUntil <= 2 ? Colors.red : Colors.grey,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  Color _getGradeColor(double percentage) {
+    if (percentage >= 90) return Colors.green;
+    if (percentage >= 80) return Colors.lightGreen;
+    if (percentage >= 70) return Colors.orange;
+    if (percentage >= 60) return Colors.deepOrange;
+    return Colors.red;
+  }
+
+  IconData _getTrendIcon(String trend) {
+    switch (trend) {
+      case 'up':
+        return Icons.trending_up;
+      case 'down':
+        return Icons.trending_down;
+      case 'stable':
+        return Icons.trending_flat;
+      default:
+        return Icons.trending_flat;
+    }
+  }
+
+  Color _getTrendColor(String trend) {
+    switch (trend) {
+      case 'up':
+        return Colors.green;
+      case 'down':
+        return Colors.red;
+      case 'stable':
+        return Colors.grey;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  void _showComingSoon(BuildContext context, String feature) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('$feature feature coming soon!'),
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 }

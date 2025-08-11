@@ -62,7 +62,7 @@ class AuthRemoteDataSource {
         _ref = ref;
 
   final FirebaseAuth _auth;
-  final ProviderRef _ref;
+  final Ref _ref;
 
   String? _verificationId;
 

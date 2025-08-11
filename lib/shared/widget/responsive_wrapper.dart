@@ -28,7 +28,7 @@ class ResponsiveViewWrapper extends StatelessWidget {
     return MaxWidthBox(
       maxWidth: 3840,
       child: ResponsiveScaledBox(
-        width: ResponsiveValue<double?>(context, conditionalValues: [
+        width: ResponsiveValue<double>(context, conditionalValues: [
           const Condition.equals(name: MOBILE, value: 420),
           const Condition.equals(name: TABLET, value: 800),
           const Condition.equals(name: DESKTOP, value: 1800),

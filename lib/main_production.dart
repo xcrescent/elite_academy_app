@@ -18,21 +18,18 @@ Future<void> main() async {
   const appleProvider =
       kReleaseMode ? AppleProvider.appAttestWithDeviceCheckFallback : AppleProvider.debug;
   // final webProvider = isWeb ? reCaptcha : null;
-  try {
-    var token = await FirebaseAppCheck.instance.activate(
-      androidProvider: androidProvider,
-      appleProvider: appleProvider,
-      // webRecaptchaSiteKey: _webProvider,
-    );
 
-    if (kDebugMode) {
-      print('Firebase App Check Activated');
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      print("Firebase App Check Activation Error: $e");
-    }
-  }
+  await FirebaseAppCheck.instance
+      .activate(
+    androidProvider: androidProvider,
+    appleProvider: appleProvider,
+    // webRecaptchaSiteKey: _webProvider,
+  )
+      .then((value) {
+    // Firebase App Check Activated successfully
+  }).catchError((e) {
+    // Firebase App Check Activation Error
+  });
 
   ///You can override your environment variable in bootstrap method here for providers
   bootstrap(() => const App());

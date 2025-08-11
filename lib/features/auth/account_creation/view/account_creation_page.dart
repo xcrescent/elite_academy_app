@@ -94,9 +94,9 @@ class AccountCreationScreen extends HookConsumerWidget {
                             top: 5,
                             right: 2,
                           ),
-                          variant: IconButtonVariant.FillBlueA700,
-                          shape: IconButtonShape.CircleBorder15,
-                          padding: IconButtonPadding.PaddingAll4,
+                          variant: IconButtonVariant.fillBlueA700,
+                          shape: IconButtonShape.circleBorder15,
+                          padding: IconButtonPadding.paddingAll4,
                           alignment: Alignment.topRight,
                           child: CustomImageView(
                             svgPath: ImageConstant.imgForward,

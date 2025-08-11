@@ -4,6 +4,7 @@ import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:elite_academy/data/repository/auth_repository.dart';
 import 'package:elite_academy/features/auth/phone/controller/phone_auth_state_pod.dart';
 import 'package:elite_academy/shared/widget/custom_button.dart';
+import 'package:elite_academy/shared/widget/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,13 +16,13 @@ class PhoneAuthPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final authNotifier = ref.watch(authNotifierProvider);
-    // useEffect(() {
-    //   if (authNotifier is User) {
-    //     context.router.pushNamed('/phone-verify');
-    //   }
-    //   return () {};
-    // }, [authNotifier]);
+    ref.listen(authStateNotifierProvider, (_, state) {
+      if (state == AuthState.authenticating) {
+        context.router.pushNamed('/phone-verify');
+      } else {
+        // State changed to: $state
+      }
+    });
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
