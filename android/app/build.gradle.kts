@@ -13,7 +13,7 @@ val keystorePropertiesFile = rootProject.file("key.properties")
 // Initialize a new Properties() object called keystoreProperties.
 val keystoreProperties = Properties()
 
-// Load your keystore.properties file into the keystoreProperties object.
+// Load your key.properties file into the keystoreProperties object.
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
