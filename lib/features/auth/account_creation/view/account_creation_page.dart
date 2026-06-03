@@ -1,32 +1,53 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:elite_academy/core/theme/app_style.dart';
-import 'package:elite_academy/core/utils/color_constant.dart';
-import 'package:elite_academy/core/utils/image_constant.dart';
+import 'package:elite_academy/const/image_constant.dart';
+import 'package:elite_academy/core/providers/firebase_provider.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
+import 'package:elite_academy/features/auth/auth.dart';
 import 'package:elite_academy/shared/widget/custom_button.dart';
 import 'package:elite_academy/shared/widget/custom_icon_button.dart';
 import 'package:elite_academy/shared/widget/custom_image_view.dart';
-import 'package:elite_academy/shared/widget/custom_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-@RoutePage()
-class AccountCreationScreen extends StatelessWidget {
-  AccountCreationScreen({super.key});
-  TextEditingController group10198Controller = TextEditingController();
-  TextEditingController group10198OneController = TextEditingController();
-  TextEditingController group10198TwoController = TextEditingController();
-  TextEditingController group10198ThreeController = TextEditingController();
-  TextEditingController group10198FourController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+@RoutePage(
+  deferredLoading: true,
+)
+class AccountCreationScreen extends HookConsumerWidget {
+  const AccountCreationScreen({super.key});
 
+  static final formKey = GlobalKey<FormState>();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firstNameController = useTextEditingController();
+    final lastNameController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final authNotifier = ref.watch(authNotifierProvider);
+    if (kDebugMode) {
+      firstNameController.text = "Dev";
+      lastNameController.text = "Elite";
+      emailController.text = "dev@eliteacademy.co.in";
+      passwordController.text = "123456";
+    }
+    useEffect(() {
+      if (authNotifier.value is User) {
+        print("Redirecting to Home Page");
+        context.router.replaceNamed(
+          '/home',
+        );
+      }
+
+      return () {};
+    }, [authNotifier]);
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConstant.gray50,
         resizeToAvoidBottomInset: false,
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -41,7 +62,7 @@ class AccountCreationScreen extends StatelessWidget {
               children: [
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     height: getSize(
                       150,
                     ),
@@ -73,9 +94,9 @@ class AccountCreationScreen extends StatelessWidget {
                             top: 5,
                             right: 2,
                           ),
-                          variant: IconButtonVariant.FillBlueA700,
-                          shape: IconButtonShape.CircleBorder15,
-                          padding: IconButtonPadding.PaddingAll4,
+                          variant: IconButtonVariant.fillBlueA700,
+                          shape: IconButtonShape.circleBorder15,
+                          padding: IconButtonPadding.paddingAll4,
                           alignment: Alignment.topRight,
                           child: CustomImageView(
                             svgPath: ImageConstant.imgForward,
@@ -85,107 +106,88 @@ class AccountCreationScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 26,
-                  ),
-                  child: Text(
-                    "First Name",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198Controller,
-                  hintText: "Enter First Name",
-                  margin: getMargin(
-                    top: 8,
+                  onChanged: (value) {
+                    ref.read(firstNameProvider.notifier).state = value;
+                  },
+                  controller: firstNameController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter First Name",
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "First Name is required";
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 19,
-                  ),
-                  child: Text(
-                    "Last Name",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198OneController,
-                  hintText: "Enter Last Name",
-                  margin: getMargin(
-                    top: 7,
+                  onChanged: (value) {
+                    ref.read(lastNameProvider.notifier).state = value;
+                  },
+                  controller: lastNameController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Last Name",
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Last Name is required";
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 18,
-                  ),
-                  child: Text(
-                    "Mobile Number",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198TwoController,
-                  hintText: "Enter Mobile Number",
-                  margin: getMargin(
-                    top: 8,
+                  onChanged: (value) {
+                    ref.read(emailProvider.notifier).state = value;
+                  },
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Email Id",
                   ),
-                  textInputType: TextInputType.phone,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Email Id is required";
+                    }
+                    return null;
+                  },
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 18,
-                  ),
-                  child: Text(
-                    "Email Id",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
+                const SizedBox(
+                  height: 16,
                 ),
-                CustomTextFormField(
+                TextFormField(
                   focusNode: FocusNode(),
-                  controller: group10198ThreeController,
-                  hintText: "Enter Email Id",
-                  margin: getMargin(
-                    top: 8,
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Password",
                   ),
-                  textInputType: TextInputType.emailAddress,
-                ),
-                Padding(
-                  padding: getPadding(
-                    top: 18,
-                  ),
-                  child: Text(
-                    "Set Password",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtGilroyMedium16,
-                  ),
-                ),
-                CustomTextFormField(
-                  focusNode: FocusNode(),
-                  controller: group10198FourController,
-                  hintText: "Set Password",
-                  margin: getMargin(
-                    top: 8,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.visiblePassword,
-                  isObscureText: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Password is required";
+                    }
+                    return null;
+                  },
                 ),
                 CustomButton(
+                  onTap: () async {
+                    if (formKey.currentState!.validate()) {
+                      await ref.read(authProvider).createUserWithEmailAndPassword(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          );
+                    }
+                  },
                   height: getVerticalSize(
                     50,
                   ),

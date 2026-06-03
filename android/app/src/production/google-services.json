@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "505765642038",
+    "project_id": "elite-academy-flutter",
+    "storage_bucket": "elite-academy-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505765642038:android:f2ae7b880d0a91a0473d97",
+        "android_client_info": {
+          "package_name": "edu.aeronex.elite_academy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-euWRMXoWFVb0ZRnTGbzLbd0pHgglwIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

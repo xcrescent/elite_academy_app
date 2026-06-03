@@ -1,10 +1,9 @@
+import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
+import 'package:elite_academy/shared/exception/base_exception.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/local_storage/app_storage_pod.dart';
-import '../../../shared/exception/base_exception.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ///This Notifier class used to get current locale and change local in DB
 class LocaleNotifier extends AutoDisposeNotifier<Locale> {
   final _localeBoxKey = 'locale';

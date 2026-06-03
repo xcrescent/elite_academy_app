@@ -2,7 +2,7 @@
 // coverage:ignore-file
 import 'package:dio/dio.dart';
 import 'package:duration/duration.dart';
-import '../../../bootstrap.dart';
+import 'package:elite_academy/bootstrap.dart';
 
 ///This Interceptor is used check the response time from the server for each request
 class TimeResponseInterceptor extends Interceptor {
@@ -17,7 +17,7 @@ class TimeResponseInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    final duration = printDuration(
+    final duration = prettyDuration(
       stopwatch.elapsed,
       tersity: DurationTersity.millisecond,
     );
@@ -28,7 +28,7 @@ class TimeResponseInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    final duration = printDuration(
+    final duration = prettyDuration(
       stopwatch.elapsed,
       tersity: DurationTersity.millisecond,
     );

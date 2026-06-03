@@ -1,10 +1,10 @@
+import 'package:elite_academy/const/color_constant.dart';
 import 'package:elite_academy/core/theme/app_style.dart';
-import 'package:elite_academy/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AppbarSubtitle7 extends StatelessWidget {
-  AppbarSubtitle7({required this.text, this.margin, this.onTap});
+  AppbarSubtitle7({super.key, required this.text, this.margin, this.onTap});
 
   String text;
 

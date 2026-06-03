@@ -1,19 +1,15 @@
+import 'package:elite_academy/features/auth/phone/model/phone_auth_response_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../features/auth/auth.dart';
+class PhoneAuthNotifier extends StateNotifier<PhoneAuthResponse> {
+  PhoneAuthNotifier()
+      : super(PhoneAuthResponse(
+          user: null,
+          error: null,
+          isNewUser: false,
+        ));
 
-/// This notifier class used to build intial value
-/// from intial counter value which can be overriden.
-
-class PhoneAuthNotifier extends Notifier<int> {
-  @override
-  int build() {
-    return ref.watch(intialPhoneAuthValuePod);
+  void setResponse(PhoneAuthResponse response) {
+    state = response;
   }
-
-  ///This function updates current state increase by 1
-  void increment() => state = state + 1;
-
-  ///This function updates current state decrease by 1
-  void decrement() => state = state - 1;
 }

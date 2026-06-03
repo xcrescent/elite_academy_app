@@ -1,9 +1,29 @@
-import 'package:elite_academy/core/utils/color_constant.dart';
+import 'package:elite_academy/const/color_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
+  final TextFormFieldShape? shape;
+  final TextFormFieldPadding? padding;
+  final TextFormFieldVariant? variant;
+  final TextFormFieldFontStyle? fontStyle;
+  final Alignment? alignment;
+  final double? width;
+  final EdgeInsetsGeometry? margin;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final bool? isObscureText;
+  final TextInputAction? textInputAction;
+  final TextInputType? textInputType;
+  final int? maxLines;
+  final String? hintText;
+  final Widget? prefix;
+  final BoxConstraints? prefixConstraints;
+  final Widget? suffix;
+  final BoxConstraints? suffixConstraints;
+  final FormFieldValidator<String>? validator;
+  final Function(String)? onChanged;
+  const CustomTextFormField({
     super.key,
     this.shape,
     this.padding,
@@ -24,45 +44,8 @@ class CustomTextFormField extends StatelessWidget {
     this.suffix,
     this.suffixConstraints,
     this.validator,
+    this.onChanged,
   });
-
-  TextFormFieldShape? shape;
-
-  TextFormFieldPadding? padding;
-
-  TextFormFieldVariant? variant;
-
-  TextFormFieldFontStyle? fontStyle;
-
-  Alignment? alignment;
-
-  double? width;
-
-  EdgeInsetsGeometry? margin;
-
-  TextEditingController? controller;
-
-  FocusNode? focusNode;
-
-  bool? isObscureText;
-
-  TextInputAction? textInputAction;
-
-  TextInputType? textInputType;
-
-  int? maxLines;
-
-  String? hintText;
-
-  Widget? prefix;
-
-  BoxConstraints? prefixConstraints;
-
-  Widget? suffix;
-
-  BoxConstraints? suffixConstraints;
-
-  FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +62,7 @@ class CustomTextFormField extends StatelessWidget {
       width: width ?? double.maxFinite,
       margin: margin,
       child: TextFormField(
+        onChanged: onChanged,
         controller: controller,
         focusNode: focusNode,
         style: _setFontStyle(),
@@ -113,7 +97,7 @@ class CustomTextFormField extends StatelessWidget {
 
   _setFontStyle() {
     switch (fontStyle) {
-      case TextFormFieldFontStyle.GilroyMedium16BlueA700:
+      case TextFormFieldFontStyle.gilroyMedium16BlueA700:
         return TextStyle(
           color: ColorConstant.blueA700,
           fontSize: getFontSize(
@@ -122,7 +106,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case TextFormFieldFontStyle.GilroyMedium14:
+      case TextFormFieldFontStyle.gilroyMedium14:
         return TextStyle(
           color: ColorConstant.blueGray400,
           fontSize: getFontSize(
@@ -131,7 +115,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case TextFormFieldFontStyle.GilroyMedium16Bluegray900:
+      case TextFormFieldFontStyle.gilroyMedium16BlueGray900:
         return TextStyle(
           color: ColorConstant.blueGray900,
           fontSize: getFontSize(
@@ -140,7 +124,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
-      case TextFormFieldFontStyle.GilroyRegular14:
+      case TextFormFieldFontStyle.gilroyRegular14:
         return TextStyle(
           color: ColorConstant.whiteA700,
           fontSize: getFontSize(
@@ -149,7 +133,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w400,
         );
-      case TextFormFieldFontStyle.GilroySemiBold18:
+      case TextFormFieldFontStyle.gilroySemiBold18:
         return TextStyle(
           color: ColorConstant.blueGray900,
           fontSize: getFontSize(
@@ -158,7 +142,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w600,
         );
-      case TextFormFieldFontStyle.GilroyRegular14Bluegray400:
+      case TextFormFieldFontStyle.gilroyRegular14BlueGray400:
         return TextStyle(
           color: ColorConstant.blueGray400,
           fontSize: getFontSize(
@@ -167,7 +151,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w400,
         );
-      case TextFormFieldFontStyle.GilroySemiBold16:
+      case TextFormFieldFontStyle.gilroySemiBold16:
         return TextStyle(
           color: ColorConstant.blueGray900,
           fontSize: getFontSize(
@@ -176,7 +160,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w600,
         );
-      case TextFormFieldFontStyle.GilroyRegular14Bluegray300:
+      case TextFormFieldFontStyle.gilroyRegular14BlueGray300:
         return TextStyle(
           color: ColorConstant.blueGray300,
           fontSize: getFontSize(
@@ -185,7 +169,7 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w400,
         );
-      case TextFormFieldFontStyle.GilroySemiBold18BlueA700:
+      case TextFormFieldFontStyle.gilroySemiBold18BlueA700:
         return TextStyle(
           color: ColorConstant.blueA700,
           fontSize: getFontSize(
@@ -208,7 +192,7 @@ class CustomTextFormField extends StatelessWidget {
 
   _setOutlineBorderRadius() {
     switch (shape) {
-      case TextFormFieldShape.CustomBorderTL6:
+      case TextFormFieldShape.customBorderTL6:
         return BorderRadius.only(
           topLeft: Radius.circular(
             getHorizontalSize(
@@ -242,23 +226,23 @@ class CustomTextFormField extends StatelessWidget {
 
   _setBorderStyle() {
     switch (variant) {
-      case TextFormFieldVariant.FillBlue50:
+      case TextFormFieldVariant.fillBlue50:
         return OutlineInputBorder(
           borderRadius: _setOutlineBorderRadius(),
           borderSide: BorderSide.none,
         );
-      case TextFormFieldVariant.UnderLineBluegray100:
+      case TextFormFieldVariant.underLineBlueGray100:
         return UnderlineInputBorder(
           borderSide: BorderSide(
             color: ColorConstant.blueGray100,
           ),
         );
-      case TextFormFieldVariant.Outline:
+      case TextFormFieldVariant.outline:
         return OutlineInputBorder(
           borderRadius: _setOutlineBorderRadius(),
           borderSide: BorderSide.none,
         );
-      case TextFormFieldVariant.OutlineIndigo100:
+      case TextFormFieldVariant.outlineIndigo100:
         return OutlineInputBorder(
           borderRadius: _setOutlineBorderRadius(),
           borderSide: BorderSide(
@@ -266,7 +250,7 @@ class CustomTextFormField extends StatelessWidget {
             width: 1,
           ),
         );
-      case TextFormFieldVariant.None:
+      case TextFormFieldVariant.none:
         return InputBorder.none;
       default:
         return OutlineInputBorder(
@@ -281,11 +265,11 @@ class CustomTextFormField extends StatelessWidget {
 
   _setFillColor() {
     switch (variant) {
-      case TextFormFieldVariant.FillBlue50:
+      case TextFormFieldVariant.fillBlue50:
         return ColorConstant.blue50;
-      case TextFormFieldVariant.Outline:
+      case TextFormFieldVariant.outline:
         return ColorConstant.black90099;
-      case TextFormFieldVariant.OutlineIndigo100:
+      case TextFormFieldVariant.outlineIndigo100:
         return ColorConstant.whiteA700;
       default:
         return ColorConstant.whiteA700;
@@ -294,15 +278,15 @@ class CustomTextFormField extends StatelessWidget {
 
   _setFilled() {
     switch (variant) {
-      case TextFormFieldVariant.FillBlue50:
+      case TextFormFieldVariant.fillBlue50:
         return true;
-      case TextFormFieldVariant.UnderLineBluegray100:
+      case TextFormFieldVariant.underLineBlueGray100:
         return false;
-      case TextFormFieldVariant.Outline:
+      case TextFormFieldVariant.outline:
         return true;
-      case TextFormFieldVariant.OutlineIndigo100:
+      case TextFormFieldVariant.outlineIndigo100:
         return true;
-      case TextFormFieldVariant.None:
+      case TextFormFieldVariant.none:
         return false;
       default:
         return true;
@@ -311,31 +295,31 @@ class CustomTextFormField extends StatelessWidget {
 
   _setPadding() {
     switch (padding) {
-      case TextFormFieldPadding.PaddingT20:
+      case TextFormFieldPadding.paddingT20:
         return getPadding(
           left: 16,
           top: 20,
           right: 16,
           bottom: 20,
         );
-      case TextFormFieldPadding.PaddingT12:
+      case TextFormFieldPadding.paddingT12:
         return getPadding(
           left: 12,
           top: 12,
           bottom: 12,
         );
-      case TextFormFieldPadding.PaddingT11:
+      case TextFormFieldPadding.paddingT11:
         return getPadding(
           left: 8,
           top: 11,
           right: 8,
           bottom: 11,
         );
-      case TextFormFieldPadding.PaddingAll8:
+      case TextFormFieldPadding.paddingAll8:
         return getPadding(
           all: 8,
         );
-      case TextFormFieldPadding.PaddingT15:
+      case TextFormFieldPadding.paddingT15:
         return getPadding(
           left: 15,
           top: 15,
@@ -350,37 +334,37 @@ class CustomTextFormField extends StatelessWidget {
 }
 
 enum TextFormFieldShape {
-  RoundedBorder6,
-  CustomBorderTL6,
+  roundedBorder6,
+  customBorderTL6,
 }
 
 enum TextFormFieldPadding {
-  PaddingAll12,
-  PaddingT20,
-  PaddingT12,
-  PaddingT11,
-  PaddingAll8,
-  PaddingT15,
+  paddingAll12,
+  paddingT20,
+  paddingT12,
+  paddingT11,
+  paddingAll8,
+  paddingT15,
 }
 
 enum TextFormFieldVariant {
-  None,
-  OutlineBluegray100,
-  FillBlue50,
-  UnderLineBluegray100,
-  Outline,
-  OutlineIndigo100,
+  none,
+  outlineBlueGray100,
+  fillBlue50,
+  underLineBlueGray100,
+  outline,
+  outlineIndigo100,
 }
 
 enum TextFormFieldFontStyle {
-  GilroyMedium16,
-  GilroyMedium16BlueA700,
-  GilroyMedium14,
-  GilroyMedium16Bluegray900,
-  GilroyRegular14,
-  GilroySemiBold18,
-  GilroyRegular14Bluegray400,
-  GilroySemiBold16,
-  GilroyRegular14Bluegray300,
-  GilroySemiBold18BlueA700,
+  gilroyMedium16,
+  gilroyMedium16BlueA700,
+  gilroyMedium14,
+  gilroyMedium16BlueGray900,
+  gilroyRegular14,
+  gilroySemiBold18,
+  gilroyRegular14BlueGray400,
+  gilroySemiBold16,
+  gilroyRegular14BlueGray300,
+  gilroySemiBold18BlueA700,
 }

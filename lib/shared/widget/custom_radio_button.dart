@@ -1,9 +1,19 @@
-import 'package:elite_academy/core/utils/color_constant.dart';
+import 'package:elite_academy/const/color_constant.dart';
 import 'package:elite_academy/core/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomRadioButton extends StatelessWidget {
-  CustomRadioButton({
+  final RadioFontStyle? fontStyle;
+  final Alignment? alignment;
+  final Function(String)? onChange;
+  final bool? isRightCheck;
+  final double? iconSize;
+  final String? value;
+  final String? groupValue;
+  final String? text;
+  final double? width;
+  final EdgeInsetsGeometry? margin;
+  const CustomRadioButton({
     super.key,
     this.fontStyle,
     this.alignment,
@@ -16,26 +26,6 @@ class CustomRadioButton extends StatelessWidget {
     this.width,
     this.margin,
   });
-
-  RadioFontStyle? fontStyle;
-
-  Alignment? alignment;
-
-  Function(String)? onChange;
-
-  bool? isRightCheck;
-
-  double? iconSize;
-
-  String? value;
-
-  String? groupValue;
-
-  String? text;
-
-  double? width;
-
-  EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +55,7 @@ class CustomRadioButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             right: 8,
           ),
           child: getTextWidget(),
@@ -80,7 +70,7 @@ class CustomRadioButton extends StatelessWidget {
       children: [
         getRadioWidget(),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 8,
           ),
           child: getTextWidget(),
@@ -108,7 +98,7 @@ class CustomRadioButton extends StatelessWidget {
         onChanged: (value) {
           onChange!(value!);
         },
-        visualDensity: VisualDensity(
+        visualDensity: const VisualDensity(
           vertical: -4,
           horizontal: -4,
         ),
@@ -132,5 +122,5 @@ class CustomRadioButton extends StatelessWidget {
 }
 
 enum RadioFontStyle {
-  GilroyMedium16,
+  gilroyMedium16,
 }

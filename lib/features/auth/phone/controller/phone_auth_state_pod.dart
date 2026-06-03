@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../features/auth/auth.dart';
+import '../model/phone_auth_response_model.dart';
+import '../phone.dart';
 
-/// This provider holds AuthNotifier
-final phoneAuthPod = NotifierProvider<PhoneAuthNotifier, int>(
-  PhoneAuthNotifier.new,
-  name: 'authPod',
-);
+final phoneNumberControllerPod =
+    StateProvider<TextEditingController>((ref) => TextEditingController());
 
-///This provider used to seup the intial value
-///which can be overriden for test
-final intialPhoneAuthValuePod = Provider((ref) => 0);
+final otpControllerPod = StateProvider<String>((ref) => '');
+final verificationIdProvider = StateProvider<String>((ref) => '');
+
+final phoneAuthNotifierProvider =
+    StateNotifierProvider<PhoneAuthNotifier, PhoneAuthResponse>((ref) {
+  return PhoneAuthNotifier();
+});

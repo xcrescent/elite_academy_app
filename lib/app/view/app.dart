@@ -1,16 +1,17 @@
+import 'package:elite_academy/core/router/auto_route_observer.dart';
+import 'package:elite_academy/core/router/router_pod.dart';
+import 'package:elite_academy/core/theme/app_theme.dart';
+import 'package:elite_academy/core/theme/theme_controller.dart';
+import 'package:elite_academy/l10n/arb/app_localizations.dart';
+import 'package:elite_academy/shared/helper/global_helper.dart';
+import 'package:elite_academy/shared/pods/locale_pod.dart';
+import 'package:elite_academy/shared/widget/no_internet_widget.dart';
+import 'package:elite_academy/shared/widget/responsive_wrapper.dart';
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/router/auto_route_observer.dart';
-import '../../../core/router/router_pod.dart';
-import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/theme_controller.dart';
-import '../../../shared/helper/global_helper.dart';
-import '../../../shared/pods/locale_pod.dart';
-import '../../../shared/widget/no_internet_widget.dart';
-import '../../../shared/widget/responsive_wrapper.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 ///This class holds Material App or Cupertino App
 ///with routing,theming and locale setup .
 ///Also responsive framerwork used for responsive application
@@ -55,7 +56,8 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           final mediaquery = MediaQuery.of(context);
           child = MediaQuery(
             data: mediaquery.copyWith(
-              textScaleFactor: mediaquery.textScaleFactor.clamp(0, 1.5),
+              textScaler:
+                  TextScaler.linear(mediaquery.textScaler.scale(1.0).clamp(0, 1.5)),
             ),
             child: child,
           );
@@ -65,20 +67,20 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           child = AnnotatedRegion<SystemUiOverlayStyle>(
             value: currentTheme == ThemeMode.dark
                 ? SystemUiOverlayStyle.light.copyWith(
-                    statusBarColor: Colors.white.withOpacity(0.4),
+                    statusBarColor: Colors.white.withValues(alpha: 0.4),
                     systemNavigationBarColor: Colors.black,
                     systemNavigationBarDividerColor: Colors.black,
                     systemNavigationBarIconBrightness: Brightness.dark,
                   )
                 : currentTheme == ThemeMode.light
                     ? SystemUiOverlayStyle.dark.copyWith(
-                        statusBarColor: Colors.white.withOpacity(0.4),
+                        statusBarColor: Colors.white.withValues(alpha: 0.4),
                         systemNavigationBarColor: Colors.grey,
                         systemNavigationBarDividerColor: Colors.grey,
                         systemNavigationBarIconBrightness: Brightness.light,
                       )
                     : SystemUiOverlayStyle.dark.copyWith(
-                        statusBarColor: Colors.white.withOpacity(0.4),
+                        statusBarColor: Colors.white.withValues(alpha: 0.4),
                         systemNavigationBarColor: Colors.grey,
                         systemNavigationBarDividerColor: Colors.grey,
                         systemNavigationBarIconBrightness: Brightness.light,

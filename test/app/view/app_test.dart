@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:elite_academy/features/home/home_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
-import 'package:elite_academy/features/counter/counter.dart';
 import 'package:elite_academy/shared/pods/internet_checker_pod.dart';
 
 import '../../helpers/pump_app.dart';
@@ -27,10 +27,10 @@ Future<void> main() async {
             enableInternetCheckerPod.overrideWithValue(false),
             appBoxProvider.overrideWithValue(appBox),
           ],
-          child: const CounterPage(),
+          child: const HomePage(),
         ),
       );
-      expect(find.byType(CounterPage), findsOneWidget);
+      expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }

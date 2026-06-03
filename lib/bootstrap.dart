@@ -1,14 +1,22 @@
 import 'dart:async';
 import 'dart:developer';
+
+import 'package:elite_academy/core/local_storage/app_storage_pod.dart';
+import 'package:elite_academy/init.dart';
+import 'package:elite_academy/shared/riverpod_ext/riverpod_observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:platform_info/platform_info.dart';
-import 'core/local_storage/app_storage_pod.dart';
-import 'init.dart';
-import 'shared/riverpod_ext/riverpod_observer.dart';
 import 'package:talker_flutter/talker_flutter.dart';
+
+import 'data/model/admin_model.dart';
+import 'data/model/attendance_model.dart';
+import 'data/model/batch_model.dart';
+import 'data/model/fee_model.dart';
+import 'data/model/org_model.dart';
+import 'data/model/staff_model.dart';
+import 'data/model/student_model.dart';
 
 // coverage:ignore-file
 
@@ -18,14 +26,13 @@ import 'package:talker_flutter/talker_flutter.dart';
 
 final talker = TalkerFlutter.init(
   settings: TalkerSettings(
-    maxHistoryItems: null,
     useConsoleLogs: !kReleaseMode,
     enabled: !kReleaseMode,
   ),
   logger: TalkerLogger(
     output: debugPrint,
     settings: TalkerLoggerSettings(
-      enableColors: !Platform.I.isIOS,
+      enableColors: !kReleaseMode,
     ),
   ),
 );
@@ -38,7 +45,6 @@ Future<void> bootstrap(
   FutureOr<Widget> Function() builder, {
   List<Override> overrides = const [],
   List<ProviderObserver>? observers,
-  ProviderContainer? parent,
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -46,7 +52,25 @@ Future<void> bootstrap(
   WidgetsFlutterBinding.ensureInitialized();
   unawaited(init());
   await Hive.initFlutter();
+
+  // Register adapters BEFORE opening boxes
+  Hive.registerAdapter(AdminModelAdapter());
+  Hive.registerAdapter(OrgModelAdapter());
+  Hive.registerAdapter(BatchModelAdapter());
+  Hive.registerAdapter(StaffModelAdapter());
+  Hive.registerAdapter(StudentModelAdapter());
+  Hive.registerAdapter(FeeModelAdapter());
+  Hive.registerAdapter(AttendanceModelAdapter());
+
+  // Open boxes AFTER registering adapters
   final appBox = await Hive.openBox('appBox');
+  await Hive.openBox<AdminModel>('adminBox');
+  await Hive.openBox<OrgModel>('orgBox');
+  await Hive.openBox<BatchModel>('batchBox');
+  await Hive.openBox<StaffModel>('staffBox');
+  await Hive.openBox<StudentModel>('studentBox');
+  await Hive.openBox<FeeModel>('feeBox');
+  await Hive.openBox<AttendanceModel>('attendanceBox');
 
   runApp(
     ProviderScope(
@@ -60,7 +84,6 @@ Future<void> bootstrap(
         ),
         ...?observers,
       ],
-      parent: parent,
       child: await builder(),
     ),
   );
